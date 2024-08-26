@@ -2,6 +2,7 @@ package hospital;
 
 public class GestorPaciente 
 {
+    /*Parte Vicente. */
     /* Lore:
     Las otras clases son los objetos del problema,
     Pero GestorHospital es como el director de la sinfonía
