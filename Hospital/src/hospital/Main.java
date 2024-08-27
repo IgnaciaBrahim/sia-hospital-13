@@ -1,6 +1,11 @@
 package hospital;
 import java.io.*;
 import java.util.*;
+//import java.time.*;
+//import hospital.GestionTerminal;
+//import hospital.Hospital;
+//import hospital.Persona;
+
 //Instancia el hospital pero la clase que realmente
 //gestiona el hospital es gestor hospital.
 public class Main {
@@ -11,28 +16,28 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
+        LinkedList<Paciente> pacientes = hospital_VIJ.getLista_pacientes_prioridad();
 
         while (continuar) 
         {
-            System.out.println("""
-                + - - - - - - - - - - - - - - - - - - - - - - - - - +
-                | Bienvenido/a al sistema de Atención Hospitalaria. |
-                |                                                   |
-                | Por  favor,  seleccione  una  de  las  siguientes |
-                | opciones  ingresando  el  numero  correspondiente:|
-                + - - - - - - - - - - - - - - - - - - - - - - - - - +
-                | 1. Añadir paciente                                |
-                | 2. Registrar alta voluntaria                      |
-                | 3. Asignar doctor a paciente                      |
-                | 4. Asignar habitación a paciente                  |
-                | 5. Registrar visita a paciente                    |
-                | 6. Consultar pacientes por triage                 |
-                | 7. Ver estado de habitaciones y camas             |
-                | 8. Ver disponibilidad de doctores                 |
-                | 9. Explicación de las opciones del menú           |
-                | 10. Salir del sistema                             |
-                + - - - - - - - - - - - - - - - - - - - - - - - - - +
-                """);
+            System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
+            System.out.println("| Bienvenido/a al sistema de Atención Hospitalaria. |");
+            System.out.println("|                                                   |");
+            System.out.println("| Por  favor,  seleccione  una  de  las  siguientes |");
+            System.out.println("| opciones  ingresando  el  numero  correspondiente:|");
+            System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
+            System.out.println("| 1. Añadir paciente                                |");
+            System.out.println("| 2. Registrar alta voluntaria                      |");
+            System.out.println("| 3. Asignar doctor a paciente                      |");
+            System.out.println("| 4. Asignar habitación a paciente                  |");
+            System.out.println("| 5. Registrar visita a paciente                    |");
+            System.out.println("| 6. Consultar pacientes por triage                 |");
+            System.out.println("| 7. Ver estado de habitaciones y camas             |");
+            System.out.println("| 8. Ver disponibilidad de doctores                 |");
+            System.out.println("| 9. Explicación de las opciones del menú           |");
+            System.out.println("| 10. Salir del sistema                             |");
+            System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
+               
             System.out.print("\n\nIngrese su opción: \n");
             opcion = reader.readLine();
             
@@ -76,8 +81,9 @@ public class Main {
                     else
                     {
                         System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");  
-                        //agregarPaciente(datos_paciente, edad, sexo, triage);
-                        //hola soy yo jajaja
+                        Paciente paciente = new Paciente();
+                        paciente.agregarPaciente(datos_paciente, edad, sexo, triage, pacientes);
+
                     }
                     
                     terminal.presioneTecla();
