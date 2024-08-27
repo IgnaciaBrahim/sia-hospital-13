@@ -1,7 +1,5 @@
 package hospital; // hola
 
-import hospital.Persona;
-
 public class Doctor 
 {
     Persona datos_doctor;

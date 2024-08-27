@@ -1,3 +1,4 @@
+package hospital;
 import java.io.*;
 
 public class GestionTerminal{

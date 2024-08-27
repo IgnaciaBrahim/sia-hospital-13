@@ -1,7 +1,5 @@
 package hospital;
 
-import hospital.Persona;
-
 public class Paciente {
     Persona datos_paciente;
     private int edad;
@@ -21,11 +19,11 @@ public class Paciente {
         this.num_habitacion = null;
     }
 
-    public Paciente(Persona datos_paciente, int edad, int sexo, int triaje){
+    public Paciente(Persona datos_paciente, int edad, int sexo, int triage){
         this.datos_paciente = datos_paciente;
-        this.edad = edad0;
+        this.edad = edad;
         this.sexo = sexo;
-        this.triage = triaje;
+        this.triage = triage;
         this.medico_asignado = null;
         this.estado_atencion = "NO";
         this.num_habitacion = null;
@@ -36,7 +34,7 @@ public class Paciente {
         this.datos_paciente = datos_paciente;
         this.edad = edad;
         this.sexo = sexo;
-        this.triage = triaje;
+        this.triage = triage;
         this.medico_asignado = medico_asignado;
         this.estado_atencion = estado_atencion;
         this.num_habitacion = num_habitacion;
