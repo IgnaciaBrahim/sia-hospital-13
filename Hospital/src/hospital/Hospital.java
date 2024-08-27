@@ -9,8 +9,17 @@ public class Hospital
     //VALUE = "Doctor1, Doctor2..."
     int capacidad = 300;
     HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
+    HashMap<String, Paciente> map_paciente = new HashMap<>();
     LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
+
+    public HashMap<String, Paciente> getMap_paciente() {
+        return map_paciente;
+    }
+
+    public void setMap_paciente(HashMap<String, Paciente> map_paciente) {
+        this.map_paciente = map_paciente;
+    }
 
     public int getCapacidad() {
         return capacidad;
@@ -28,8 +37,10 @@ public class Hospital
         this.map_doctores = map_doctores;
     }
 
-    public LinkedList<Paciente> getLista_pacientes_prioridad() {
-        return lista_pacientes_prioridad;
+    public LinkedList<Paciente> getLista_pacientes_prioridad() 
+    {
+        //copia
+        return new LinkedList<>(lista_pacientes_prioridad);
     }
 
     public void setLista_pacientes_prioridad(LinkedList<Paciente> lista_pacientes_prioridad) {
@@ -44,6 +55,38 @@ public class Hospital
         this.habitaciones = habitaciones;
     }
     
+    public Paciente buscarPacienteRut(String rut)
+    {
+        Paciente aux_paciente = map_paciente.get(rut);
+        return aux_paciente;
+    }
+    
+    public void borrarPacienteCama(Paciente aux_paciente)
+    {
+        for (int i = 0; i < habitaciones.size(); i++) 
+        {
+            Habitacion habitacion = habitaciones.get(i);
+            if (habitacion.getCama_1() != null && habitacion.getCama_1().equals(aux_paciente))
+            {
+                habitacion.setCama_1(null);
+                break;
+            }
+            else if (habitacion.getCama_2() != null && habitacion.getCama_2().equals(aux_paciente))
+            {
+                habitacion.setCama_2(null);
+                break;
+            }
+        }
+    }
+    public void borrarPaciente(String rut, Paciente aux_paciente)
+    {
+        map_paciente.remove(rut);
+        lista_pacientes_prioridad.remove(aux_paciente);
+        if (aux_paciente.getNum_habitacion() != null)
+        {
+            borrarPacienteCama(aux_paciente);
+        }
+    }
    
 }
 
