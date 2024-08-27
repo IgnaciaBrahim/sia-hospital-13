@@ -77,6 +77,7 @@ public class Main {
                     {
                         System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");  
                         //agregarPaciente(datos_paciente, edad, sexo, triage);
+                        //hola soy yo jajaja
                     }
                     
                     terminal.presioneTecla();
