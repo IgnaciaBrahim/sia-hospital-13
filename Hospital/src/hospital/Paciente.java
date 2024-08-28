@@ -112,7 +112,8 @@ public class Paciente {
     public void setNum_habitacion(String num_habitacion) {
         this.num_habitacion = num_habitacion;
     }
-
+    
+    //Métodos de clase//
     public LocalDateTime getTiempoActual(){
         return tiempoActual;
     }
@@ -121,11 +122,11 @@ public class Paciente {
     }
 
     public void agregarPaciente(Persona datosPac, int edad, int sexo, int triaje, LinkedList<Paciente> listaPacientes)  {
-        LocalDateTime tiempoActual = LocalDateTime.now();
+        LocalDateTime tiempo_actual = LocalDateTime.now();
         DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String tiempoFormateado = tiempoActual.format(formatoTiempo);
+        String tiempoFormateado = tiempo_actual.format(formatoTiempo);
 
-        Paciente pac = new Paciente(datosPac, edad, sexo, triaje, tiempoActual);
+        Paciente pac = new Paciente(datosPac, edad, sexo, triaje, tiempo_actual);
         System.out.println("Paciente ingresado a las " + tiempoFormateado);
 
         // Insertar el paciente en la lista de manera ordenada
@@ -134,12 +135,13 @@ public class Paciente {
             Paciente pacienteExistente = listaPacientes.get(i);
             if (pacienteExistente.getTriage() < triaje || 
                (pacienteExistente.getTriage() == triaje && 
-                pacienteExistente.getTiempoActual().isBefore(tiempoActual))) {
+                pacienteExistente.getTiempoActual().isBefore(tiempo_actual))) {
                 posicionInsertar = i + 1;
             } else {
                 break;
             }
         }
+        //Implementación de insersion ordenada en arrlist.
         listaPacientes.add(posicionInsertar, pac);
        
     }

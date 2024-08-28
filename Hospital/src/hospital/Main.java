@@ -6,8 +6,6 @@ import java.util.*;
 //import hospital.Hospital;
 //import hospital.Persona;
 
-//Instancia el hospital pero la clase que realmente
-//gestiona el hospital es gestor hospital.
 public class Main {
     public static void explicarOpcionesMenu() {
         System.out.println("""
@@ -154,7 +152,8 @@ public class Main {
                         System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
                         
                     }
-                     
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla(); 
                     break;
                 case "3":
                     // "Asignar doctor a paciente"
@@ -172,10 +171,6 @@ public class Main {
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
-<<<<<<< HEAD
-                    
-                     System.out.println("OPCION 4");
-=======
                     System.out.println("OPCION 4");
                     System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
                     rut = reader.readLine();
@@ -187,7 +182,6 @@ public class Main {
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
->>>>>>> 1797d894b81b4dcbeb7acc320a9aad48687df626
                     break;
                 case "5":
                     // "Registrar visita a paciente"
@@ -199,12 +193,118 @@ public class Main {
                     break;
                 case "7":
                     // "Ver estado de habitaciones y camas"
-                     System.out.println("OPCION 7");
+                    System.out.println("OPCION 7");
+                    System.out.println("Desea ver el estado de: \n");
+                    System.out.println("1) Todas las habitaciones.");
+                    System.out.println("2) Habitación en particular.\n");
+                    String menu_7_opcion = reader.readLine();
+                    
+                    switch (menu_7_opcion)
+                    {
+                        case "1":
+                            System.out.println("MOSTRANDO ESTADO DEL HOSPITAL...\n");
+                            for (int i = 0; i < 150 ; i++)
+                            {
+                                System.out.println("==================================================================================================");
+                                Habitacion aux = hospital_VIJ.obtenerHabitacion(i);
+                                String cadena_mostrar = hospital_VIJ.obtenerMostrarHabitacion(aux);
+                                System.out.println(cadena_mostrar);
+                            }
+                            
+                        case "2":
+                            System.out.println("Ingrese el n° de habitación.\n");
+                            int num_habi = Integer.parseInt(reader.readLine());
+                            Habitacion aux = hospital_VIJ.obtenerHabitacion(num_habi);
+                            String cadena_mostrar = hospital_VIJ.obtenerMostrarHabitacion(aux);
+                            System.out.println("==================================================================================================");
+                            System.out.println(cadena_mostrar);
+                            System.out.println("==================================================================================================");
+                            
+                            break;
+                        default:
+                            System.out.println("\nOpción inválida. Volviendo al menú principal...");
+                            break;
+                    }
+                    
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla(); 
                     break;
+                    //end caso 7
+                    
                 case "8":
                     // "Ver disponibilidad de doctores"
-                     System.out.println("OPCION 8");
+                    System.out.println("OPCION 8");
+                    System.out.println("Desea ver disponibilidad de: \n");
+                    System.out.println("1) Todos los doctores.");
+                    System.out.println("2) Triaje en específico .\n");
+                    String menu_8_opcion = reader.readLine();
+                    
+                    switch(menu_8_opcion)
+                    {
+                        case "1":
+                            System.out.println("\nMOSTRANDO DOCTORES DISPONIBLES...\n");
+                            int cont = 0;
+                            for (int i = 0 ; i < (hospital_VIJ.lista_doctores).size(); i++)
+                            {
+                                Doctor doctor_aux = hospital_VIJ.obtenerDoctor(i);
+                                if (doctor_aux != null && (doctor_aux.isDisponible() == true))
+                                {
+                                    cont++;
+                                    String mostrar_doc = hospital_VIJ.mostrarDoctor(doctor_aux);
+                                    System.out.println(mostrar_doc);
+                                }
+                            }
+                            if (cont == 0)
+                            {
+                                System.out.println("No hay doctores disponibles...8\n");
+                            }
+                            break;
+                        
+                        case "2":
+                            System.out.println("\nQue triaje deseas mirar?\n");
+                            System.out.println("1) Riesgo Vital");
+                            System.out.println("2) Alta Urgencia");
+                            System.out.println("3) Mediana Urgencia");
+                            System.out.println("4) Baja Urgencia");
+                            System.out.println("5) No Urgente (Baja complejidad)");
+                            String triaje_aux = reader.readLine();
+                            
+                            if (!triaje_aux.matches("[1-5]"))
+                            {
+                                System.out.println("\nEl triaje que usted ingresó no es válido.");
+                                System.out.println("Volviendo al menú principal...\n");
+                            }
+                            else
+                            {
+                                System.out.println("\nMOSTRANDO LOS DOCTORES DEL TRIAJE " + triaje_aux + " ...\n");
+                                //Solo hay 1 doctor por triaje actualmente pero esta maniobra soporta cambios.
+                                ArrayList<Doctor> doctor_disponible_triaje = hospital_VIJ.obtenerDoctor(triaje_aux);
+                                if (doctor_disponible_triaje == null || doctor_disponible_triaje.isEmpty())
+                                {
+                                    System.out.println("No hay doctores disponibles en el triaje señalado.\n");
+                                    
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < doctor_disponible_triaje.size(); i++)
+                                    {
+                                        String mostrar_doc = hospital_VIJ.mostrarDoctor(doctor_disponible_triaje.get(i));
+                                        System.out.println(mostrar_doc);
+                                        //reutilizan2
+                                    } 
+                                }  
+                            }  
+                            break;
+                        default:
+                            System.out.println("\nOpción inválida. Volviendo al menú principal...");
+                            break;
+                            
+                    //La magia de la sobrecarga ojala funcione D:   
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+                    
                 case "9":
                     // "Explicación de las opciones del menú"
                     System.out.println("OPCION 9");
@@ -212,6 +312,7 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+                    
                 case "10":
                     //  "Salir del sistema"
                      System.out.println("OPCION 1o");

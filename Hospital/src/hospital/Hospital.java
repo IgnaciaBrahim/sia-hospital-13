@@ -7,9 +7,16 @@ public class Hospital {
     //KEY = "Traumatología"
     //VALUE = "Doctor1, Doctor2..."
     int capacidad = 300;
+    
+    //DOCTOR
     HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
+    ArrayList<Doctor> lista_doctores = new ArrayList<>();
+    
+    //PACIENTE
     HashMap<String, Paciente> map_paciente = new HashMap<>();
     LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
+    
+    //HABITACION
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
 
     public HashMap<String, Paciente> getMap_paciente() {
@@ -89,25 +96,25 @@ public class Hospital {
     }
 
 
-public void asignarDoctorAPaciente(Paciente paciente) {
-    int triage = paciente.getTriage();
-    LinkedList<Doctor> doctoresDisponibles = map_doctores.get(triage);
+    public void asignarDoctorAPaciente(Paciente paciente) {
+        int triage = paciente.getTriage();
+        LinkedList<Doctor> doctoresDisponibles = map_doctores.get(triage);
 
-    if (doctoresDisponibles != null && !doctoresDisponibles.isEmpty()) {
-        for (Doctor doctor : doctoresDisponibles) {
-            if (doctor.isDisponible()) {
-                doctor.setPacientes_actual(doctor.getPacientes_actual() + 1);
-                paciente.setMedico_asignado(doctor);
-                doctor.setDisponible(doctor.getPacientes_actual() < doctor.getPacientes_max());
-                System.out.println("Doctor asignado con éxito a " + paciente.getDatos_paciente().getNombre());
-                return;
+        if (doctoresDisponibles != null && !doctoresDisponibles.isEmpty()) {
+            for (Doctor doctor : doctoresDisponibles) {
+                if (doctor.isDisponible()) {
+                    doctor.setPacientes_actual(doctor.getPacientes_actual() + 1);
+                    paciente.setMedico_asignado(doctor);
+                    doctor.setDisponible(doctor.getPacientes_actual() < doctor.getPacientes_max());
+                    System.out.println("Doctor asignado con éxito a " + paciente.getDatos_paciente().getNombre());
+                    return;
+                }
             }
+            System.out.println("No hay doctores disponibles en este momento.");
+        } else {
+            System.out.println("No hay doctores para el triaje solicitado.");
         }
-        System.out.println("No hay doctores disponibles en este momento.");
-    } else {
-        System.out.println("No hay doctores para el triaje solicitado.");
     }
-}
 
 
     public void asignarHabitacionAPaciente(Paciente paciente) {
@@ -129,114 +136,79 @@ public void asignarDoctorAPaciente(Paciente paciente) {
             }
         }
         System.out.println("No hay habitaciones disponibles.");
-}
-
-}
-   
-    
-
-
-
-/*
-public class Hospital {
-
-    
-    private HashMap<Integer, LinkedList<Doctor>> mapDoctores;
-    
-    private LinkedList<Paciente> listaPacientesPrioridad;
-
-    private ArrayList<Habitacion> habitaciones;
-
-    public Hospital() {
-        this.mapDoctores = new HashMap<>();
-        this.listaPacientesPrioridad = new LinkedList<>();
-        this.habitaciones = new ArrayList<>();
-
-        for (int i = 1; i <= 150; i++) {
-            habitaciones.add(new Habitacion(i));
-        }
     }
+    
+    public Habitacion obtenerHabitacion(int num)
+    {
+        Habitacion habitacion_aux = habitaciones.get(num);
+        return habitacion_aux;
+    }
+    
+    public String obtenerMostrarHabitacion(Habitacion aux)
+    {
+        return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1() + " Cama 2: " + aux.getCama_2();
+    }
+    
+    public void añadirDoctorMapaArray(Doctor doctor_aux) 
+    {
+        int triage = doctor_aux.getTriage();
 
-
-    public void añadirDoctor(Doctor doctor) {
-        int triage = doctor.getTriage();
-        if (!mapDoctores.containsKey(triage)) {
-            mapDoctores.put(triage, new LinkedList<>());
+        // Si el triage no está en el mapa se crea la lista enlazada.
+        if (!map_doctores.containsKey(triage)) 
+        {
+            map_doctores.put(triage, new LinkedList<>());
         }
-        mapDoctores.get(triage).add(doctor);
+
+        // Se añade el doctor a la lista enlazada de todas formas.
+        map_doctores.get(triage).add(doctor_aux);
+        
+        lista_doctores.add(doctor_aux);
+        
         System.out.println("Doctor añadido con éxito.");
     }
-
-    public void asignarDoctor(Paciente paciente) {
-        int triage = paciente.getTriage();
-        LinkedList<Doctor> doctoresDisponibles = mapDoctores.get(triage);
-        if (doctoresDisponibles != null && !doctoresDisponibles.isEmpty()) {
-            for (Doctor doctor : doctoresDisponibles) {
-                if (doctor.isDisponible()) {
-                    doctor.setPacientes_actual(doctor.getPacientes_actual() + 1);
-                    paciente.setMedico_asignado(doctor);
-                    doctor.setDisponible(doctor.getPacientes_actual() < doctor.getPacientes_max());
-                    System.out.println("Doctor asignado con éxito.");
-                    return;
-                }
-            }
-            System.out.println("No hay doctores disponibles en este momento.");
-        } else {
-            System.out.println("No hay doctores para el triaje solicitado.");
-        }
+    
+    public Doctor obtenerDoctor(int i)
+    {
+        Doctor aux_doctor = lista_doctores.get(i);
+        return aux_doctor;
     }
-
-
-    public List<Paciente> consultarPacientesPorTriage(int triage) {
-        List<Paciente> pacientes = new ArrayList<>();
-        for (Paciente p : listaPacientesPrioridad) {
-            if (p.getTriage() == triage) {
-                pacientes.add(p);
+    
+    public ArrayList<Doctor> obtenerDoctor(String triaje_aux)
+    {
+        int triaje = Integer.parseInt(triaje_aux);
+        ArrayList<Doctor> doctor_disponible_triaje = new ArrayList<>();
+        
+        LinkedList<Doctor> aux_triaje_lista = map_doctores.get(triaje);
+        
+        for (int i = 0; i < aux_triaje_lista.size(); i++)
+        {
+            Doctor doc_aux = aux_triaje_lista.get(i);
+            if (doc_aux.isDisponible())
+            {
+                doctor_disponible_triaje.add(doc_aux);
             }
         }
-        return pacientes;
+        return doctor_disponible_triaje; 
     }
-
-    public void verDisponibilidadDoctores() {
-        for (Map.Entry<Integer, LinkedList<Doctor>> entry : mapDoctores.entrySet()) {
-            int triage = entry.getKey();
-            LinkedList<Doctor> doctores = entry.getValue();
-            System.out.println("Triage: " + triage);
-            for (Doctor doctor : doctores) {
-                System.out.println("Doctor: " + doctor.getDatos_doctor().getNombre() + " - Disponible: " + doctor.isDisponible());
-            }
+    
+    public String mostrarDoctor(Doctor aux_doctor)
+    {
+        Persona datos = aux_doctor.getDatos_doctor();
+        String disp;
+        if (!aux_doctor.isDisponible())
+        {
+            disp = "Si";
         }
-    }
-
-    public void verEstadoHabitaciones() {
-        for (Habitacion habitacion : habitaciones) {
-            System.out.println("Habitación #" + habitacion.getNum_habitacion() + " - Ocupado: " + habitacion.isOcupado());
-            if (habitacion.getCama_1() != null) {
-                System.out.println("\tCama 1: " + habitacion.getCama_1().getDatos_paciente().getNombre());
-            }
-            if (habitacion.getCama_2() != null) {
-                System.out.println("\tCama 2: " + habitacion.getCama_2().getDatos_paciente().getNombre());
-            }
+        else
+        {
+            disp = "No";
         }
+        return "Doctor " + datos.getNombre() + " " + datos.getApellido() + " Disponible: " + disp + "\n";
     }
-
-    public void registrarVisita(String rutPaciente) {
-        Paciente paciente = buscarPacientePorRut(rutPaciente);
-        if (paciente != null) {
-            System.out.println("Visita registrada para el paciente: " + paciente.getDatos_paciente().getNombre());
-        } else {
-            System.out.println("Paciente no encontrado.");
-        }
-    }
-
-
-    private Paciente buscarPacientePorRut(String rut) {
-        for (Paciente p : listaPacientesPrioridad) {
-            if (p.getDatos_paciente().getRut().equals(rut)) {
-                return p;
-            }
-        }
-        return null;
-    }
+    
+    
+    
+    
+    
 }
-*/
+

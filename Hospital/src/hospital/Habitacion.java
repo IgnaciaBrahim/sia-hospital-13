@@ -47,5 +47,5 @@ public class Habitacion
 
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
-    }  
+    }
 }
