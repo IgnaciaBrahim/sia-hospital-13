@@ -9,6 +9,42 @@ import java.util.*;
 //Instancia el hospital pero la clase que realmente
 //gestiona el hospital es gestor hospital.
 public class Main {
+    public static void explicarOpcionesMenu() {
+        System.out.println("""
+            + - - - - - - - - - - - - - - - - - - - - - - - - - +
+            | Explicación de las Opciones del Menú               |
+            + - - - - - - - - - - - - - - - - - - - - - - - - - +
+            | 1. Añadir paciente:                               |
+            |    Permite registrar un nuevo paciente en el      |
+            |    sistema con su información personal y triage.  |
+            | 2. Registrar alta voluntaria:                     |
+            |    Marca a un paciente como dado de alta y libera |
+            |    su cama, si corresponde.                       |
+            | 3. Asignar doctor a paciente:                     |
+            |    Asigna un doctor disponible al paciente según  |
+            |    su nivel de triage.                            |
+            | 4. Asignar habitación a paciente:                 |
+            |    Asigna una habitación disponible al paciente.  |
+            | 5. Registrar visita a paciente:                   |
+            |    Registra la visita de un médico al paciente    |
+            |    para actualizar su estado.                     |
+            | 6. Consultar pacientes por triage:                |
+            |    Muestra una lista de pacientes según su nivel  |
+            |    de triage.                                     |
+            | 7. Ver estado de habitaciones y camas:            |
+            |    Muestra el estado de todas las habitaciones,   |
+            |    indicando qué camas están ocupadas.            |
+            | 8. Ver disponibilidad de doctores:                |
+            |    Muestra la lista de doctores disponibles según |
+            |    su triage asignado.                            |
+            | 9. Explicación de las opciones del menú:          |
+            |    Muestra esta pantalla de ayuda que explica     |
+            |    cada opción del menú.                          |
+            | 10. Salir del sistema:                            |
+            |    Cierra la aplicación.                          |
+            + - - - - - - - - - - - - - - - - - - - - - - - - - +
+            """);
+    }
     public static void main(String[] args) throws IOException
     {
         GestionTerminal terminal = new GestionTerminal();
@@ -91,15 +127,67 @@ public class Main {
                     break;
                 case "2":
                     // "Registrar alta voluntaria"
-                     System.out.println("OPCION 2");
+                    System.out.println("OPCION 2\n\n");
+                    System.out.println("Ingrese el RUT del paciente");
+                    rut =  reader.readLine();
+                    Paciente aux_paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (aux_paciente == null)
+                    {
+                        System.out.println("\nNo existe tal paciente. Saliendo al menu principal.\n");
+                    }
+                    else if (aux_paciente.getEdad() < 18)
+                    {
+                        System.out.println("\nEl/La Paciente es menor de edad. No se pudo registrar el alta.\n");
+                    }
+                    else if (aux_paciente.getTriage() < 3)
+                    {
+                        System.out.println("\nEl/La Paciente está en estado grave. Por ley, no se registra el alta.\n\n");
+                    }
+                    else
+                    {
+                        System.out.println("\nBuscando si el Paciente está Hospitalizado...");
+                        hospital_VIJ.borrarPaciente(rut, aux_paciente);
+                        if (aux_paciente.getNum_habitacion() != null)
+                        {
+                            System.out.println("\nEl/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        }
+                        System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        
+                    }
+                     
                     break;
                 case "3":
                     // "Asignar doctor a paciente"
-                     System.out.println("OPCION 3");
+                    System.out.println("OPCION 3");
+                    System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
+                    rut = reader.readLine();
+                    Paciente paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (paciente != null) {
+                        hospital_VIJ.asignarDoctorAPaciente(paciente);
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
+<<<<<<< HEAD
+                    
                      System.out.println("OPCION 4");
+=======
+                    System.out.println("OPCION 4");
+                    System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
+                    rut = reader.readLine();
+                    paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (paciente != null) {
+                        hospital_VIJ.asignarHabitacionAPaciente(paciente);
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
+>>>>>>> 1797d894b81b4dcbeb7acc320a9aad48687df626
                     break;
                 case "5":
                     // "Registrar visita a paciente"
@@ -119,7 +207,10 @@ public class Main {
                     break;
                 case "9":
                     // "Explicación de las opciones del menú"
-                     System.out.println("OPCION 9");
+                    System.out.println("OPCION 9");
+                    explicarOpcionesMenu();
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 case "10":
                     //  "Salir del sistema"
