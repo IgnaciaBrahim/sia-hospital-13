@@ -5,8 +5,8 @@ import hospital.Paciente;
 public class Habitacion 
 {
     private int num_habitacion; //#1 a #150
-    Paciente cama_1;
-    Paciente cama_2;
+    private Paciente cama_1;
+    private Paciente cama_2;
     private boolean ocupado;
 
     public Habitacion(int num_habitacion) 
@@ -47,6 +47,5 @@ public class Habitacion
 
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
-    }
-    
+    }  
 }
