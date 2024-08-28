@@ -26,7 +26,7 @@ public class Paciente {
         this.num_habitacion = null;
         this.tiempoActual = tiempoActual;
     }
-    
+
     public Paciente() {
         this.datos_paciente = null;
         this.edad = 0;
@@ -154,32 +154,4 @@ public class Paciente {
         }
         return null; // Si no se encuentra
     }
-
-    public void buscarCamaDePaciente(LinkedList<Paciente> listaPacientes) {
-    
-        System.out.print("Ingrese el RUT del paciente a buscar: ");
-        String rut = "21"; // LEER DATO... ¿EN QUE CLASE DEBE ESTAR? T-T
-    
-        Paciente pacienteEncontrado = null;
-    
-        // Busca el paciente por RUT
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getDatos_paciente().getRut().equals(rut)) {
-                pacienteEncontrado = paciente;
-                break;
-            }
-        }
-    
-        if (pacienteEncontrado != null) {
-            if (pacienteEncontrado.getNum_habitacion() != null) {
-                System.out.println("El paciente " + pacienteEncontrado.getDatos_paciente().getNombre() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
-                // no se si pacienteEncontrado.getDatos_paciente().getNombre() va a funcionar eso si pero hay fe JSJSKSK
-            } else {
-                System.out.println("El paciente con RUT " + rut + " no tiene una cama asignada.");
-            }
-        } else {
-            System.out.println("No se encontró ningún paciente con el RUT ingresado.");
-        }
-    }
-    
 }

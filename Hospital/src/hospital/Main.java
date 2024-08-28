@@ -119,6 +119,8 @@ public class Main {
                         System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");  
                         Paciente paciente = new Paciente();
                         paciente.agregarPaciente(datos_paciente, edad, sexo, triage, pacientes);
+                        hospital_VIJ.setLista_pacientes_prioridad(pacientes);
+
 
                     }
                     
@@ -172,10 +174,6 @@ public class Main {
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
-//<<<<<<< HEAD
-                    
-                     System.out.println("OPCION 4");
-//=======
                     System.out.println("OPCION 4");
                     System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
                     rut = reader.readLine();
@@ -187,11 +185,34 @@ public class Main {
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
-//>>>>>>> 1797d894b81b4dcbeb7acc320a9aad48687df626
                     break;
+
                 case "5":
                     // "Registrar visita a paciente"
-                     System.out.println("OPCION 5");
+                    System.out.print("Ingrese el RUT del paciente a buscar: ");
+                    String rutP = reader.readLine();
+                    Paciente pacienteEncontrado = null;
+                    // Busca el paciente por RUT
+                    for (Paciente pacienteCama : pacientes) {
+                        if (pacienteCama.getDatos_paciente().getRut().equals(rutP)) {
+                            pacienteEncontrado = pacienteCama;
+                            break;
+                        }
+                    }
+                
+                    if (pacienteEncontrado != null) {
+                        if (pacienteEncontrado.getNum_habitacion() != null) {
+                            System.out.println("El paciente " + pacienteEncontrado.getDatos_paciente().getNombre() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
+                            // no se si pacienteEncontrado.getDatos_paciente().getNombre() va a funcionar eso si pero hay fe JSJSKSK
+                        } else {
+                            System.out.println("El paciente con RUT " + rutP + " no tiene una cama asignada.");
+                        }
+                    } else {
+                        System.out.println("No se encontró ningún paciente con el RUT ingresado.");
+                    }
+
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 case "6":
                     // Consultar pacientes por triaje"
