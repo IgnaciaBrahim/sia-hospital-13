@@ -85,7 +85,34 @@ public class Main {
                     break;
                 case "2":
                     // "Registrar alta voluntaria"
-                     System.out.println("OPCION 2");
+                    System.out.println("OPCION 2\n\n");
+                    System.out.println("Ingrese el RUT del paciente");
+                    rut =  reader.readLine();
+                    Paciente aux_paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (aux_paciente == null)
+                    {
+                        System.out.println("\nNo existe tal paciente. Saliendo al menu principal.\n");
+                    }
+                    else if (aux_paciente.getEdad() < 18)
+                    {
+                        System.out.println("\nEl/La Paciente es menor de edad. No se pudo registrar el alta.\n");
+                    }
+                    else if (aux_paciente.getTriage() < 3)
+                    {
+                        System.out.println("\nEl/La Paciente está en estado grave. Por ley, no se registra el alta.\n\n");
+                    }
+                    else
+                    {
+                        System.out.println("\nBuscando si el Paciente está Hospitalizado...");
+                        hospital_VIJ.borrarPaciente(rut, aux_paciente);
+                        if (aux_paciente.getNum_habitacion() != null)
+                        {
+                            System.out.println("\nEl/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        }
+                        System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        
+                    }
+                     
                     break;
                 case "3":
                     // "Asignar doctor a paciente"
@@ -93,6 +120,7 @@ public class Main {
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
+                    
                      System.out.println("OPCION 4");
                     break;
                 case "5":
