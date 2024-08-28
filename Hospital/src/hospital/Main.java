@@ -43,6 +43,25 @@ public class Main {
             + - - - - - - - - - - - - - - - - - - - - - - - - - +
             """);
     }
+
+    public static int esValido(BufferedReader reader, String mensaje) throws IOException {
+        int numero = 0; 
+        boolean valido = false; 
+
+        while (!valido) {
+            System.out.print(mensaje);
+            String entrada = reader.readLine();
+            
+            if (entrada.matches("\\d+")) {
+                numero = Integer.parseInt(entrada); 
+                valido = true;
+            } else {
+                System.out.println("Por favor, ingrese un número válido.");
+            }
+        }
+
+        return numero; // Devolver el número válido
+    }
     public static void main(String[] args) throws IOException
     {
         GestionTerminal terminal = new GestionTerminal();
@@ -90,13 +109,12 @@ public class Main {
                     
                     Persona datos_paciente = new Persona(rut, nombre, apellido);
                     
-                    System.out.println("\nIndique la edad:");
-                    int edad = Integer.parseInt(reader.readLine());
+                    int edad = esValido(reader, "Indique la edad: ");
                     
-                    System.out.println("\nIndique el Sexo del Paciente:");
+                    System.out.println("SEA:");
                     System.out.println("0) Hombre");
                     System.out.println("1) Mujer");
-                    int sexo = Integer.parseInt(reader.readLine());
+                    int sexo = esValido(reader, "Indique el Sexo del Paciente:");
                     
                     System.out.println("\nSeleccione la Condición del Paciente. Se le Asignará la Prioridad Según Corresponda:");
                     System.out.println("1) Riesgo Vital");
@@ -104,8 +122,8 @@ public class Main {
                     System.out.println("3) Mediana Urgencia");
                     System.out.println("4) Baja Urgencia");
                     System.out.println("5) No Urgente (Baja complejidad)");
-                    
-                    int triage = Integer.parseInt(reader.readLine());
+                    int triage = esValido(reader, "\nIndique el Triaje: ");
+                   
                     
                     if (triage == 5)
                     {
@@ -209,7 +227,6 @@ public class Main {
                     if (pacienteEncontrado != null) {
                         if (pacienteEncontrado.getNum_habitacion() != null) {
                             System.out.println("El paciente " + pacienteEncontrado.getDatos_paciente().getNombre() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
-                            // no se si pacienteEncontrado.getDatos_paciente().getNombre() va a funcionar eso si pero hay fe JSJSKSK
                         } else {
                             System.out.println("El paciente con RUT " + rutP + " no tiene una cama asignada.");
                         }
@@ -230,8 +247,9 @@ public class Main {
                     System.out.println("3. Mediana Urgencia");
                     System.out.println("4. Baja Urgencia");
                     System.out.println("5. No Urgente");
-                    int triajeBuscar;
-                    triajeBuscar = Integer.parseInt(reader.readLine());
+                    
+                    int triajeBuscar = esValido(reader, "Ingrese triaje: ");
+    
                     hospital_VIJ.mostrarPacientesPorTriaje(hospital_VIJ.getLista_pacientes_prioridad(), triajeBuscar);
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
