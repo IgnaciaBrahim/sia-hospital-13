@@ -89,11 +89,31 @@ public class Main {
                     break;
                 case "3":
                     // "Asignar doctor a paciente"
-                     System.out.println("OPCION 3");
+                    System.out.println("OPCION 3");
+                    System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
+                    rut = reader.readLine();
+                    Paciente paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (paciente != null) {
+                        hospital_VIJ.asignarDoctorAPaciente(paciente);
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
-                     System.out.println("OPCION 4");
+                    System.out.println("OPCION 4");
+                    System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
+                    rut = reader.readLine();
+                    paciente = hospital_VIJ.buscarPacienteRut(rut);
+                    if (paciente != null) {
+                        hospital_VIJ.asignarHabitacionAPaciente(paciente);
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 case "5":
                     // "Registrar visita a paciente"
