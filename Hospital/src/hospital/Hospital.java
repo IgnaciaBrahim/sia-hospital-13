@@ -136,6 +136,54 @@ public class Hospital {
             }
         }
         System.out.println("No hay habitaciones disponibles.");
+<<<<<<< HEAD
+=======
+    }
+
+    public void mostrarPacientesPorTriaje(LinkedList<Paciente> pacientitos, int triaje){
+        System.out.println("Pacientes en Triaje: " + triaje);
+        System.out.println("- - - - - - - - - - - - - - - - - -");
+        for (Paciente paciente : pacientitos) {
+            if (paciente.getTriage() == triaje){
+                System.out.println("- Nombre: " + paciente.getDatos_paciente().getNombre());
+                System.out.println("- Apellido: " + paciente.getDatos_paciente().getApellido());
+                System.out.println("- RUT: " + paciente.getDatos_paciente().getRut());
+                if (paciente.getNum_habitacion() != null) {
+                    System.out.println("- Habitación: " + paciente.getNum_habitacion());
+                }
+                else{
+                    System.out.println("- Sin habitación asignada.");
+                }
+                System.out.println("- - - - - - - - - - - - - - - - - -");
+            }
+        }
+    }
+
+}
+   
+    
+
+
+
+/*
+public class Hospital {
+
+    
+    private HashMap<Integer, LinkedList<Doctor>> mapDoctores;
+    
+    private LinkedList<Paciente> listaPacientesPrioridad;
+
+    private ArrayList<Habitacion> habitaciones;
+
+    public Hospital() {
+        this.mapDoctores = new HashMap<>();
+        this.listaPacientesPrioridad = new LinkedList<>();
+        this.habitaciones = new ArrayList<>();
+
+        for (int i = 1; i <= 150; i++) {
+            habitaciones.add(new Habitacion(i));
+        }
+>>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
     }
     
     public Habitacion obtenerHabitacion(int num)

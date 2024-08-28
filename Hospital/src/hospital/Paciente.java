@@ -4,6 +4,7 @@ package hospital;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
+//import java.util.Scanner;
 
 public class Paciente {
     Persona datos_paciente;
@@ -25,6 +26,7 @@ public class Paciente {
         this.num_habitacion = null;
         this.tiempoActual = tiempoActual;
     }
+
     public Paciente() {
         this.datos_paciente = null;
         this.edad = 0;
@@ -145,4 +147,14 @@ public class Paciente {
         listaPacientes.add(posicionInsertar, pac);
        
     }
+
+    public Paciente buscarPacientePorCama(LinkedList<Paciente> listaPacientes, String numHabitacion) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getNum_habitacion() != null && paciente.getNum_habitacion().equals(numHabitacion)) {
+                return paciente;
+            }
+        }
+        return null; // Si no se encuentra
+    }
+
 }

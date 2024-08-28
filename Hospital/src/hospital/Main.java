@@ -117,12 +117,15 @@ public class Main {
                         System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");  
                         Paciente paciente = new Paciente();
                         paciente.agregarPaciente(datos_paciente, edad, sexo, triage, pacientes);
+                        hospital_VIJ.setLista_pacientes_prioridad(pacientes);
+
 
                     }
                     
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "2":
                     // "Registrar alta voluntaria"
                     System.out.println("OPCION 2\n\n");
@@ -153,8 +156,13 @@ public class Main {
                         
                     }
                     terminal.presioneTecla();
+<<<<<<< HEAD
                     terminal.limpiarPantalla(); 
+=======
+                    terminal.limpiarPantalla();
+>>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
                     break;
+
                 case "3":
                     // "Asignar doctor a paciente"
                     System.out.println("OPCION 3");
@@ -169,6 +177,7 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "4":
                     // "Asignar habitación a paciente"
                     System.out.println("OPCION 4");
@@ -183,16 +192,54 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "5":
                     // "Registrar visita a paciente"
-                     System.out.println("OPCION 5");
+                    System.out.print("Ingrese el RUT del paciente a buscar: ");
+                    String rutP = reader.readLine();
+                    Paciente pacienteEncontrado = null;
+                    // Busca el paciente por RUT
+                    for (Paciente pacienteCama : pacientes) {
+                        if (pacienteCama.getDatos_paciente().getRut().equals(rutP)) {
+                            pacienteEncontrado = pacienteCama;
+                            break;
+                        }
+                    }
+                
+                    if (pacienteEncontrado != null) {
+                        if (pacienteEncontrado.getNum_habitacion() != null) {
+                            System.out.println("El paciente " + pacienteEncontrado.getDatos_paciente().getNombre() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
+                            // no se si pacienteEncontrado.getDatos_paciente().getNombre() va a funcionar eso si pero hay fe JSJSKSK
+                        } else {
+                            System.out.println("El paciente con RUT " + rutP + " no tiene una cama asignada.");
+                        }
+                    } else {
+                        System.out.println("No se encontró ningún paciente con el RUT ingresado.");
+                    }
+
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+
                 case "6":
                     // Consultar pacientes por triaje"
-                     System.out.println("OPCION 6");
+                    System.out.println("OPCION 6");
+                    System.out.println("Ingrese una opción de triaje:");
+                    System.out.println("1. Riesgo Vital");
+                    System.out.println("2. Alta Urgencia");
+                    System.out.println("3. Mediana Urgencia");
+                    System.out.println("4. Baja Urgencia");
+                    System.out.println("5. No Urgente");
+                    int triajeBuscar;
+                    triajeBuscar = Integer.parseInt(reader.readLine());
+                    hospital_VIJ.mostrarPacientesPorTriaje(hospital_VIJ.getLista_pacientes_prioridad(), triajeBuscar);
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+
                 case "7":
                     // "Ver estado de habitaciones y camas"
+<<<<<<< HEAD
                     System.out.println("OPCION 7");
                     System.out.println("Desea ver el estado de: \n");
                     System.out.println("1) Todas las habitaciones.");
@@ -303,6 +350,18 @@ public class Main {
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
+=======
+                     System.out.println("OPCION 7");
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
+                    break;
+
+                case "8":
+                    // "Ver disponibilidad de doctores"
+                     System.out.println("OPCION 8");
+                     terminal.presioneTecla();
+                     terminal.limpiarPantalla();
+>>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
                     break;
                     
                 case "9":
@@ -317,9 +376,12 @@ public class Main {
                     //  "Salir del sistema"
                      System.out.println("OPCION 1o");
                     continuar = false;  
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, ingrese un número del 1 al 10.");
+
                     break;
             }
     }
