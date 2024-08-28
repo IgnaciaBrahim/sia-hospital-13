@@ -2,8 +2,7 @@ package hospital;
 
 import java.util.*;
 
-public class Hospital 
-{
+public class Hospital {
     //HashMap doctores =
     //KEY = "Traumatología"
     //VALUE = "Doctor1, Doctor2..."
@@ -78,6 +77,7 @@ public class Hospital
             }
         }
     }
+
     public void borrarPaciente(String rut, Paciente aux_paciente)
     {
         map_paciente.remove(rut);
@@ -87,8 +87,55 @@ public class Hospital
             borrarPacienteCama(aux_paciente);
         }
     }
-   
+
+
+public void asignarDoctorAPaciente(Paciente paciente) {
+    int triage = paciente.getTriage();
+    LinkedList<Doctor> doctoresDisponibles = map_doctores.get(triage);
+
+    if (doctoresDisponibles != null && !doctoresDisponibles.isEmpty()) {
+        for (Doctor doctor : doctoresDisponibles) {
+            if (doctor.isDisponible()) {
+                doctor.setPacientes_actual(doctor.getPacientes_actual() + 1);
+                paciente.setMedico_asignado(doctor);
+                doctor.setDisponible(doctor.getPacientes_actual() < doctor.getPacientes_max());
+                System.out.println("Doctor asignado con éxito a " + paciente.getDatos_paciente().getNombre());
+                return;
+            }
+        }
+        System.out.println("No hay doctores disponibles en este momento.");
+    } else {
+        System.out.println("No hay doctores para el triaje solicitado.");
+    }
 }
+
+
+    public void asignarHabitacionAPaciente(Paciente paciente) {
+        for (Habitacion habitacion : habitaciones) {
+            if (!habitacion.isOcupado()) {
+                if (habitacion.getCama_1() == null) {
+                    habitacion.setCama_1(paciente);
+                    habitacion.setOcupado(true);
+                    paciente.setNum_habitacion(String.valueOf(habitacion.getNum_habitacion()));
+                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.getDatos_paciente().getNombre());
+                    return;
+                } else if (habitacion.getCama_2() == null) {
+                    habitacion.setCama_2(paciente);
+                    habitacion.setOcupado(true);
+                    paciente.setNum_habitacion(String.valueOf(habitacion.getNum_habitacion()));
+                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.getDatos_paciente().getNombre());
+                    return;
+                }
+            }
+        }
+        System.out.println("No hay habitaciones disponibles.");
+}
+
+}
+   
+    
+
+
 
 /*
 public class Hospital {
