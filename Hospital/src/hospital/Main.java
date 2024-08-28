@@ -172,10 +172,10 @@ public class Main {
                     break;
                 case "4":
                     // "Asignar habitación a paciente"
-<<<<<<< HEAD
+//<<<<<<< HEAD
                     
                      System.out.println("OPCION 4");
-=======
+//=======
                     System.out.println("OPCION 4");
                     System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X): ");
                     rut = reader.readLine();
@@ -187,7 +187,7 @@ public class Main {
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
->>>>>>> 1797d894b81b4dcbeb7acc320a9aad48687df626
+//>>>>>>> 1797d894b81b4dcbeb7acc320a9aad48687df626
                     break;
                 case "5":
                     // "Registrar visita a paciente"
