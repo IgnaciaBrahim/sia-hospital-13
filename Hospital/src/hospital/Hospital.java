@@ -129,7 +129,26 @@ public void asignarDoctorAPaciente(Paciente paciente) {
             }
         }
         System.out.println("No hay habitaciones disponibles.");
-}
+    }
+
+    public void mostrarPacientesPorTriaje(LinkedList<Paciente> pacientitos, int triaje){
+        System.out.println("Pacientes en Triaje: " + triaje);
+        System.out.println("- - - - - - - - - - - - - - - - - -");
+        for (Paciente paciente : pacientitos) {
+            if (paciente.getTriage() == triaje){
+                System.out.println("- Nombre: " + paciente.getDatos_paciente().getNombre());
+                System.out.println("- Apellido: " + paciente.getDatos_paciente().getApellido());
+                System.out.println("- RUT: " + paciente.getDatos_paciente().getRut());
+                if (paciente.getNum_habitacion() != null) {
+                    System.out.println("- Habitación: " + paciente.getNum_habitacion());
+                }
+                else{
+                    System.out.println("- Sin habitación asignada.");
+                }
+                System.out.println("- - - - - - - - - - - - - - - - - -");
+            }
+        }
+    }
 
 }
    

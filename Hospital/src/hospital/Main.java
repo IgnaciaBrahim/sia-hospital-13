@@ -127,6 +127,7 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "2":
                     // "Registrar alta voluntaria"
                     System.out.println("OPCION 2\n\n");
@@ -156,8 +157,10 @@ public class Main {
                         System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
                         
                     }
-                     
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+
                 case "3":
                     // "Asignar doctor a paciente"
                     System.out.println("OPCION 3");
@@ -172,6 +175,7 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "4":
                     // "Asignar habitación a paciente"
                     System.out.println("OPCION 4");
@@ -214,17 +218,35 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
+
                 case "6":
                     // Consultar pacientes por triaje"
-                     System.out.println("OPCION 6");
+                    System.out.println("OPCION 6");
+                    System.out.println("Ingrese una opción de triaje:");
+                    System.out.println("1. Riesgo Vital");
+                    System.out.println("2. Alta Urgencia");
+                    System.out.println("3. Mediana Urgencia");
+                    System.out.println("4. Baja Urgencia");
+                    System.out.println("5. No Urgente");
+                    int triajeBuscar;
+                    triajeBuscar = Integer.parseInt(reader.readLine());
+                    hospital_VIJ.mostrarPacientesPorTriaje(hospital_VIJ.getLista_pacientes_prioridad(), triajeBuscar);
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+
                 case "7":
                     // "Ver estado de habitaciones y camas"
                      System.out.println("OPCION 7");
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
+
                 case "8":
                     // "Ver disponibilidad de doctores"
                      System.out.println("OPCION 8");
+                     terminal.presioneTecla();
+                     terminal.limpiarPantalla();
                     break;
                 case "9":
                     // "Explicación de las opciones del menú"
@@ -237,9 +259,12 @@ public class Main {
                     //  "Salir del sistema"
                      System.out.println("OPCION 1o");
                     continuar = false;  
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, ingrese un número del 1 al 10.");
+
                     break;
             }
     }
