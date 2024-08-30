@@ -136,8 +136,6 @@ public class Hospital {
             }
         }
         System.out.println("No hay habitaciones disponibles.");
-<<<<<<< HEAD
-=======
     }
 
     public void mostrarPacientesPorTriaje(LinkedList<Paciente> pacientitos, int triaje){
@@ -158,35 +156,8 @@ public class Hospital {
             }
         }
     }
-
-}
-   
     
-
-
-
-/*
-public class Hospital {
-
-    
-    private HashMap<Integer, LinkedList<Doctor>> mapDoctores;
-    
-    private LinkedList<Paciente> listaPacientesPrioridad;
-
-    private ArrayList<Habitacion> habitaciones;
-
-    public Hospital() {
-        this.mapDoctores = new HashMap<>();
-        this.listaPacientesPrioridad = new LinkedList<>();
-        this.habitaciones = new ArrayList<>();
-
-        for (int i = 1; i <= 150; i++) {
-            habitaciones.add(new Habitacion(i));
-        }
->>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
-    }
-    
-    public Habitacion obtenerHabitacion(int num)
+       public Habitacion obtenerHabitacion(int num)
     {
         Habitacion habitacion_aux = habitaciones.get(num);
         return habitacion_aux;
@@ -253,10 +224,7 @@ public class Hospital {
         }
         return "Doctor " + datos.getNombre() + " " + datos.getApellido() + " Disponible: " + disp + "\n";
     }
-    
-    
-    
-    
-    
+
 }
+  
 

@@ -174,11 +174,7 @@ public class Main {
                         
                     }
                     terminal.presioneTecla();
-<<<<<<< HEAD
                     terminal.limpiarPantalla(); 
-=======
-                    terminal.limpiarPantalla();
->>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
                     break;
 
                 case "3":
@@ -257,7 +253,6 @@ public class Main {
 
                 case "7":
                     // "Ver estado de habitaciones y camas"
-<<<<<<< HEAD
                     System.out.println("OPCION 7");
                     System.out.println("Desea ver el estado de: \n");
                     System.out.println("1) Todas las habitaciones.");
@@ -368,20 +363,8 @@ public class Main {
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
-=======
-                     System.out.println("OPCION 7");
-                    terminal.presioneTecla();
-                    terminal.limpiarPantalla();
                     break;
 
-                case "8":
-                    // "Ver disponibilidad de doctores"
-                     System.out.println("OPCION 8");
-                     terminal.presioneTecla();
-                     terminal.limpiarPantalla();
->>>>>>> 4bfa3ad343a8e059c3cf1258723d7535109d1642
-                    break;
-                    
                 case "9":
                     // "Explicación de las opciones del menú"
                     System.out.println("OPCION 9");
