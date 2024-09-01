@@ -1,47 +1,41 @@
 package hospital;
 import java.io.*;
 import java.util.*;
-//import java.time.*;
-//import hospital.GestionTerminal;
-//import hospital.Hospital;
-//import hospital.Persona;
 
 public class Main {
     public static void explicarOpcionesMenu() {
-        System.out.println("""
-            + - - - - - - - - - - - - - - - - - - - - - - - - - +
-            | Explicación de las Opciones del Menú               |
-            + - - - - - - - - - - - - - - - - - - - - - - - - - +
-            | 1. Añadir paciente:                               |
-            |    Permite registrar un nuevo paciente en el      |
-            |    sistema con su información personal y triage.  |
-            | 2. Registrar alta voluntaria:                     |
-            |    Marca a un paciente como dado de alta y libera |
-            |    su cama, si corresponde.                       |
-            | 3. Asignar doctor a paciente:                     |
-            |    Asigna un doctor disponible al paciente según  |
-            |    su nivel de triage.                            |
-            | 4. Asignar habitación a paciente:                 |
-            |    Asigna una habitación disponible al paciente.  |
-            | 5. Registrar visita a paciente:                   |
-            |    Registra la visita de un médico al paciente    |
-            |    para actualizar su estado.                     |
-            | 6. Consultar pacientes por triage:                |
-            |    Muestra una lista de pacientes según su nivel  |
-            |    de triage.                                     |
-            | 7. Ver estado de habitaciones y camas:            |
-            |    Muestra el estado de todas las habitaciones,   |
-            |    indicando qué camas están ocupadas.            |
-            | 8. Ver disponibilidad de doctores:                |
-            |    Muestra la lista de doctores disponibles según |
-            |    su triage asignado.                            |
-            | 9. Explicación de las opciones del menú:          |
-            |    Muestra esta pantalla de ayuda que explica     |
-            |    cada opción del menú.                          |
-            | 10. Salir del sistema:                            |
-            |    Cierra la aplicación.                          |
-            + - - - - - - - - - - - - - - - - - - - - - - - - - +
-            """);
+        System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
+        System.out.println("| Explicación de las Opciones del Menú              |");
+        System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
+        System.out.println("| 1. Añadir paciente:                               |");
+        System.out.println("|    Permite registrar un nuevo paciente en el      |");
+        System.out.println("|    sistema con su información personal y triage.  |");
+        System.out.println("| 2. Registrar alta voluntaria:                     |");
+        System.out.println("|    Marca a un paciente como dado de alta y libera |");
+        System.out.println("|    su cama, si corresponde.                       |");
+        System.out.println("| 3. Asignar doctor a paciente:                     |");
+        System.out.println("|    Asigna un doctor disponible al paciente según  |");
+        System.out.println("|    su nivel de triage.                            |");
+        System.out.println("| 4. Asignar habitación a paciente:                 |");
+        System.out.println("|    Asigna una habitación disponible al paciente.  |");
+        System.out.println("| 5. Registrar visita a paciente:                   |");
+        System.out.println("|    Registra la visita de un médico al paciente    |");
+        System.out.println("|    para actualizar su estado.                     |");
+        System.out.println("| 6. Consultar pacientes por triage:                |");
+        System.out.println("|    Muestra una lista de pacientes según su nivel  |");
+        System.out.println("|    de triage.                                     |");
+        System.out.println("| 7. Ver estado de habitaciones y camas:            |");
+        System.out.println("|    Muestra el estado de todas las habitaciones,   |");
+        System.out.println("|    indicando qué camas están ocupadas.            |");
+        System.out.println("| 8. Ver disponibilidad de doctores:                |");
+        System.out.println("|    Muestra la lista de doctores disponibles según |");
+        System.out.println("|    su triage asignado.                            |");
+        System.out.println("| 9. Explicación de las opciones del menú:          |");
+        System.out.println("|    Muestra esta pantalla de ayuda que explica     |");
+        System.out.println("|    cada opción del menú.                          |");
+        System.out.println("| 10. Salir del sistema:                            |");
+        System.out.println("|    Cierra la aplicación.                          |");
+        System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
 
     public static int esValido(BufferedReader reader, String mensaje) throws IOException {
@@ -66,10 +60,22 @@ public class Main {
     {
         GestionTerminal terminal = new GestionTerminal();
         Hospital hospital_VIJ = new Hospital();
+        ArrayList<Doctor> listaDoctores = hospital_VIJ.crearDoctores();
+        hospital_VIJ.lista_doctores.addAll(listaDoctores);
+
+        for (Doctor doctor : listaDoctores) {
+            int triajNum = doctor.getTriage();
+            LinkedList<Doctor> doctoresNivel = hospital_VIJ.map_doctores.getOrDefault(triajNum, new LinkedList<>());
+            doctoresNivel.add(doctor);
+            hospital_VIJ.map_doctores.put(triajNum, doctoresNivel);
+        }
+
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
         LinkedList<Paciente> pacientes = hospital_VIJ.getLista_pacientes_prioridad();
+
 
         while (continuar) 
         {
@@ -242,7 +248,6 @@ public class Main {
                     System.out.println("2. Alta Urgencia");
                     System.out.println("3. Mediana Urgencia");
                     System.out.println("4. Baja Urgencia");
-                    System.out.println("5. No Urgente");
                     
                     int triajeBuscar = esValido(reader, "Ingrese triaje: ");
     
@@ -316,7 +321,7 @@ public class Main {
                             }
                             if (cont == 0)
                             {
-                                System.out.println("No hay doctores disponibles...8\n");
+                                System.out.println("No hay doctores disponibles...\n");
                             }
                             break;
                         

@@ -3,9 +3,6 @@ package hospital;
 import java.util.*;
 
 public class Hospital {
-    //HashMap doctores =
-    //KEY = "Traumatología"
-    //VALUE = "Doctor1, Doctor2..."
     int capacidad = 300;
     
     //DOCTOR
@@ -139,6 +136,10 @@ public class Hospital {
     }
 
     public void mostrarPacientesPorTriaje(LinkedList<Paciente> pacientitos, int triaje){
+        if (triaje >=5){
+            System.out.println("Ingreso de triaje incorrecto.");
+            return;
+        }
         System.out.println("Pacientes en Triaje: " + triaje);
         System.out.println("- - - - - - - - - - - - - - - - - -");
         for (Paciente paciente : pacientitos) {
@@ -223,6 +224,25 @@ public class Hospital {
             disp = "No";
         }
         return "Doctor " + datos.getNombre() + " " + datos.getApellido() + " Disponible: " + disp + "\n";
+    }
+
+    public ArrayList<Doctor> crearDoctores(){
+        // aca
+        ArrayList<Doctor> listaDoctores = new ArrayList<>();
+        Persona datDoct1 = new Persona("21.669.284-5", "Lucas", "Pinto");
+        Persona datDoct2 = new Persona("21.655.474-4", "Inti", "Liberona");
+        Persona datDoct3 = new Persona("20.360.437-8", "Martin", "Basulto");
+        Persona datDoct4 = new Persona("21.404.381-5", "Juan", "Mercade");
+        
+        Doctor dc1 = new Doctor(datDoct1, 1);
+        Doctor dc2 = new Doctor(datDoct2, 2);
+        Doctor dc3 = new Doctor(datDoct3, 3);
+        Doctor dc4 = new Doctor(datDoct4, 4);
+        listaDoctores.add(dc1);
+        listaDoctores.add(dc2);
+        listaDoctores.add(dc3);
+        listaDoctores.add(dc4);
+        return listaDoctores;
     }
 
 }
