@@ -215,7 +215,7 @@ public class Hospital {
     {
         Persona datos = aux_doctor.getDatos_doctor();
         String disp;
-        if (!aux_doctor.isDisponible())
+        if (aux_doctor.isDisponible())
         {
             disp = "Si";
         }

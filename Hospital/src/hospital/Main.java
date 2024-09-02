@@ -63,7 +63,7 @@ public class Main {
         hospital_VIJ.crearDoctores();
         hospital_VIJ.crear_Habitaciones();
         
-        //pase todo esto al hospital:
+        //pase todo esto al hospital (dentro del objeto Hospital_VIJ):
         /*
         hospital_VIJ.lista_doctores.addAll(listaDoctores);
 
