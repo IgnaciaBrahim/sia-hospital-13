@@ -226,9 +226,9 @@ public class Hospital {
         return "Doctor " + datos.getNombre() + " " + datos.getApellido() + " Disponible: " + disp + "\n";
     }
 
-    public ArrayList<Doctor> crearDoctores(){
+    public void crearDoctores(){
         // aca
-        ArrayList<Doctor> listaDoctores = new ArrayList<>();
+        //ArrayList<Doctor> listaDoctores = new ArrayList<>();
         Persona datDoct1 = new Persona("21.669.284-5", "Lucas", "Pinto");
         Persona datDoct2 = new Persona("21.655.474-4", "Inti", "Liberona");
         Persona datDoct3 = new Persona("20.360.437-8", "Martin", "Basulto");
@@ -238,13 +238,56 @@ public class Hospital {
         Doctor dc2 = new Doctor(datDoct2, 2);
         Doctor dc3 = new Doctor(datDoct3, 3);
         Doctor dc4 = new Doctor(datDoct4, 4);
-        listaDoctores.add(dc1);
-        listaDoctores.add(dc2);
-        listaDoctores.add(dc3);
-        listaDoctores.add(dc4);
-        return listaDoctores;
+        lista_doctores.add(dc1);
+        lista_doctores.add(dc2);
+        lista_doctores.add(dc3);
+        lista_doctores.add(dc4);
+        
+        //preparar mapa
+        LinkedList<Doctor> triaje_1 = new LinkedList<>();
+        LinkedList<Doctor> triaje_2 = new LinkedList<>();
+        LinkedList<Doctor> triaje_3 = new LinkedList<>();
+        LinkedList<Doctor> triaje_4 = new LinkedList<>();
+        
+        //add doctor to linked list:
+        triaje_1.add(dc1);
+        triaje_2.add(dc2);
+        triaje_3.add(dc3);
+        triaje_4.add(dc4);
+        
+        //añadir map doctor
+        map_doctores.put(dc1.getTriage(), triaje_1);
+        map_doctores.put(dc2.getTriage(), triaje_2);
+        map_doctores.put(dc3.getTriage(), triaje_3);
+        map_doctores.put(dc4.getTriage(), triaje_4);
     }
-
+    
+    public void crear_Habitaciones()
+    {
+        //solo hay arrlist:
+        //ArrayList<Habitacion> habitaciones = new ArrayList<>();
+        /*
+            private int num_habitacion; //#1 a #150
+            private Paciente cama_1;
+            private Paciente cama_2;
+            private boolean ocupado;
+        
+        constructor:
+        public Habitacion(int num_habitacion) 
+        {
+        this.num_habitacion = num_habitacion;
+        this.cama_1 = null;
+        this.cama_2 = null;
+        this.ocupado = false;
+        }
+        */
+        
+        for (int i = 0; i < 150; i++)
+        {
+            Habitacion aux = new Habitacion(i + 1);
+            habitaciones.add(aux);
+        } 
+    }
 }
   
 

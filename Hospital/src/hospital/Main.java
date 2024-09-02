@@ -60,7 +60,11 @@ public class Main {
     {
         GestionTerminal terminal = new GestionTerminal();
         Hospital hospital_VIJ = new Hospital();
-        ArrayList<Doctor> listaDoctores = hospital_VIJ.crearDoctores();
+        hospital_VIJ.crearDoctores();
+        hospital_VIJ.crear_Habitaciones();
+        
+        //pase todo esto al hospital:
+        /*
         hospital_VIJ.lista_doctores.addAll(listaDoctores);
 
         for (Doctor doctor : listaDoctores) {
@@ -69,7 +73,7 @@ public class Main {
             doctoresNivel.add(doctor);
             hospital_VIJ.map_doctores.put(triajNum, doctoresNivel);
         }
-
+        */
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
@@ -275,6 +279,7 @@ public class Main {
                                 String cadena_mostrar = hospital_VIJ.obtenerMostrarHabitacion(aux);
                                 System.out.println(cadena_mostrar);
                             }
+                            break;
                             
                         case "2":
                             System.out.println("Ingrese el n° de habitación.\n");
