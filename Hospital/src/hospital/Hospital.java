@@ -18,46 +18,12 @@ public class Hospital {
     //HABITACION
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
 
-    public HashMap<String, Paciente> getMap_paciente() {
-        return map_paciente;
-    }
-
-    public void setMap_paciente(HashMap<String, Paciente> map_paciente) {
-        this.map_paciente = map_paciente;
-    }
-
     public int getCapacidad() {
         return capacidad;
     }
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
-    }
-
-    public HashMap<Integer, LinkedList<Doctor>> getMap_doctores() {
-        return map_doctores;
-    }
-
-    public void setMap_doctores(HashMap<Integer, LinkedList<Doctor>> map_doctores) {
-        this.map_doctores = map_doctores;
-    }
-
-    public LinkedList<Paciente> getLista_pacientes_prioridad() 
-    {
-        //copia
-        return new LinkedList<>(lista_pacientes_prioridad);
-    }
-
-    public void setLista_pacientes_prioridad(LinkedList<Paciente> lista_pacientes_prioridad) {
-        this.lista_pacientes_prioridad = lista_pacientes_prioridad;
-    }
-
-    public ArrayList<Habitacion> getHabitaciones() {
-        return habitaciones;
-    }
-
-    public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
-        this.habitaciones = habitaciones;
     }
     
     public Paciente buscarPacienteRut(String rut)
