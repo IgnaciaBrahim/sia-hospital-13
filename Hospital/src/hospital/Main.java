@@ -62,6 +62,7 @@ public class Main {
         Hospital hospital_VIJ = new Hospital();
         hospital_VIJ.crearDoctores();
         hospital_VIJ.crear_Habitaciones();
+        hospital_VIJ.crear_Pacientes();
         
         //pase todo esto al hospital (dentro del objeto Hospital_VIJ):
         /*
@@ -78,9 +79,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
-        LinkedList<Paciente> pacientes = hospital_VIJ.getLista_pacientes_prioridad();
-
-
+        
         while (continuar) 
         {
             System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
@@ -142,12 +141,8 @@ public class Main {
                     }
                     else
                     {
-                        System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");  
-                        Paciente paciente = new Paciente();
-                        paciente.agregarPaciente(datos_paciente, edad, sexo, triage, pacientes);
-                        hospital_VIJ.setLista_pacientes_prioridad(pacientes);
-
-
+                        System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");
+                        hospital_VIJ.agregarPaciente(datos_paciente, edad, sexo, triage);
                     }
                     
                     terminal.presioneTecla();
@@ -223,7 +218,7 @@ public class Main {
                     String rutP = reader.readLine();
                     Paciente pacienteEncontrado = null;
                     // Busca el paciente por RUT
-                    for (Paciente pacienteCama : pacientes) {
+                    for (Paciente pacienteCama : hospital_VIJ.lista_pacientes_prioridad) {
                         if (pacienteCama.getDatos_paciente().getRut().equals(rutP)) {
                             pacienteEncontrado = pacienteCama;
                             break;
@@ -255,7 +250,7 @@ public class Main {
                     
                     int triajeBuscar = esValido(reader, "Ingrese triaje: ");
     
-                    hospital_VIJ.mostrarPacientesPorTriaje(hospital_VIJ.getLista_pacientes_prioridad(), triajeBuscar);
+                    hospital_VIJ.mostrarPacientesPorTriaje(triajeBuscar);
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
@@ -272,7 +267,7 @@ public class Main {
                     {
                         case "1":
                             System.out.println("MOSTRANDO ESTADO DEL HOSPITAL...\n");
-                            for (int i = 0; i < 150 ; i++)
+                            for (int i = 1; i < 151 ; i++)
                             {
                                 System.out.println("==================================================================================================");
                                 Habitacion aux = hospital_VIJ.obtenerHabitacion(i);

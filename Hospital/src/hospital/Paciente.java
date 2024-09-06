@@ -2,8 +2,6 @@ package hospital;
 
 //import java.io.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 //import java.util.Scanner;
 
 public class Paciente {
@@ -35,6 +33,7 @@ public class Paciente {
         this.medico_asignado = null;
         this.estado_atencion = "NO";
         this.num_habitacion = null;
+        this.tiempoActual = LocalDateTime.now();
     }
 
     public Paciente(Persona datos_paciente, int edad, int sexo, int triage){
@@ -45,6 +44,7 @@ public class Paciente {
         this.medico_asignado = null;
         this.estado_atencion = "NO";
         this.num_habitacion = null;
+        this.tiempoActual = LocalDateTime.now();
     }
 
     public Paciente(Persona datos_paciente, int edad, int sexo, int triage, Doctor medico_asignado, String estado_atencion, String num_habitacion) {
@@ -56,6 +56,7 @@ public class Paciente {
         this.medico_asignado = medico_asignado;
         this.estado_atencion = estado_atencion;
         this.num_habitacion = num_habitacion;
+        this.tiempoActual = LocalDateTime.now();
     }
 
     public Persona getDatos_paciente() {
@@ -122,39 +123,4 @@ public class Paciente {
     public void setTiempoActual(LocalDateTime tiempoActual){
         this.tiempoActual = tiempoActual;
     }
-
-    public void agregarPaciente(Persona datosPac, int edad, int sexo, int triaje, LinkedList<Paciente> listaPacientes)  {
-        LocalDateTime tiempo_actual = LocalDateTime.now();
-        DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String tiempoFormateado = tiempo_actual.format(formatoTiempo);
-
-        Paciente pac = new Paciente(datosPac, edad, sexo, triaje, tiempo_actual);
-        System.out.println("Paciente ingresado a las " + tiempoFormateado);
-
-        // Insertar el paciente en la lista de manera ordenada
-        int posicionInsertar = 0;
-        for (int i = 0; i < listaPacientes.size(); i++) {
-            Paciente pacienteExistente = listaPacientes.get(i);
-            if (pacienteExistente.getTriage() < triaje || 
-               (pacienteExistente.getTriage() == triaje && 
-                pacienteExistente.getTiempoActual().isBefore(tiempo_actual))) {
-                posicionInsertar = i + 1;
-            } else {
-                break;
-            }
-        }
-        //Implementación de insersion ordenada en arrlist.
-        listaPacientes.add(posicionInsertar, pac);
-       
-    }
-
-    public Paciente buscarPacientePorCama(LinkedList<Paciente> listaPacientes, String numHabitacion) {
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getNum_habitacion() != null && paciente.getNum_habitacion().equals(numHabitacion)) {
-                return paciente;
-            }
-        }
-        return null; // Si no se encuentra
-    }
-
 }

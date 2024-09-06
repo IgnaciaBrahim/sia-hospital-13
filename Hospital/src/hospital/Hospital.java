@@ -1,5 +1,7 @@
 package hospital;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Hospital {
@@ -135,14 +137,14 @@ public class Hospital {
         System.out.println("No hay habitaciones disponibles.");
     }
 
-    public void mostrarPacientesPorTriaje(LinkedList<Paciente> pacientitos, int triaje){
+    public void mostrarPacientesPorTriaje(int triaje){
         if (triaje >=5){
             System.out.println("Ingreso de triaje incorrecto.");
             return;
         }
         System.out.println("Pacientes en Triaje: " + triaje);
         System.out.println("- - - - - - - - - - - - - - - - - -");
-        for (Paciente paciente : pacientitos) {
+        for (Paciente paciente : lista_pacientes_prioridad) {
             if (paciente.getTriage() == triaje){
                 System.out.println("- Nombre: " + paciente.getDatos_paciente().getNombre());
                 System.out.println("- Apellido: " + paciente.getDatos_paciente().getApellido());
@@ -158,15 +160,23 @@ public class Hospital {
         }
     }
     
-       public Habitacion obtenerHabitacion(int num)
+    public Habitacion obtenerHabitacion(int num)
     {
-        Habitacion habitacion_aux = habitaciones.get(num);
-        return habitacion_aux;
+        if (num >= 1 && num <= habitaciones.size()) {
+            return habitaciones.get(num - 1);
+        } else {
+            System.out.println("Número de habitación no válido.");
+            return null;
+        }
     }
     
     public String obtenerMostrarHabitacion(Habitacion aux)
     {
-        return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1() + " Cama 2: " + aux.getCama_2();
+        if (aux.getCama_1() != null && aux.getCama_2() != null)
+        {
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().getDatos_paciente().getNombre() + " Cama 2: " + aux.getCama_2().getDatos_paciente().getNombre();
+        }
+        return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie"  + " Cama 2: Nadie";
     }
     
     public void añadirDoctorMapaArray(Doctor doctor_aux) 
@@ -282,11 +292,101 @@ public class Hospital {
         }
         */
         
-        for (int i = 0; i < 150; i++)
+        for (int i = 1; i < 151; i++)
         {
-            Habitacion aux = new Habitacion(i + 1);
+            Habitacion aux = new Habitacion(i);
             habitaciones.add(aux);
+            obtenerMostrarHabitacion(aux);
         } 
+    }
+    
+        public void agregarPaciente(Persona datosPac, int edad, int sexo, int triaje)  {
+        LocalDateTime tiempo_actual = LocalDateTime.now();
+        DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String tiempoFormateado = tiempo_actual.format(formatoTiempo);
+
+        Paciente pac = new Paciente(datosPac, edad, sexo, triaje, tiempo_actual);
+        System.out.println("Paciente ingresado a las " + tiempoFormateado);
+
+        // Insertar el paciente en la lista de manera ordenada
+        int posicionInsertar = 0;
+        for (int i = 0; i < lista_pacientes_prioridad.size(); i++) {
+            Paciente pacienteExistente = lista_pacientes_prioridad.get(i);
+            if (pacienteExistente.getTriage() < triaje || 
+               (pacienteExistente.getTriage() == triaje && 
+                pacienteExistente.getTiempoActual().isBefore(tiempo_actual))) {
+                posicionInsertar = i + 1;
+            } else {
+                break;
+            }
+        }
+        //Implementación de insersion ordenada en arrlist.
+        lista_pacientes_prioridad.add(posicionInsertar, pac);
+        map_paciente.put(pac.getDatos_paciente().getRut(), pac);
+       
+    }
+        
+    //sobreescribi
+    public void agregarPaciente(Paciente pac)  {
+        LocalDateTime tiempo_actual = LocalDateTime.now();
+        DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String tiempoFormateado = tiempo_actual.format(formatoTiempo);
+
+        System.out.println("Paciente ingresado a las " + tiempoFormateado);
+
+        // Insertar el paciente en la lista de manera ordenada
+        int posicionInsertar = 0;
+        for (int i = 0; i < lista_pacientes_prioridad.size(); i++) {
+            Paciente pacienteExistente = lista_pacientes_prioridad.get(i);
+            if (pacienteExistente.getTriage() < pac.getTriage() || 
+               (pacienteExistente.getTriage() == pac.getTriage() && 
+                pacienteExistente.getTiempoActual().isBefore(tiempo_actual))) {
+                posicionInsertar = i + 1;
+            } else {
+                break;
+            }
+        }
+        //Implementación de insersion ordenada en arrlist.
+        lista_pacientes_prioridad.add(posicionInsertar, pac);
+        map_paciente.put(pac.getDatos_paciente().getRut(), pac);
+       
+    }
+
+    public Paciente buscarPacientePorCama(String numHabitacion) {
+        for (Paciente paciente : lista_pacientes_prioridad) {
+            if (paciente.getNum_habitacion() != null && paciente.getNum_habitacion().equals(numHabitacion)) {
+                return paciente;
+            }
+        }
+        return null; // Si no se encuentra
+    }
+    
+    public void crear_Pacientes()
+    {
+        //ficticios:
+        
+        Persona p1 = new Persona("21.275.186-3", "Ignacia", "Brahim");
+        Persona p2 = new Persona("21.108.465-0", "Carlos", "Abarza");
+        Persona p3 = new Persona("8.285.871-7", "Elizabeth", "Brahim");
+        Persona p4 = new Persona("10.577.195-9", "Claudio", "Cubillos");
+        Persona p5 = new Persona("10.273.813-6", "Laura", "Griffiths");
+        
+        Paciente pac1 = new Paciente(p1, 21, 1, 3);
+        Paciente pac2 = new Paciente(p2, 21, 0, 5);
+        Paciente pac3 = new Paciente(p3, 52, 1, 1);
+        Paciente pac4 = new Paciente(p4, 50, 0, 2);
+        Paciente pac5 = new Paciente(p5, 63, 1, 4);
+        
+        agregarPaciente(pac1);
+        agregarPaciente(pac2);
+        agregarPaciente(pac3);
+        agregarPaciente(pac4);
+        agregarPaciente(pac5);
+        map_paciente.put(pac1.getDatos_paciente().getRut(), pac1);
+        map_paciente.put(pac2.getDatos_paciente().getRut(), pac2);
+        map_paciente.put(pac3.getDatos_paciente().getRut(), pac3);
+        map_paciente.put(pac4.getDatos_paciente().getRut(), pac4);
+        map_paciente.put(pac5.getDatos_paciente().getRut(), pac5);
     }
 }
   
