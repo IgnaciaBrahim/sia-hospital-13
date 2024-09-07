@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 //import java.util.Scanner;
 
 public class Paciente {
-    Persona datos_paciente;
+    private Persona datos_paciente;
     private int edad;
     private int sexo; //(0M - 1F)
     private int triage; 
-    Doctor medico_asignado;
+    private Doctor medico_asignado;
     private String estado_atencion;
     private String num_habitacion = null; //debe ser un string de verdad? // Si ta bien
     private LocalDateTime tiempoActual;

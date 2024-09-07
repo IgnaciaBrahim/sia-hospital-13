@@ -175,7 +175,11 @@ public class Main {
                         {
                             System.out.println("\nEl/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
                         }
-                        System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        else
+                        {
+                            System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                        }
+                  
                         
                     }
                     terminal.presioneTecla();
@@ -218,7 +222,8 @@ public class Main {
                     String rutP = reader.readLine();
                     Paciente pacienteEncontrado = null;
                     // Busca el paciente por RUT
-                    for (Paciente pacienteCama : hospital_VIJ.lista_pacientes_prioridad) {
+                    for (int i = 0; i < hospital_VIJ.getListaPacientePriorSize(); i++) {
+                        Paciente pacienteCama = hospital_VIJ.obtenerPacienteLista(i);
                         if (pacienteCama.getDatos_paciente().getRut().equals(rutP)) {
                             pacienteEncontrado = pacienteCama;
                             break;
@@ -309,7 +314,7 @@ public class Main {
                         case "1":
                             System.out.println("\nMOSTRANDO DOCTORES DISPONIBLES...\n");
                             int cont = 0;
-                            for (int i = 0 ; i < (hospital_VIJ.lista_doctores).size(); i++)
+                            for (int i = 0 ; i < hospital_VIJ.getListaDoctoresSize(); i++)
                             {
                                 Doctor doctor_aux = hospital_VIJ.obtenerDoctor(i);
                                 if (doctor_aux != null && (doctor_aux.isDisponible() == true))
@@ -382,7 +387,7 @@ public class Main {
                     //  "Salir del sistema"
                      System.out.println("OPCION 1o");
                     continuar = false;  
-                    terminal.presioneTecla();
+                    //terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
                 default:

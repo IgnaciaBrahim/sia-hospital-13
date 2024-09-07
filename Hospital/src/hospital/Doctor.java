@@ -2,7 +2,7 @@ package hospital; // hola
 
 public class Doctor 
 {
-    Persona datos_doctor;
+    private Persona datos_doctor;
     private int triage;
     private int pacientes_max = 6;
     private int pacientes_actual = 0;

@@ -5,26 +5,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Hospital {
-    int capacidad = 300;
     
     //DOCTOR
-    HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
-    ArrayList<Doctor> lista_doctores = new ArrayList<>();
+    private HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
+    private ArrayList<Doctor> lista_doctores = new ArrayList<>();
     
     //PACIENTE
-    HashMap<String, Paciente> map_paciente = new HashMap<>();
-    LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
+    private HashMap<String, Paciente> map_paciente = new HashMap<>();
+    private LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
     
     //HABITACION
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
-
-    public int getCapacidad() {
-        return capacidad;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
     
     public Paciente buscarPacienteRut(String rut)
     {
@@ -40,11 +31,13 @@ public class Hospital {
             if (habitacion.getCama_1() != null && habitacion.getCama_1().equals(aux_paciente))
             {
                 habitacion.setCama_1(null);
+                habitacion.setOcupado(false);
                 break;
             }
             else if (habitacion.getCama_2() != null && habitacion.getCama_2().equals(aux_paciente))
             {
                 habitacion.setCama_2(null);
+                habitacion.setOcupado(false);
                 break;
             }
         }
@@ -87,7 +80,6 @@ public class Hospital {
             if (!habitacion.isOcupado()) {
                 if (habitacion.getCama_1() == null) {
                     habitacion.setCama_1(paciente);
-                    habitacion.setOcupado(true);
                     paciente.setNum_habitacion(String.valueOf(habitacion.getNum_habitacion()));
                     System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.getDatos_paciente().getNombre());
                     return;
@@ -138,7 +130,15 @@ public class Hospital {
     
     public String obtenerMostrarHabitacion(Habitacion aux)
     {
-        if (aux.getCama_1() != null && aux.getCama_2() != null)
+        if (aux.getCama_1() != null && aux.getCama_2() == null)
+        {
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().getDatos_paciente().getNombre() + " Cama 2: Nadie";
+        }
+        else if (aux.getCama_2() != null && aux.getCama_1() == null)
+        {
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie" + " Cama 2: " + aux.getCama_2().getDatos_paciente().getNombre();
+        }
+        else if (aux.getCama_2() != null && aux.getCama_1() != null)
         {
             return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().getDatos_paciente().getNombre() + " Cama 2: " + aux.getCama_2().getDatos_paciente().getNombre();
         }
@@ -209,55 +209,44 @@ public class Hospital {
         Persona datDoct2 = new Persona("21.655.474-4", "Inti", "Liberona");
         Persona datDoct3 = new Persona("20.360.437-8", "Martin", "Basulto");
         Persona datDoct4 = new Persona("21.404.381-5", "Juan", "Mercade");
+        Persona datDoct5 = new Persona("10.045.209-K", "Viviana", "Suazo");
         
         Doctor dc1 = new Doctor(datDoct1, 1);
         Doctor dc2 = new Doctor(datDoct2, 2);
         Doctor dc3 = new Doctor(datDoct3, 3);
         Doctor dc4 = new Doctor(datDoct4, 4);
+        Doctor dc5 = new Doctor(datDoct5, 5);
+        
         lista_doctores.add(dc1);
         lista_doctores.add(dc2);
         lista_doctores.add(dc3);
         lista_doctores.add(dc4);
+        lista_doctores.add(dc5);
         
         //preparar mapa
         LinkedList<Doctor> triaje_1 = new LinkedList<>();
         LinkedList<Doctor> triaje_2 = new LinkedList<>();
         LinkedList<Doctor> triaje_3 = new LinkedList<>();
         LinkedList<Doctor> triaje_4 = new LinkedList<>();
+        LinkedList<Doctor> triaje_5 = new LinkedList<>();
         
         //add doctor to linked list:
         triaje_1.add(dc1);
         triaje_2.add(dc2);
         triaje_3.add(dc3);
         triaje_4.add(dc4);
+        triaje_5.add(dc5);
         
         //añadir map doctor
         map_doctores.put(dc1.getTriage(), triaje_1);
         map_doctores.put(dc2.getTriage(), triaje_2);
         map_doctores.put(dc3.getTriage(), triaje_3);
         map_doctores.put(dc4.getTriage(), triaje_4);
+        map_doctores.put(dc5.getTriage(), triaje_5);
     }
     
     public void crear_Habitaciones()
-    {
-        //solo hay arrlist:
-        //ArrayList<Habitacion> habitaciones = new ArrayList<>();
-        /*
-            private int num_habitacion; //#1 a #150
-            private Paciente cama_1;
-            private Paciente cama_2;
-            private boolean ocupado;
-        
-        constructor:
-        public Habitacion(int num_habitacion) 
-        {
-        this.num_habitacion = num_habitacion;
-        this.cama_1 = null;
-        this.cama_2 = null;
-        this.ocupado = false;
-        }
-        */
-        
+    {   
         for (int i = 1; i < 151; i++)
         {
             Habitacion aux = new Habitacion(i);
@@ -343,16 +332,34 @@ public class Hospital {
         Paciente pac4 = new Paciente(p4, 50, 0, 2);
         Paciente pac5 = new Paciente(p5, 63, 1, 4);
         
+        //Lista de prioridad
         agregarPaciente(pac1);
         agregarPaciente(pac2);
         agregarPaciente(pac3);
         agregarPaciente(pac4);
         agregarPaciente(pac5);
+        
         map_paciente.put(pac1.getDatos_paciente().getRut(), pac1);
         map_paciente.put(pac2.getDatos_paciente().getRut(), pac2);
         map_paciente.put(pac3.getDatos_paciente().getRut(), pac3);
         map_paciente.put(pac4.getDatos_paciente().getRut(), pac4);
         map_paciente.put(pac5.getDatos_paciente().getRut(), pac5);
+    }
+    
+    //funciones que necesito para que funcione el main D:
+    public int getListaDoctoresSize()
+    {
+        return lista_doctores.size();
+    }
+    
+    public int getListaPacientePriorSize()
+    {
+        return lista_pacientes_prioridad.size();
+    }
+    
+    public Paciente obtenerPacienteLista(int i)
+    {
+        return lista_pacientes_prioridad.get(i);
     }
 }
   
