@@ -38,39 +38,65 @@ public class Main {
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
 
-    public static int esValido(BufferedReader reader, String mensaje) throws NumberFormatException, IOException {
-        int numero = 0; 
-        boolean valido = false; 
+    public static int esValido(BufferedReader reader, String mensaje, String tipo) throws IOException {
+        int numero = 0;
+        boolean valido = false;
     
         while (!valido) {
             System.out.print(mensaje);
             String entrada = reader.readLine();
-            
-            if (entrada != null && entrada.matches("\\d+")) {
-                numero = Integer.parseInt(entrada); 
-                valido = true;
-            } else {
-                throw new NumberFormatException("Por favor, ingrese un número válido.");
+    
+            try {
+                numero = Integer.parseInt(entrada);
+                switch (tipo) {
+                    case "edad":
+                        if (numero >= 0 && numero <= 150) {
+                            valido = true;
+                        } else {
+                            System.out.println("Edad no válida. Ingrese un valor entre 0 y 150.");
+                        }
+                        break;
+                    case "sexo":
+                        if (numero == 0 || numero == 1) {
+                            valido = true;
+                        } else {
+                            System.out.println("Sexo no válido. Ingrese 0 para Hombre o 1 para Mujer.");
+                        }
+                        break;
+                    case "triaje":
+                        if (numero >= 1 && numero <= 5) {
+                            valido = true;
+                        } else {
+                            System.out.println("Triage no válido. Ingrese un valor entre 1 y 5.");
+                        }
+                        break;
+                    default:
+                        System.out.println("Tipo de dato no reconocido.");
+                        valido = true; // Si no se necesita validación específica
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: no se pudo convertir a número. Inténtelo nuevamente.");
             }
         }
-        return numero; 
+        return numero;
     }
     
-    
-    public static String validarRut(BufferedReader reader) throws InvalidRutException, IOException {
-        String rut;
-        while (true) {
+
+    public static String validarRut(BufferedReader reader) throws IOException {
+        String rut = "";
+        boolean valido = false;
+        
+        while (!valido) {
+            System.out.println("Ingrese RUT (Formato XX.XXX.XXX-X): ");
             rut = reader.readLine();
             if (rut.matches("\\d{2}\\.\\d{3}\\.\\d{3}-[0-9Kk]")) {
-                break; // RUT válido
+                valido = true; // Si el RUT es válido, salimos del ciclo
             } else {
-                // Aquí lanzamos la excepción
-                throw new InvalidRutException("RUT inválido. Debe seguir el formato XX.XXX.XXX-X (ejemplo: 12.633.624-7).");
+                System.out.println("RUT inválido. Debe seguir el formato XX.XXX.XXX-X (ejemplo: 12.633.624-7). Intente nuevamente.");
             }
         }
         return rut;
     }
-    
     
     public static String validarNombreApellido(BufferedReader reader, String tipo) throws IOException {
         String entrada;
@@ -96,7 +122,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
-        
+    
         while (continuar) 
         {
             System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
@@ -125,54 +151,52 @@ public class Main {
             {
                 
                 case "1":
-                try {
-                    System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
-                    rut = validarRut(reader); // Llamada que puede lanzar InvalidRutException
-                
-                    // Aquí continuaría el flujo normal de tu código si el RUT es válido:
-                    System.out.println("\nIngrese Nombre del Paciente");
-                    String nombre = validarNombreApellido(reader, "Nombre"); // Validar nombre
-                
-                    System.out.println("\nIngrese Apellido del Paciente");
-                    String apellido = validarNombreApellido(reader, "Apellido"); // Validar apellido
-                
-                    datos_paciente = new Persona(rut, nombre, apellido);
-                    
-                } catch (InvalidRutException e) {
-                    System.out.println("Error: " + e.getMessage()); // Mensaje en caso de RUT inválido
-                } catch (IOException e) {
-                    System.out.println("Error de entrada/salida: " + e.getMessage());
-                }
-                
-                    int edad = esValido(reader, "Indique la edad: ");
-                    
-                    System.out.println("SEA:");
-                    System.out.println("0) Hombre");
-                    System.out.println("1) Mujer");
-                    int sexo = esValido(reader, "Indique el Sexo del Paciente:");
-                    
-                    System.out.println("\nSeleccione la Condición del Paciente. Se le Asignará la Prioridad Según Corresponda:");
-                    System.out.println("1) Riesgo Vital");
-                    System.out.println("2) Alta Urgencia");
-                    System.out.println("3) Mediana Urgencia");
-                    System.out.println("4) Baja Urgencia");
-                    System.out.println("5) No Urgente (Baja complejidad)");
-                    int triage = esValido(reader, "\nIndique el Triaje: ");
-                   
-                    
-                    if (triage == 5)
-                    {
-                        System.out.println("\nEl paciente se derivará al CESFAM correspondiente.");
-                        System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");  
+                    try {
+                        // Validar el RUT hasta que sea válido
+                        System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
+                        rut = validarRut(reader);  // Ahora sigue pidiendo el RUT hasta que sea válido
+
+                        // Solicitar nombre y apellido
+                        System.out.println("\nIngrese Nombre del Paciente");
+                        String nombre = validarNombreApellido(reader, "Nombre");
+
+                        System.out.println("\nIngrese Apellido del Paciente");
+                        String apellido = validarNombreApellido(reader, "Apellido");
+
+                        // Inicializar datos del paciente
+                        datos_paciente = new Persona(rut, nombre, apellido);
+
+                        int edad = esValido(reader, "Indique la edad: ", "edad");
+
+                        // Validar el sexo: seguirá pidiendo hasta que la entrada sea válida
+                        System.out.println("SEA:");
+                        System.out.println("0) Hombre");
+                        System.out.println("1) Mujer");
+                        int sexo = esValido(reader, "Indique el Sexo del Paciente: ", "sexo");
+
+                        // Validar el triaje: seguirá pidiendo hasta que la entrada sea válida
+                        System.out.println("\nSeleccione la Condición del Paciente. Se le Asignará la Prioridad Según Corresponda:");
+                        System.out.println("1) Riesgo Vital");
+                        System.out.println("2) Alta Urgencia");
+                        System.out.println("3) Mediana Urgencia");
+                        System.out.println("4) Baja Urgencia");
+                        System.out.println("5) No Urgente (Baja complejidad)");
+                        int triaje = esValido(reader, "\nIndique el Triaje: ", "triaje");
+
+                        // Acciones dependiendo del triaje
+                        if (triaje == 5) {
+                            System.out.println("\nEl paciente se derivará al CESFAM correspondiente.");
+                            System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");
+                        } else {
+                            System.out.println("\nGracias por venir hospital VIJ. Se agregará al/la paciente " + datos_paciente.getNombre() + " \n");
+                            hospital_VIJ.agregarPaciente(datos_paciente, edad, sexo, triaje);
+                        }
+
+                    } catch (IOException e) {
+                        System.out.println("Error de entrada/salida: " + e.getMessage());
                     }
-                    else
-                    {
-                        System.out.println("\nGracias por venir hospital VIJ. Se agregará a el/la paciente " + datos_paciente.getNombre() + " \n");
-                        hospital_VIJ.agregarPaciente(datos_paciente, edad, sexo, triage);
-                    }
-                    
                     terminal.presioneTecla();
-                    terminal.limpiarPantalla();
+                    terminal.limpiarPantalla(); 
                     break;
 
                 case "2":
@@ -271,17 +295,19 @@ public class Main {
                     break;
 
                 case "6":
-                    // Consultar pacientes por triaje"
                     System.out.println("OPCION 6");
                     System.out.println("Ingrese una opción de triaje:");
                     System.out.println("1. Riesgo Vital");
                     System.out.println("2. Alta Urgencia");
                     System.out.println("3. Mediana Urgencia");
                     System.out.println("4. Baja Urgencia");
-                    
-                    int triajeBuscar = esValido(reader, "Ingrese triaje: ");
-    
-                    hospital_VIJ.mostrarPacientesPorTriaje(triajeBuscar);
+                    try {
+                        int triajeBuscar = esValido(reader, "Ingrese triaje: ", "triaje");
+                        hospital_VIJ.mostrarPacientesPorTriaje(triajeBuscar);
+                    } catch (IOException e) {
+                        System.out.println("Error de entrada/salida: " + e.getMessage());
+                    }
+
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
