@@ -7,12 +7,12 @@ import java.util.*;
 public class Hospital {
     
     //DOCTOR
-    private HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
-    private ArrayList<Doctor> lista_doctores = new ArrayList<>();
+    private final HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
+    private final ArrayList<Doctor> lista_doctores = new ArrayList<>();
     
     //PACIENTE
-    private HashMap<String, Paciente> map_paciente = new HashMap<>();
-    private LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
+    private final HashMap<String, Paciente> map_paciente = new HashMap<>();
+    private final LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
     
     //HABITACION
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Hospital {
                     doctor.setPacientes_actual(doctor.getPacientes_actual() + 1);
                     paciente.setMedico_asignado(doctor);
                     doctor.setDisponible(doctor.getPacientes_actual() < doctor.getPacientes_max());
-                    System.out.println("Doctor asignado con éxito a " + paciente.getDatos_paciente().getNombre());
+                    System.out.println("Doctor " + doctor.obtenerDatos() + " asignado con éxito a " + paciente.obtenerDatos());
                     return;
                 }
             }
@@ -81,13 +81,13 @@ public class Hospital {
                 if (habitacion.getCama_1() == null) {
                     habitacion.setCama_1(paciente);
                     paciente.setNum_habitacion(String.valueOf(habitacion.getNum_habitacion()));
-                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.getDatos_paciente().getNombre());
+                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.obtenerDatos());
                     return;
                 } else if (habitacion.getCama_2() == null) {
                     habitacion.setCama_2(paciente);
                     habitacion.setOcupado(true);
                     paciente.setNum_habitacion(String.valueOf(habitacion.getNum_habitacion()));
-                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.getDatos_paciente().getNombre());
+                    System.out.println("Habitación " + habitacion.getNum_habitacion() + " asignada a " + paciente.obtenerDatos());
                     return;
                 }
             }
@@ -104,9 +104,9 @@ public class Hospital {
         System.out.println("- - - - - - - - - - - - - - - - - -");
         for (Paciente paciente : lista_pacientes_prioridad) {
             if (paciente.getTriage() == triaje){
-                System.out.println("- Nombre: " + paciente.getDatos_paciente().getNombre());
-                System.out.println("- Apellido: " + paciente.getDatos_paciente().getApellido());
-                System.out.println("- RUT: " + paciente.getDatos_paciente().getRut());
+                System.out.println("- Nombre: " + paciente.getNombre());
+                System.out.println("- Apellido: " + paciente.getApellido());
+                System.out.println("- RUT: " + paciente.getRut());
                 if (paciente.getNum_habitacion() != null) {
                     System.out.println("- Habitación: " + paciente.getNum_habitacion());
                 }
@@ -132,15 +132,15 @@ public class Hospital {
     {
         if (aux.getCama_1() != null && aux.getCama_2() == null)
         {
-            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().getDatos_paciente().getNombre() + " Cama 2: Nadie";
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().obtenerDatos() + " Cama 2: Nadie";
         }
         else if (aux.getCama_2() != null && aux.getCama_1() == null)
         {
-            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie" + " Cama 2: " + aux.getCama_2().getDatos_paciente().getNombre();
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie" + " Cama 2: " + aux.getCama_2().obtenerDatos();
         }
         else if (aux.getCama_2() != null && aux.getCama_1() != null)
         {
-            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().getDatos_paciente().getNombre() + " Cama 2: " + aux.getCama_2().getDatos_paciente().getNombre();
+            return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: " + aux.getCama_1().obtenerDatos() + " Cama 2: " + aux.getCama_2().obtenerDatos();
         }
         return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie"  + " Cama 2: Nadie";
     }
@@ -189,7 +189,6 @@ public class Hospital {
     
     public String mostrarDoctor(Doctor aux_doctor)
     {
-        Persona datos = aux_doctor.getDatos_doctor();
         String disp;
         if (aux_doctor.isDisponible())
         {
@@ -199,29 +198,23 @@ public class Hospital {
         {
             disp = "No";
         }
-        return "Doctor " + datos.getNombre() + " " + datos.getApellido() + " Disponible: " + disp + "\n";
+        return "Doctor " + aux_doctor.obtenerDatos() + " Disponible: " + disp + "\n";
     }
 
     public void crearDoctores(){
         // aca
         //ArrayList<Doctor> listaDoctores = new ArrayList<>();
-        Persona datDoct1 = new Persona("21.669.284-5", "Lucas", "Pinto");
-        Persona datDoct2 = new Persona("21.655.474-4", "Inti", "Liberona");
-        Persona datDoct3 = new Persona("20.360.437-8", "Martin", "Basulto");
-        Persona datDoct4 = new Persona("21.404.381-5", "Juan", "Mercade");
-        Persona datDoct5 = new Persona("10.045.209-K", "Viviana", "Suazo");
+        Doctor datDoct1 = new Doctor("21.669.284-5", "Lucas", "Pinto");
+        Doctor datDoct2 = new Doctor("21.655.474-4", "Inti", "Liberona");
+        Doctor datDoct3 = new Doctor("20.360.437-8", "Martin", "Basulto");
+        Doctor datDoct4 = new Doctor("21.404.381-5", "Juan", "Mercade");
+        Doctor datDoct5 = new Doctor("10.045.209-K", "Viviana", "Suazo");
         
-        Doctor dc1 = new Doctor(datDoct1, 1);
-        Doctor dc2 = new Doctor(datDoct2, 2);
-        Doctor dc3 = new Doctor(datDoct3, 3);
-        Doctor dc4 = new Doctor(datDoct4, 4);
-        Doctor dc5 = new Doctor(datDoct5, 5);
-        
-        lista_doctores.add(dc1);
-        lista_doctores.add(dc2);
-        lista_doctores.add(dc3);
-        lista_doctores.add(dc4);
-        lista_doctores.add(dc5);
+        lista_doctores.add(datDoct1);
+        lista_doctores.add(datDoct2);
+        lista_doctores.add(datDoct3);
+        lista_doctores.add(datDoct4);
+        lista_doctores.add(datDoct5);
         
         //preparar mapa
         LinkedList<Doctor> triaje_1 = new LinkedList<>();
@@ -230,19 +223,26 @@ public class Hospital {
         LinkedList<Doctor> triaje_4 = new LinkedList<>();
         LinkedList<Doctor> triaje_5 = new LinkedList<>();
         
+        datDoct1.setTriage(1);
+        datDoct2.setTriage(2);
+        datDoct3.setTriage(3);
+        datDoct4.setTriage(4);
+        datDoct5.setTriage(5);
+        
+        
         //add doctor to linked list:
-        triaje_1.add(dc1);
-        triaje_2.add(dc2);
-        triaje_3.add(dc3);
-        triaje_4.add(dc4);
-        triaje_5.add(dc5);
+        triaje_1.add(datDoct1);
+        triaje_2.add(datDoct2);
+        triaje_3.add(datDoct3);
+        triaje_4.add(datDoct4);
+        triaje_5.add(datDoct5);
         
         //añadir map doctor
-        map_doctores.put(dc1.getTriage(), triaje_1);
-        map_doctores.put(dc2.getTriage(), triaje_2);
-        map_doctores.put(dc3.getTriage(), triaje_3);
-        map_doctores.put(dc4.getTriage(), triaje_4);
-        map_doctores.put(dc5.getTriage(), triaje_5);
+        map_doctores.put(datDoct1.getTriage(), triaje_1);
+        map_doctores.put(datDoct2.getTriage(), triaje_2);
+        map_doctores.put(datDoct3.getTriage(), triaje_3);
+        map_doctores.put(datDoct4.getTriage(), triaje_4);
+        map_doctores.put(datDoct5.getTriage(), triaje_5);
     }
     
     public void crear_Habitaciones()
@@ -255,12 +255,12 @@ public class Hospital {
         } 
     }
     
-        public void agregarPaciente(Persona datosPac, int edad, int sexo, int triaje)  {
+        public void agregarPaciente(String rut, String nombre, String apellido, int edad, int sexo, int triaje)  {
         LocalDateTime tiempo_actual = LocalDateTime.now();
         DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
         String tiempoFormateado = tiempo_actual.format(formatoTiempo);
 
-        Paciente pac = new Paciente(datosPac, edad, sexo, triaje, tiempo_actual);
+        Paciente pac = new Paciente(rut, nombre, apellido, edad, sexo, triaje, tiempo_actual);
         System.out.println("Paciente ingresado a las " + tiempoFormateado);
 
         // Insertar el paciente en la lista de manera ordenada
@@ -277,7 +277,7 @@ public class Hospital {
         }
         //Implementación de insersion ordenada en arrlist.
         lista_pacientes_prioridad.add(posicionInsertar, pac);
-        map_paciente.put(pac.getDatos_paciente().getRut(), pac);
+        map_paciente.put(pac.getRut(), pac);
        
     }
         
@@ -303,7 +303,7 @@ public class Hospital {
         }
         //Implementación de insersion ordenada en arrlist.
         lista_pacientes_prioridad.add(posicionInsertar, pac);
-        map_paciente.put(pac.getDatos_paciente().getRut(), pac);
+        map_paciente.put(pac.getRut(), pac);
        
     }
 
@@ -320,17 +320,11 @@ public class Hospital {
     {
         //ficticios:
         
-        Persona p1 = new Persona("21.275.186-3", "Ignacia", "Brahim");
-        Persona p2 = new Persona("21.108.465-0", "Carlos", "Abarza");
-        Persona p3 = new Persona("8.285.871-7", "Elizabeth", "Brahim");
-        Persona p4 = new Persona("10.577.195-9", "Claudio", "Cubillos");
-        Persona p5 = new Persona("10.273.813-6", "Laura", "Griffiths");
-        
-        Paciente pac1 = new Paciente(p1, 21, 1, 3);
-        Paciente pac2 = new Paciente(p2, 21, 0, 5);
-        Paciente pac3 = new Paciente(p3, 52, 1, 1);
-        Paciente pac4 = new Paciente(p4, 50, 0, 2);
-        Paciente pac5 = new Paciente(p5, 63, 1, 4);
+        Paciente pac1 = new Paciente("21.275.186-3", "Ignacia", "Brahim", 21, 1, 3);
+        Paciente pac2 = new Paciente("21.108.465-0", "Carlos", "Abarza", 21, 0, 5);
+        Paciente pac3 = new Paciente("8.285.871-7", "Elizabeth", "Brahim", 52, 1, 1);
+        Paciente pac4 = new Paciente("10.577.195-9", "Claudio", "Cubillos", 50, 0, 2);
+        Paciente pac5 = new Paciente("10.273.813-6", "Laura", "Griffiths", 63, 1, 4);
         
         //Lista de prioridad
         agregarPaciente(pac1);
@@ -339,11 +333,11 @@ public class Hospital {
         agregarPaciente(pac4);
         agregarPaciente(pac5);
         
-        map_paciente.put(pac1.getDatos_paciente().getRut(), pac1);
-        map_paciente.put(pac2.getDatos_paciente().getRut(), pac2);
-        map_paciente.put(pac3.getDatos_paciente().getRut(), pac3);
-        map_paciente.put(pac4.getDatos_paciente().getRut(), pac4);
-        map_paciente.put(pac5.getDatos_paciente().getRut(), pac5);
+        map_paciente.put(pac1.getRut(), pac1);
+        map_paciente.put(pac2.getRut(), pac2);
+        map_paciente.put(pac3.getRut(), pac3);
+        map_paciente.put(pac4.getRut(), pac4);
+        map_paciente.put(pac5.getRut(), pac5);
     }
     
     //funciones que necesito para que funcione el main D:

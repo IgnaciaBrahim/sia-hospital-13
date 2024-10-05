@@ -1,21 +1,17 @@
 package hospital;
-
-//import java.io.*;
 import java.time.LocalDateTime;
-//import java.util.Scanner;
 
-public class Paciente {
-    private Persona datos_paciente;
+public class Paciente extends Persona{
     private int edad;
     private int sexo; //(0M - 1F)
     private int triage; 
     private Doctor medico_asignado;
     private String estado_atencion;
-    private String num_habitacion = null; //debe ser un string de verdad? // Si ta bien
+    private String num_habitacion = null; 
     private LocalDateTime tiempoActual;
 
-    public Paciente(Persona datosPac, int edad, int sexo, int triaje, LocalDateTime tiempoActual){
-        this.datos_paciente = datosPac;
+    public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triaje, LocalDateTime tiempoActual){
+        super(rut, nombre, apellido);
         this.edad = edad;
         this.sexo = sexo;
         this.triage = triaje;
@@ -25,8 +21,8 @@ public class Paciente {
         this.tiempoActual = tiempoActual;
     }
 
-    public Paciente() {
-        this.datos_paciente = null;
+    public Paciente(String rut, String nombre, String apellido) {
+        super(rut, nombre, apellido);
         this.edad = 0;
         this.sexo = 0;
         this.triage = 1;
@@ -36,8 +32,8 @@ public class Paciente {
         this.tiempoActual = LocalDateTime.now();
     }
 
-    public Paciente(Persona datos_paciente, int edad, int sexo, int triage){
-        this.datos_paciente = datos_paciente;
+    public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triage){
+        super(rut, nombre, apellido);
         this.edad = edad;
         this.sexo = sexo;
         this.triage = triage;
@@ -47,9 +43,8 @@ public class Paciente {
         this.tiempoActual = LocalDateTime.now();
     }
 
-    public Paciente(Persona datos_paciente, int edad, int sexo, int triage, Doctor medico_asignado, String estado_atencion, String num_habitacion) {
-        // Había un dato llamado num_cama, lo cambié por num_habitación pero sigue la duda de qué hacer con la cama
-        this.datos_paciente = datos_paciente;
+    public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triage, Doctor medico_asignado, String estado_atencion, String num_habitacion) {
+        super(rut, nombre, apellido);
         this.edad = edad;
         this.sexo = sexo;
         this.triage = triage;
@@ -58,15 +53,8 @@ public class Paciente {
         this.num_habitacion = num_habitacion;
         this.tiempoActual = LocalDateTime.now();
     }
-
-    public Persona getDatos_paciente() {
-        return datos_paciente;
-    }
-
-    public void setDatos_paciente(Persona datos_paciente) {
-        this.datos_paciente = datos_paciente;
-    }
-
+    
+    //Setter + Getter Clase 
     public int getEdad() {
         return edad;
     }
@@ -116,11 +104,37 @@ public class Paciente {
         this.num_habitacion = num_habitacion;
     }
     
-    //Métodos de clase//
     public LocalDateTime getTiempoActual(){
         return tiempoActual;
     }
+    
     public void setTiempoActual(LocalDateTime tiempoActual){
         this.tiempoActual = tiempoActual;
+    }
+    
+    //Contrato
+    @Override
+    public void registrarse()
+    {
+        System.out.println("me registro!");
+    }
+    
+    @Override 
+    public Object verAsignacion()
+    {
+        Object medico = (Object) medico_asignado;
+        return medico;
+    }
+    
+    @Override
+    public void salirHospital()
+    {
+        System.out.println("me salgo!");
+    }
+    
+    @Override
+    public void alta()
+    {
+        System.out.println("doy un alta!");
     }
 }

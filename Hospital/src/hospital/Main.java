@@ -164,8 +164,6 @@ public class Main {
                         System.out.println("\nIngrese Apellido del Paciente");
                         String apellido = validarNombreApellido(reader, "Apellido");
 
-                        datos_paciente = new Persona(rut, nombre, apellido);
-
                         // edad hasta que se ingrese una válida
                         int edad = esValido(reader, "Indique la edad: ", "edad");
 
@@ -187,7 +185,7 @@ public class Main {
                             System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");
                         } else {
                             System.out.println("\nGracias por venir hospital VIJ. Se agregará al/la paciente " + datos_paciente.getNombre() + " \n");
-                            hospital_VIJ.agregarPaciente(datos_paciente, edad, sexo, triaje);
+                            hospital_VIJ.agregarPaciente(rut, nombre, apellido, edad, sexo, triaje);
                         }
 
                     } catch (IOException e) {
@@ -221,11 +219,11 @@ public class Main {
                         hospital_VIJ.borrarPaciente(rut, aux_paciente);
                         if (aux_paciente.getNum_habitacion() != null)
                         {
-                            System.out.println("\nEl/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                            System.out.println("\nEl/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + aux_paciente.obtenerDatos());
                         }
                         else
                         {
-                            System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + (aux_paciente.getDatos_paciente()).getNombre());
+                            System.out.println("\nEl/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + aux_paciente.obtenerDatos());
                         }
                   
                         
@@ -272,7 +270,7 @@ public class Main {
                     // Busca el paciente por RUT
                     for (int i = 0; i < hospital_VIJ.getListaPacientePriorSize(); i++) {
                         Paciente pacienteCama = hospital_VIJ.obtenerPacienteLista(i);
-                        if (pacienteCama.getDatos_paciente().getRut().equals(rutP)) {
+                        if (pacienteCama.getRut().equals(rutP)) {
                             pacienteEncontrado = pacienteCama;
                             break;
                         }
@@ -280,7 +278,7 @@ public class Main {
                 
                     if (pacienteEncontrado != null) {
                         if (pacienteEncontrado.getNum_habitacion() != null) {
-                            System.out.println("El paciente " + pacienteEncontrado.getDatos_paciente().getNombre() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
+                            System.out.println("El paciente " + pacienteEncontrado.obtenerDatos() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
                         } else {
                             System.out.println("El paciente con RUT " + rutP + " no tiene una cama asignada.");
                         }
@@ -370,8 +368,7 @@ public class Main {
                                 if (doctor_aux != null && (doctor_aux.isDisponible() == true))
                                 {
                                     cont++;
-                                    String mostrar_doc = hospital_VIJ.mostrarDoctor(doctor_aux);
-                                    System.out.println(mostrar_doc);
+                                    System.out.println(doctor_aux.obtenerDatos());
                                 }
                             }
                             if (cont == 0)

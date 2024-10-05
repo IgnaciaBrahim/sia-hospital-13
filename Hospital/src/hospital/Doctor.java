@@ -1,40 +1,38 @@
-package hospital; // hola
-
-public class Doctor 
+package hospital;
+import java.util.*;
+public class Doctor extends Persona 
 {
-    private Persona datos_doctor;
     private int triage;
     private int pacientes_max = 6;
     private int pacientes_actual = 0;
+    private final ArrayList<Persona> lista_pacientes_atencion;
     private boolean disponible;
 
-    public Doctor() 
+    public Doctor(String rut, String nombre, String apellido, int triaje) 
     {
-        this.datos_doctor = null ;
-        this.triage = 0;
-        this.disponible = true;
-    }
-    public Doctor(Persona datos_doctor, int triaje) 
-    {
-        this.datos_doctor = datos_doctor;
+        super(rut, nombre, apellido);
         this.triage = triaje;
         this.disponible = true;
+        lista_pacientes_atencion = new ArrayList<>();
     }
-    public Doctor(Persona datos_doctor) 
+    
+        public Doctor(Persona pp, int triaje) 
     {
-        this.datos_doctor = datos_doctor;
+        
+        this.triage = triaje;
+        this.disponible = true;
+        lista_pacientes_atencion = new ArrayList<>();
+    }
+        
+    public Doctor(String rut, String nombre, String apellido) 
+    {
+        super(rut, nombre, apellido);
         this.triage = 0;
         this.disponible = true;
+        lista_pacientes_atencion = new ArrayList<>();
     }
-
-    public Persona getDatos_doctor() {
-        return datos_doctor;
-    }
-
-    public void setDatos_doctor(Persona datos_doctor) {
-        this.datos_doctor = datos_doctor;
-    }
-
+    
+    //Propios
     public int getTriage() {
         return triage;
     }
@@ -66,5 +64,30 @@ public class Doctor
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-    //metodos de clase
+    
+    //Contrato Abstracta   
+    @Override
+    public void registrarse()
+    {
+        System.out.println("me registro!");
+    }
+    
+    @Override
+    public Object verAsignacion()
+    {
+        Object copy_pac = (Object) new ArrayList<>(lista_pacientes_atencion);
+        return copy_pac;
+    }
+    
+    @Override
+    public void salirHospital()
+    {
+        System.out.println("me salgo!");
+    }
+    
+    @Override
+    public void alta()
+    {
+        System.out.println("doy un alta!");
+    }
 }

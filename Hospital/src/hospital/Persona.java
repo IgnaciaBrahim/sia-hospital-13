@@ -1,6 +1,5 @@
 package hospital;
-
-public class Persona 
+public abstract class Persona 
 {
     private String rut;
     private String nombre;
@@ -43,4 +42,22 @@ public class Persona
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+    
+    //Abstracción
+    public String obtenerDatos()
+    {
+        return getNombre() + " " + getApellido();
+    }
+    public void actualizarDatos(String rut, String nombre, String apellido)
+    {
+        setNombre(nombre);
+        setRut(rut);
+        setApellido(apellido);
+    }
+    
+    public abstract Object verAsignacion();
+    public abstract void registrarse();
+    public abstract void salirHospital();
+    public abstract void alta();
+    
 }
