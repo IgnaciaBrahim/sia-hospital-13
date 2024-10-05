@@ -51,33 +51,33 @@ public class Main {
                 switch (tipo) {
                     case "edad":
                         if (numero >= 0 && numero <= 150) {
-                            valido = true;  // Edad válida, salimos del bucle
+                            valido = true; 
                         } else {
                             throw new EdadInvalidaException("Edad fuera del rango permitido (0-150).");
                         }
                         break;
                     case "sexo":
                         if (numero == 0 || numero == 1) {
-                            valido = true;  // Sexo válido, salimos del bucle
+                            valido = true; 
                         } else {
                             throw new SexoInvalidoException("Sexo no válido. Ingrese 0 para Hombre o 1 para Mujer.");
                         }
                         break;
                     case "triaje":
                         if (numero >= 1 && numero <= 5) {
-                            valido = true;  // Triage válido, salimos del bucle
+                            valido = true;  
                         } else {
                             throw new TriageInvalidoException("Triage no válido. Ingrese un valor entre 1 y 5.");
                         }
                         break;
                     default:
                         System.out.println("Tipo de dato no reconocido.");
-                        valido = true;  // Si no es un tipo de dato reconocido, no hacemos nada más
+                        valido = true; 
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error: no se pudo convertir a número. Inténtelo nuevamente.");
             } catch (EdadInvalidaException | SexoInvalidoException | TriageInvalidoException e) {
-                System.out.println("Error: " + e.getMessage());  // Imprimimos el mensaje de la excepción
+                System.out.println("Error: " + e.getMessage());  // mje excepción
             }
         }
         return numero;
@@ -157,28 +157,25 @@ public class Main {
                     try {
                         // Validar el RUT hasta que sea válido
                         System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
-                        rut = validarRut(reader);  // Sigue pidiendo el RUT hasta que sea válido
+                        rut = validarRut(reader);  // pedir el RUT hasta que sea válido
 
-                        // Solicitar nombre y apellido
+                        // nombre y apellido
                         System.out.println("\nIngrese Nombre del Paciente");
                         String nombre = validarNombreApellido(reader, "Nombre");
 
                         System.out.println("\nIngrese Apellido del Paciente");
                         String apellido = validarNombreApellido(reader, "Apellido");
 
-                        // Inicializar datos del paciente
                         datos_paciente = new Persona(rut, nombre, apellido);
 
-                        // Validar la edad hasta que se ingrese una válida
+                        // edad hasta que se ingrese una válida
                         int edad = esValido(reader, "Indique la edad: ", "edad");
 
-                        // Validar el sexo: seguirá pidiendo hasta que la entrada sea válida
                         System.out.println("SEA:");
                         System.out.println("0) Hombre");
                         System.out.println("1) Mujer");
                         int sexo = esValido(reader, "Indique el Sexo del Paciente: ", "sexo");
 
-                        // Validar el triaje: seguirá pidiendo hasta que la entrada sea válida
                         System.out.println("\nSeleccione la Condición del Paciente. Se le Asignará la Prioridad Según Corresponda:");
                         System.out.println("1) Riesgo Vital");
                         System.out.println("2) Alta Urgencia");
@@ -187,7 +184,6 @@ public class Main {
                         System.out.println("5) No Urgente (Baja complejidad)");
                         int triaje = esValido(reader, "\nIndique el Triaje: ", "triaje");
 
-                        // Acciones dependiendo del triaje
                         if (triaje == 5) {
                             System.out.println("\nEl paciente se derivará al CESFAM correspondiente.");
                             System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");
