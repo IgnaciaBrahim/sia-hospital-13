@@ -4,16 +4,17 @@
  */
 package Ventanas;
 
+
 /**
  *
  * @author evapo
  */
-public class prueba extends javax.swing.JFrame {
+public class Prueba extends javax.swing.JFrame {
 
     /**
      * Creates new form prueba
      */
-    public prueba() {
+    public Prueba() {
         initComponents();
     }
 
@@ -52,7 +53,7 @@ public class prueba extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenido/a al Sistema");
+        jLabel1.setText("Bienvenido al Sistema");
         jLabel1.setAutoscrolls(true);
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -73,7 +74,7 @@ public class prueba extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("de Gestión Hospitalaria");
+        jLabel2.setText("de Gestion Hospitalaria");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -146,7 +147,7 @@ public class prueba extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                prueba ventana = new prueba();  // Crear la ventana de ingreso
+                Prueba ventana = new Prueba();  // Crear la ventana de ingreso
             
                 // Centramos la ventana en el centro de la pantalla
                 ventana.setLocationRelativeTo(null);

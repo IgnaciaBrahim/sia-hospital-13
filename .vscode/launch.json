@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Prueba",
+            "request": "launch",
+            "mainClass": "Ventanas.Prueba",
+            "projectName": "sia-hospital-13_b06f06bd"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main Class",
+            "request": "launch",
+            "mainClass": "Ventanas.Prueba",
+            "projectName": "TuNombreDeProyecto"
+        }
+    ]
+  }
+  

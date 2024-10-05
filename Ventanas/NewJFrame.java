@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Ventanas;
-import javax.swing.*;
-
 
 /**
  *
@@ -38,11 +36,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setText("Escoja una opción:");
+        jLabel1.setText("Escoja una opcion:");
 
         jList1.setBackground(new java.awt.Color(204, 204, 255));
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Añadir Paciente", "Registrar Alta Voluntaria", "Asignar Doctor a Paciente", "Asignar Habitación a Paciente", "Registrar Visita a Paciente", "Consultar Pacientes por Triaje", "Ver Estado de Habitaciones y Camas", "Ver Disponibilidad de Doctores", "Explicación de las Opciones del Menú", "Salir del Sistema." };
+            String[] strings = { "Anadir Paciente", "Registrar Alta Voluntaria", "Asignar Doctor a Paciente", "Asignar Habitacion a Paciente", "Registrar Visita a Paciente", "Consultar Pacientes por Triaje", "Ver Estado de Habitaciones y Camas", "Ver Disponibilidad de Doctores", "Explicacion de las Opciones del Menu", "Salir del Sistema." };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -96,7 +94,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {                                    
         // Verificar que la opción seleccionada es "Añadir Paciente"
     String seleccion = jList1.getSelectedValue().toString();
-    if (seleccion.equals("Añadir Paciente")) {
+    if (seleccion.equals("Anadir Paciente")) {
         // Crear y mostrar la ventana NuevoPaciente
         NuevoPaciente nuevoPacienteVentana = new NuevoPaciente();
         nuevoPacienteVentana.setLocationRelativeTo(null);
@@ -123,7 +121,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-    if (seleccion.equals("Asignar Habitación a Paciente")) {
+    if (seleccion.equals("Asignar Habitacion a Paciente")) {
         // Crear y mostrar la ventana NuevoPaciente
         AsignarHabitacion asignarHab = new AsignarHabitacion();
         asignarHab.setLocationRelativeTo(null);
@@ -168,7 +166,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-    if (seleccion.equals("Explicación de las Opciones del Menú")) {
+    if (seleccion.equals("Explicacion de las Opciones del Menu")) {
         // Crear y mostrar la ventana NuevoPaciente
         OpcionesMEnu menuu = new OpcionesMEnu();
         menuu.setLocationRelativeTo(null);

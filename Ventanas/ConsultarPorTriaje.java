@@ -152,7 +152,7 @@ public class ConsultarPorTriaje extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        
         this.dispose();  // Cierra la ventana actual
         // Abrir la ventana del menú (prueba.java)
         NewJFrame menuVentana = new NewJFrame();
