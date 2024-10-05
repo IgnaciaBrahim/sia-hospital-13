@@ -1,6 +1,6 @@
 package hospital;
 
-import hospital.Paciente;
+//import hospital.Paciente;
 
 public class Habitacion 
 {

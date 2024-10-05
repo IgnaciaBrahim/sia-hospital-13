@@ -38,24 +38,30 @@ public class Main {
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
 
-    public static int esValido(BufferedReader reader, String mensaje) throws IOException {
+    public static int esValido(BufferedReader reader, String mensaje) {
         int numero = 0; 
         boolean valido = false; 
-
+    
         while (!valido) {
             System.out.print(mensaje);
-            String entrada = reader.readLine();
+            String entrada = null;
+            try {
+                entrada = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error al leer la entrada: " + e.getMessage());
+                continue;
+            }
             
-            if (entrada.matches("\\d+")) {
+            if (entrada != null && entrada.matches("\\d+")) {
                 numero = Integer.parseInt(entrada); 
                 valido = true;
             } else {
                 System.out.println("Por favor, ingrese un número válido.");
             }
         }
-
-        return numero; // Devolver el número válido
+        return numero; 
     }
+    
     public static void main(String[] args) throws IOException
     {
         GestionTerminal terminal = new GestionTerminal();
@@ -63,18 +69,6 @@ public class Main {
         hospital_VIJ.crearDoctores();
         hospital_VIJ.crear_Habitaciones();
         hospital_VIJ.crear_Pacientes();
-        
-        //pase todo esto al hospital (dentro del objeto Hospital_VIJ):
-        /*
-        hospital_VIJ.lista_doctores.addAll(listaDoctores);
-
-        for (Doctor doctor : listaDoctores) {
-            int triajNum = doctor.getTriage();
-            LinkedList<Doctor> doctoresNivel = hospital_VIJ.map_doctores.getOrDefault(triajNum, new LinkedList<>());
-            doctoresNivel.add(doctor);
-            hospital_VIJ.map_doctores.put(triajNum, doctoresNivel);
-        }
-        */
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
