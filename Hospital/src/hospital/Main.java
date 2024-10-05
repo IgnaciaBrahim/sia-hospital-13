@@ -51,35 +51,38 @@ public class Main {
                 switch (tipo) {
                     case "edad":
                         if (numero >= 0 && numero <= 150) {
-                            valido = true;
+                            valido = true;  // Edad válida, salimos del bucle
                         } else {
-                            System.out.println("Edad no válida. Ingrese un valor entre 0 y 150.");
+                            throw new EdadInvalidaException("Edad fuera del rango permitido (0-150).");
                         }
                         break;
                     case "sexo":
                         if (numero == 0 || numero == 1) {
-                            valido = true;
+                            valido = true;  // Sexo válido, salimos del bucle
                         } else {
-                            System.out.println("Sexo no válido. Ingrese 0 para Hombre o 1 para Mujer.");
+                            throw new SexoInvalidoException("Sexo no válido. Ingrese 0 para Hombre o 1 para Mujer.");
                         }
                         break;
                     case "triaje":
                         if (numero >= 1 && numero <= 5) {
-                            valido = true;
+                            valido = true;  // Triage válido, salimos del bucle
                         } else {
-                            System.out.println("Triage no válido. Ingrese un valor entre 1 y 5.");
+                            throw new TriageInvalidoException("Triage no válido. Ingrese un valor entre 1 y 5.");
                         }
                         break;
                     default:
                         System.out.println("Tipo de dato no reconocido.");
-                        valido = true; // Si no se necesita validación específica
+                        valido = true;  // Si no es un tipo de dato reconocido, no hacemos nada más
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error: no se pudo convertir a número. Inténtelo nuevamente.");
+            } catch (EdadInvalidaException | SexoInvalidoException | TriageInvalidoException e) {
+                System.out.println("Error: " + e.getMessage());  // Imprimimos el mensaje de la excepción
             }
         }
         return numero;
     }
+    
     
 
     public static String validarRut(BufferedReader reader) throws IOException {
@@ -154,7 +157,7 @@ public class Main {
                     try {
                         // Validar el RUT hasta que sea válido
                         System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
-                        rut = validarRut(reader);  // Ahora sigue pidiendo el RUT hasta que sea válido
+                        rut = validarRut(reader);  // Sigue pidiendo el RUT hasta que sea válido
 
                         // Solicitar nombre y apellido
                         System.out.println("\nIngrese Nombre del Paciente");
@@ -166,6 +169,7 @@ public class Main {
                         // Inicializar datos del paciente
                         datos_paciente = new Persona(rut, nombre, apellido);
 
+                        // Validar la edad hasta que se ingrese una válida
                         int edad = esValido(reader, "Indique la edad: ", "edad");
 
                         // Validar el sexo: seguirá pidiendo hasta que la entrada sea válida
