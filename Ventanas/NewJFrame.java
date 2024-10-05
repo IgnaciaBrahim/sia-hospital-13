@@ -3,12 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Ventanas;
+import javax.swing.*;
 
-//import javax.swing.JFrame;
-//import javax.swing.JPanel;
-//import javax.swing.JLabel;
-//import javax.swing.JList;
-// O usa: import javax.swing.*;
 
 /**
  *

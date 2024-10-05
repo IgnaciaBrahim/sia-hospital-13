@@ -1,4 +1,4 @@
-package hospital; // Asegúrate de que esté en el mismo paquete que las demás clases
+package hospital; 
 
 public class EdadInvalidaException extends Exception {
     public EdadInvalidaException(String mensaje) {
