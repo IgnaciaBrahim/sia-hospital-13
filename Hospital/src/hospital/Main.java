@@ -38,30 +38,53 @@ public class Main {
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
 
-    public static int esValido(BufferedReader reader, String mensaje) {
+    public static int esValido(BufferedReader reader, String mensaje) throws NumberFormatException, IOException {
         int numero = 0; 
         boolean valido = false; 
     
         while (!valido) {
             System.out.print(mensaje);
-            String entrada = null;
-            try {
-                entrada = reader.readLine();
-            } catch (IOException e) {
-                System.out.println("Error al leer la entrada: " + e.getMessage());
-                continue;
-            }
+            String entrada = reader.readLine();
             
             if (entrada != null && entrada.matches("\\d+")) {
                 numero = Integer.parseInt(entrada); 
                 valido = true;
             } else {
-                System.out.println("Por favor, ingrese un número válido.");
+                throw new NumberFormatException("Por favor, ingrese un número válido.");
             }
         }
         return numero; 
     }
     
+    
+    public static String validarRut(BufferedReader reader) throws InvalidRutException, IOException {
+        String rut;
+        while (true) {
+            rut = reader.readLine();
+            if (rut.matches("\\d{2}\\.\\d{3}\\.\\d{3}-[0-9Kk]")) {
+                break; // RUT válido
+            } else {
+                // Aquí lanzamos la excepción
+                throw new InvalidRutException("RUT inválido. Debe seguir el formato XX.XXX.XXX-X (ejemplo: 12.633.624-7).");
+            }
+        }
+        return rut;
+    }
+    
+    
+    public static String validarNombreApellido(BufferedReader reader, String tipo) throws IOException {
+        String entrada;
+        while (true) {
+            entrada = reader.readLine();
+            if (entrada.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                break; // Nombre o apellido válido
+            } else {
+                System.out.println(tipo + " inválido. Debe contener solo letras. Ingrese nuevamente: ");
+            }
+        }
+        return entrada;
+    }
+
     public static void main(String[] args) throws IOException
     {
         GestionTerminal terminal = new GestionTerminal();
@@ -96,22 +119,31 @@ public class Main {
                
             System.out.print("\n\nIngrese su opción: \n");
             opcion = reader.readLine();
-            
+            String rut;
+            Persona datos_paciente = null;
             switch (opcion) 
             {
+                
                 case "1":
-                    System.out.println("OPCION 1\n\n");
+                try {
                     System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
-                    String rut = reader.readLine();
-                    
+                    rut = validarRut(reader); // Llamada que puede lanzar InvalidRutException
+                
+                    // Aquí continuaría el flujo normal de tu código si el RUT es válido:
                     System.out.println("\nIngrese Nombre del Paciente");
-                    String nombre = reader.readLine();
-                    
+                    String nombre = validarNombreApellido(reader, "Nombre"); // Validar nombre
+                
                     System.out.println("\nIngrese Apellido del Paciente");
-                    String apellido = reader.readLine();
+                    String apellido = validarNombreApellido(reader, "Apellido"); // Validar apellido
+                
+                    datos_paciente = new Persona(rut, nombre, apellido);
                     
-                    Persona datos_paciente = new Persona(rut, nombre, apellido);
-                    
+                } catch (InvalidRutException e) {
+                    System.out.println("Error: " + e.getMessage()); // Mensaje en caso de RUT inválido
+                } catch (IOException e) {
+                    System.out.println("Error de entrada/salida: " + e.getMessage());
+                }
+                
                     int edad = esValido(reader, "Indique la edad: ");
                     
                     System.out.println("SEA:");
