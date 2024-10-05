@@ -81,9 +81,7 @@ public class Main {
             }
         }
         return numero;
-    }
-    
-    
+    }   
 
     public static String validarRut(BufferedReader reader) throws IOException {
         String rut = "";
@@ -139,7 +137,7 @@ public class Main {
             System.out.println("| 3. Asignar doctor a paciente                      |");
             System.out.println("| 4. Asignar habitación a paciente                  |");
             System.out.println("| 5. Registrar visita a paciente                    |");
-            System.out.println("| 6. Consultar pacientes por triage                 |");
+            System.out.println("| 6. Consultar pacientes por triaje                 |");
             System.out.println("| 7. Ver estado de habitaciones y camas             |");
             System.out.println("| 8. Ver disponibilidad de doctores                 |");
             System.out.println("| 9. Explicación de las opciones del menú           |");
