@@ -65,6 +65,8 @@ public class Doctor extends Persona
         this.disponible = disponible;
     }
     
+    
+    
     //Contrato Abstracta   
     @Override
     public void registrarse()

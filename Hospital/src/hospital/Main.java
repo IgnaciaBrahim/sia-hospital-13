@@ -116,9 +116,10 @@ public class Main {
     {
         GestionTerminal terminal = new GestionTerminal();
         Hospital hospital_VIJ = new Hospital();
-        hospital_VIJ.crearDoctores();
+        hospital_VIJ.cargarDoctoresCSV("doctores.csv");
+        hospital_VIJ.cargarPacientesCSV("pacientes.csv");
         hospital_VIJ.crear_Habitaciones();
-        hospital_VIJ.crear_Pacientes();
+        
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";

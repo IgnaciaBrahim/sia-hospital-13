@@ -1,5 +1,10 @@
 package hospital;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -280,6 +285,22 @@ public class Hospital {
         map_paciente.put(pac.getRut(), pac);
        
     }
+
+    // Método auxiliar para buscar un doctor por su nombre completo
+    private Doctor buscarDoctorPorNombre(String nombreCompleto) {
+    // Asumimos que el nombre completo está en el formato "Nombre Apellido"
+    String[] partesNombre = nombreCompleto.split(" ");
+    String nombre = partesNombre[0];
+    String apellido = partesNombre[1];
+
+    // Buscar en la lista de doctores
+    for (Doctor doctor : lista_doctores) {
+        if (doctor.getNombre().equals(nombre) && doctor.getApellido().equals(apellido)) {
+            return doctor;
+        }
+    }
+    return null; // Si no se encuentra el doctor
+}
         
     //sobreescribi
     public void agregarPaciente(Paciente pac)  {
@@ -340,6 +361,8 @@ public class Hospital {
         map_paciente.put(pac5.getRut(), pac5);
     }
     
+
+
     //funciones que necesito para que funcione el main D:
     public int getListaDoctoresSize()
     {
@@ -355,6 +378,139 @@ public class Hospital {
     {
         return lista_pacientes_prioridad.get(i);
     }
+
+
+    // Cargar Doctores desde un archivo CSV
+    public void cargarDoctoresCSV(String archivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(","); // Suponiendo que es un CSV separado por comas
+                String rut = datos[0];
+                String nombre = datos[1];
+                String apellido = datos[2];
+                int triage = Integer.parseInt(datos[3]);
+                int pacientesMax = Integer.parseInt(datos[4]);
+                int pacientesActual = Integer.parseInt(datos[5]);
+                boolean disponible = Boolean.parseBoolean(datos[6]);
+
+                Doctor doctor = new Doctor(rut, nombre, apellido, triage);
+                doctor.setPacientes_max(pacientesMax);
+                doctor.setPacientes_actual(pacientesActual);
+                doctor.setDisponible(disponible);
+
+                lista_doctores.add(doctor);
+
+                // Agregamos a la estructura de map_doctores por nivel de Triage
+                map_doctores.computeIfAbsent(triage, k -> new LinkedList<>()).add(doctor);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+     // Cargar Pacientes desde un archivo CSV
+     public void cargarPacientesCSV(String archivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String rut = datos[0];
+                String nombre = datos[1];
+                String apellido = datos[2];
+                int edad = Integer.parseInt(datos[3]);
+                int sexo = Integer.parseInt(datos[4]);
+                int triage = Integer.parseInt(datos[5]);
+                String nombreMedicoAsignado = datos[6];
+                String estadoAtencion = datos[7];
+                String numeroHabitacion = datos[8];
+                String horaAtencionStr = datos[9];
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime horaAtencion = LocalDateTime.parse(horaAtencionStr, formatter);
+
+                Paciente paciente = new Paciente(rut, nombre, apellido, edad, sexo, triage, horaAtencion);
+                
+                paciente.setEstado_atencion(estadoAtencion);
+                paciente.setNum_habitacion(numeroHabitacion);
+
+                // Buscar el doctor por su nombre
+                Doctor doctorAsignado = buscarDoctorPorNombre(nombreMedicoAsignado);
+
+                // Si se encuentra el doctor, asignarlo al paciente
+                if (doctorAsignado != null) {
+                    paciente.setMedico_asignado(doctorAsignado);
+                } else {
+                    System.out.println("Doctor no encontrado: " + nombreMedicoAsignado);
+                }
+
+                paciente.setMedico_asignado(doctorAsignado);
+
+                map_paciente.put(rut, paciente);
+                lista_pacientes_prioridad.add(paciente);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+     // Guardar Doctores en un archivo CSV
+    public void guardarDoctoresCSV(String archivo) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (Doctor doctor : lista_doctores) {
+                String linea = String.format("%s,%s,%s,%d,%d,%d,%b\n",
+                        doctor.getRut(),
+                        doctor.getNombre(),
+                        doctor.getApellido(),
+                        doctor.getTriage(),
+                        doctor.getPacientes_max(),
+                        doctor.getPacientes_actual(),
+                        doctor.isDisponible());
+                bw.write(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+     // Guardar Pacientes en un archivo CSV
+     public void guardarPacientesCSV(String archivo) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (Paciente paciente : lista_pacientes_prioridad) {
+                String linea = String.format("%s,%s,%s,%d,%s,%d,%s,%s,%s,%s\n",
+                        paciente.getRut(),
+                        paciente.getNombre(),
+                        paciente.getApellido(),
+                        paciente.getEdad(),
+                        paciente.getSexo(),
+                        paciente.getTriage(),
+                        (paciente.getMedico_asignado() != null ? paciente.getMedico_asignado().getNombre() : "Sin Doctor"),
+                        paciente.getEstado_atencion(),
+                        (paciente.getNum_habitacion() != null ? paciente.getNum_habitacion() : "Sin Habitación"),
+                        paciente.getTiempoActual().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                bw.write(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+      // Generar reporte en archivo TXT
+      public void generarReporteTXT(String archivo) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            bw.write("Reporte de Doctores:\n");
+            for (Doctor doctor : lista_doctores) {
+                bw.write(doctor.toString() + "\n");
+            }
+
+            bw.write("\nReporte de Pacientes:\n");
+            for (Paciente paciente : lista_pacientes_prioridad) {
+                bw.write(paciente.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
   
 
