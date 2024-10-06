@@ -36,11 +36,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setText("Escoja una opcion:");
+        jLabel1.setText("Escoja una opción:");
 
         jList1.setBackground(new java.awt.Color(204, 204, 255));
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Anadir Paciente", "Registrar Alta Voluntaria", "Asignar Doctor a Paciente", "Asignar Habitacion a Paciente", "Registrar Visita a Paciente", "Consultar Pacientes por Triaje", "Ver Estado de Habitaciones y Camas", "Ver Disponibilidad de Doctores", "Explicacion de las Opciones del Menu", "Salir del Sistema." };
+            String[] strings = { "Añadir Paciente", "Registrar Alta Voluntaria", "Asignar Doctor a Paciente", "Asignar Habitación a Paciente", "Registrar Visita a Paciente", "Consultar Pacientes por Triaje", "Ver Estado de Habitaciones y Camas", "Ver Disponibilidad de Doctores", "Gestionar Medicos por Triaje", "Explicación de las Opciones del Menú", "Salir del Sistema." };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -67,8 +67,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jList1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jList1)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,7 +94,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {                                    
         // Verificar que la opción seleccionada es "Añadir Paciente"
     String seleccion = jList1.getSelectedValue().toString();
-    if (seleccion.equals("Anadir Paciente")) {
+    if (seleccion.equals("Añadir Paciente")) {
         // Crear y mostrar la ventana NuevoPaciente
         NuevoPaciente nuevoPacienteVentana = new NuevoPaciente();
         nuevoPacienteVentana.setLocationRelativeTo(null);
@@ -121,7 +121,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-    if (seleccion.equals("Asignar Habitacion a Paciente")) {
+    if (seleccion.equals("Asignar Habitación a Paciente")) {
         // Crear y mostrar la ventana NuevoPaciente
         AsignarHabitacion asignarHab = new AsignarHabitacion();
         asignarHab.setLocationRelativeTo(null);
@@ -166,7 +166,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-    if (seleccion.equals("Explicacion de las Opciones del Menu")) {
+    if (seleccion.equals("Explicación de las Opciones del Menú")) {
         // Crear y mostrar la ventana NuevoPaciente
         OpcionesMEnu menuu = new OpcionesMEnu();
         menuu.setLocationRelativeTo(null);
@@ -182,9 +182,16 @@ public class NewJFrame extends javax.swing.JFrame {
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-    
-    
-    
+    // Gestionar Medicos por Triaje
+    if (seleccion.equals("Gestionar Medicos por Triaje")) {
+        // Crear y mostrar la ventana NuevoPaciente
+        ElimAgregMedicos elimAgreg = new ElimAgregMedicos();
+        elimAgreg.setLocationRelativeTo(null);
+        elimAgreg.setVisible(true);
+        // Cerrar la ventana actual
+        this.dispose();  // Esto cierra NewJFrame
+    }
+        
     }                                   
 
     /**
