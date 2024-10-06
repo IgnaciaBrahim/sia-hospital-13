@@ -1,0 +1,118 @@
+@startuml
+abstract class Persona
+{
+    -rut: String
+    -nombre: String
+    -apellido: String
+    +actualizarDatos(rut:String, nombre:String, apellido:String)
+    +obtenerDatos() : String
+    {abstract}+registrarse()
+    {abstract}+verAsignacion() : Object
+    {abstract}+salirHospital() : String
+}
+
+class Paciente
+{
+    -edad: int
+    -estadoAtencion : String
+    -medicoAsignado : Doctor
+    -num_habitacion : String
+    -sexo : int
+    -tiempoActual : LocalDateTime
+    -triage : int
+    +registrarse()
+    +verAsignacion() : Object
+    +salirHospital() : String
+}
+
+class Doctor
+{
+    -disponible : boolean
+    -lista_pacientes_atencion: ArrayList
+    -pacientes_actual : int
+    -pacientes_max : int
+    -triage: int
+    +registrarse()
+    +verAsignacion() : Object
+    +salirHospital() : String
+}
+
+class Habitacion
+{
+    -cama_1 : Paciente
+    -cama_2 : Paciente
+    -num_habitacion : int
+    -ocupado : boolean
+}
+
+class Hospital
+{
+    -habitaciones: ArrayList<Habitacion>
+    -lista_doctores: ArrayList<Doctor>
+    -lista_pacientes_prioridad: LinkedList<Paciente>
+    -map_doctores : HashMap<Integer, LinkedList<Doctor>>
+    -map_paciente: HashMap<String, Paciente>
+    + agregarPaciente(rut: String, nombre: String, apellido: String, edad: int, sexo: int, triaje: int)
+    + agregarPaciente(pac: Paciente)
+    + añadirDoctorMapaArray(doctor_aux: Doctor)
+    + asignarDoctorAPaciente(paciente: Paciente)
+    + asignarHabitacionAPaciente(paciente: Paciente)
+    + borrarPaciente(rut: String, aux_paciente: Paciente)
+    + borrarPacienteCama(aux_paciente: Paciente)
+    + buscarPacientePorCama(numHabitacion: String): Paciente
+    + buscarPacienteRut(rut: String): Paciente
+    + crearDoctores()
+    + crear_Habitaciones()
+    + crear_Pacientes()
+    + eliminarDoctorMapaArray(doctor_aux : Doctor)
+    + getListaDoctoresSize(): int
+    + getListaPacientePriorSize(): int
+    + mostrarDoctor(aux_doctor: Doctor): String
+    + mostrarDoctor(aux_doctor : Doctor, i: int)
+    + mostrarPacientesPorTriaje(triaje: int)
+    + obtenerDoctor(i: int) : Doctor
+    + obtenerDoctor(triaje_aux: String): ArrayList<Doctor>
+    + obtenerHabitacion(num: int): Habitacion
+    + obtenerMostrarHabitacion(aux: Habitacion): String
+    + obtenerPacienteLista(i: int): Paciente
+}
+
+class GestionTerminal
+{
+    +limpiarPantalla()
+    +presioneTecla()
+}
+
+class Main
+{
+    {static}+esValido(reader: BufferedReader, mensaje: String, tipo: String) : int
+    {static}+explicarOpcionesMenu()
+    {static}+main(args: String[])
+    {static}+validarNombreApellido(reader : BufferedReader, tipo : String) : String
+    {static}+validarRut(reader : BufferedReader) : String
+}
+
+annotation Excepciones
+{
+    EdadInvalidaException
+    InvalidRutException
+    SexoInvalidoException
+    TriageInvalidoException
+}
+
+Main -- Hospital
+Main -- GestionTerminal
+
+Hospital *.. Paciente
+Hospital *.. Habitacion
+Hospital *.. Doctor
+
+Habitacion o.. Paciente
+
+Paciente o-- Doctor
+Doctor o-- Paciente
+
+Persona <|-- Paciente
+Persona <|-- Doctor
+
+@enduml
