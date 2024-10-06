@@ -94,77 +94,78 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {                                    
         // Verificar que la opción seleccionada es "Añadir Paciente"
     String seleccion = jList1.getSelectedValue().toString();
+
     if (seleccion.equals("Añadir Paciente")) {
-        // Crear y mostrar la ventana NuevoPaciente
+  
         NuevoPaciente nuevoPacienteVentana = new NuevoPaciente();
         nuevoPacienteVentana.setLocationRelativeTo(null);
         nuevoPacienteVentana.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose();  
     }
     if (seleccion.equals("Registrar Alta Voluntaria")) {
-        // Crear y mostrar la ventana NuevoPaciente
+    
         RegistrarAlta altaVol = new RegistrarAlta();
         altaVol.setLocationRelativeTo(null);
         altaVol.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Asignar Doctor a Paciente")) {
-        // Crear y mostrar la ventana NuevoPaciente
+
         AsignarDoctor asignarDoct = new AsignarDoctor();
         asignarDoct.setLocationRelativeTo(null);
         asignarDoct.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Asignar Habitación a Paciente")) {
-        // Crear y mostrar la ventana NuevoPaciente
+    
         AsignarHabitacion asignarHab = new AsignarHabitacion();
         asignarHab.setLocationRelativeTo(null);
         asignarHab.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Registrar Visita a Paciente")) {
-        // Crear y mostrar la ventana NuevoPaciente
+
         RegistrarVisita visita = new RegistrarVisita();
         visita.setLocationRelativeTo(null);
         visita.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Consultar Pacientes por Triaje")) {
-        // Crear y mostrar la ventana NuevoPaciente
+        
         ConsultarPorTriaje triajeBusc = new ConsultarPorTriaje();
         triajeBusc.setLocationRelativeTo(null);
         triajeBusc.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose();  
     }
     if (seleccion.equals("Ver Estado de Habitaciones y Camas")) {
-        // Crear y mostrar la ventana NuevoPaciente
+       
         EstdaoHabitacionCama habCam = new EstdaoHabitacionCama();
         habCam.setLocationRelativeTo(null);
         habCam.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Ver Disponibilidad de Doctores")) {
-        // Crear y mostrar la ventana NuevoPaciente
+   
         DisponibilidadDoctores doctoresVt = new DisponibilidadDoctores();
         doctoresVt.setLocationRelativeTo(null);
         doctoresVt.setVisible(true);
 
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Explicación de las Opciones del Menú")) {
         // Crear y mostrar la ventana NuevoPaciente
@@ -172,7 +173,7 @@ public class NewJFrame extends javax.swing.JFrame {
         menuu.setLocationRelativeTo(null);
         menuu.setVisible(true);
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose(); 
     }
     if (seleccion.equals("Salir del Sistema.")) {
         // Crear y mostrar la ventana NuevoPaciente
@@ -180,19 +181,19 @@ public class NewJFrame extends javax.swing.JFrame {
         salida.setLocationRelativeTo(null);
         salida.setVisible(true);
         // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
+        this.dispose();
     }
-    // Gestionar Medicos por Triaje
-    if (seleccion.equals("Gestionar Medicos por Triaje")) {
-        // Crear y mostrar la ventana NuevoPaciente
+
+    if (seleccion.equals("Gestionar Medicos por Triaje")) { 
+        // Crear y mostrar la ventana ElimAgregMedicos
         ElimAgregMedicos elimAgreg = new ElimAgregMedicos();
         elimAgreg.setLocationRelativeTo(null);
         elimAgreg.setVisible(true);
+    
         // Cerrar la ventana actual
         this.dispose();  // Esto cierra NewJFrame
     }
-        
-    }                                   
+    }                             
 
     /**
      * @param args the command line arguments
