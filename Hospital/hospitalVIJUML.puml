@@ -28,7 +28,7 @@ class Paciente
 class Doctor
 {
     -disponible : boolean
-    -lista_pacientes_atencion: ArrayList
+    -lista_pacientes_atencion: ArrayList<Paciente>
     -pacientes_actual : int
     -pacientes_max : int
     -triage: int
@@ -103,16 +103,17 @@ annotation Excepciones
 Main -- Hospital
 Main -- GestionTerminal
 
-Hospital *.. Paciente
-Hospital *.. Habitacion
-Hospital *.. Doctor
+Hospital "1" *.. "*" Paciente : Se atienden >
 
-Habitacion o.. Paciente
+Hospital "1" *.. "*" Habitacion : Contiene >
+Hospital "1" *.. "*" Doctor : Trabajan >
 
-Paciente o-- Doctor
-Doctor o-- Paciente
+Habitacion "0..1" o.. "*" Paciente : Tiene 2 >
 
-Persona <|-- Paciente
-Persona <|-- Doctor
+Paciente "0..1" o-- "0..1" Doctor : Atendido por >
+Doctor "0..1" o-- "0..1" Paciente : Atiende un >
+
+Persona <|-- Paciente : Hereda de <
+Persona <|-- Doctor : Hereda de <
 
 @enduml
