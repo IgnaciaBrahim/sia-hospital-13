@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compilar Proyecto Java",
+        "type": "shell",
+        "command": "javac",
+        "args": [
+          "-encoding", "UTF-8",
+          "-d", "bin",
+          "Ventanas/*.java"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": {
+          "owner": "java",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "pattern": {
+            "regexp": "^(.*):(\\d+):\\s+error:\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "message": 3
+          }
+        },
+        "detail": "Tarea generada para compilar los archivos Java del proyecto"
+      }
+    ]
+  }
+  

@@ -164,8 +164,14 @@ public class Hospital {
         map_doctores.get(triage).add(doctor_aux);
         
         lista_doctores.add(doctor_aux);
-        
-        System.out.println("Doctor añadido con éxito.");
+    }
+    
+    public void eliminarDoctorMapaArray(Doctor doctor_aux) 
+    {
+        int triage = doctor_aux.getTriage();
+        LinkedList<Doctor> doctores_triaje = map_doctores.get(triage);
+        doctores_triaje.remove(doctor_aux);
+        lista_doctores.remove(doctor_aux);
     }
     
     public Doctor obtenerDoctor(int i)
@@ -204,6 +210,12 @@ public class Hospital {
             disp = "No";
         }
         return "Doctor " + aux_doctor.obtenerDatos() + " Disponible: " + disp + "\n";
+    }
+    
+    //Sobreescritura
+    public String mostrarDoctor(Doctor aux_doctor, int i)
+    {
+        return i + ". " + aux_doctor.obtenerDatos() + " Triaje: " + aux_doctor.getTriage();
     }
 
     public void crearDoctores(){

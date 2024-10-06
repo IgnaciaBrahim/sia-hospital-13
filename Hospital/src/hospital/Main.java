@@ -1,6 +1,8 @@
 package hospital;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Main {
     public static void explicarOpcionesMenu() {
@@ -30,10 +32,13 @@ public class Main {
         System.out.println("| 8. Ver disponibilidad de doctores:                |");
         System.out.println("|    Muestra la lista de doctores disponibles según |");
         System.out.println("|    su triage asignado.                            |");
-        System.out.println("| 9. Explicación de las opciones del menú:          |");
+        System.out.println("| 9. Gestionar Medicos por Triaje                   |");
+        System.out.println("|    Se podrá eliminar o agregar un médico a un     |");
+        System.out.println("|    triaje específico.                             |");
+        System.out.println("| 10. Explicación de las opciones del menú:         |");
         System.out.println("|    Muestra esta pantalla de ayuda que explica     |");
         System.out.println("|    cada opción del menú.                          |");
-        System.out.println("| 10. Salir del sistema:                            |");
+        System.out.println("| 11. Salir del sistema:                            |");
         System.out.println("|    Cierra la aplicación.                          |");
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
@@ -141,8 +146,9 @@ public class Main {
             System.out.println("| 6. Consultar pacientes por triaje                 |");
             System.out.println("| 7. Ver estado de habitaciones y camas             |");
             System.out.println("| 8. Ver disponibilidad de doctores                 |");
-            System.out.println("| 9. Explicación de las opciones del menú           |");
-            System.out.println("| 10. Salir del sistema                             |");
+            System.out.println("| 9. Gestionar Medicos por Triaje                   |");
+            System.out.println("| 10. Explicación de las opciones del menú          |");
+            System.out.println("| 11. Salir del sistema                             |");
             System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
                
             System.out.print("\n\nIngrese su opción: \n");
@@ -185,7 +191,7 @@ public class Main {
                             System.out.println("\nEl paciente se derivará al CESFAM correspondiente.");
                             System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");
                         } else {
-                            System.out.println("\nGracias por venir hospital VIJ. Se agregará al/la paciente " + datos_paciente.getNombre() + " \n");
+                            System.out.println("\nGracias por venir hospital VIJ. Se agregará al/la paciente " + nombre + " " + apellido + " \n");
                             hospital_VIJ.agregarPaciente(rut, nombre, apellido, edad, sexo, triaje);
                         }
 
@@ -422,18 +428,88 @@ public class Main {
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
-
+                    
                 case "9":
-                    // "Explicación de las opciones del menú"
+                    // "Gestion Triaje"
                     System.out.println("OPCION 9");
+                    System.out.println("¿Desea añadir o Eliminar un Médico del Hospital?\n");
+                    System.out.println("1. Añadir");
+                    System.out.println("2. Eliminar\n");
+                    
+                    String op9 = reader.readLine();
+                    switch (op9)
+                    {
+                        case "1":
+                            System.out.println("Ingrese los datos del Médico que desea añadir:\n");
+                            System.out.println("1. RUT \n");
+                            String medRut = reader.readLine();
+                            System.out.println("2. Nombre \n");
+                            String medNombre = reader.readLine();
+                            System.out.println("3. Apellido \n");
+                            String medApellido = reader.readLine();
+                            System.out.println("Ingrese el triaje (1 - 5) al que desea añadir a " + medNombre + ": \n");
+                            String medTriaje = reader.readLine();
+                            
+                            if (!medTriaje.matches("[1-5]"))
+                            {
+                                System.out.println("\nEl triaje que usted ingresó no es válido.");
+                                System.out.println("Volviendo al menú principal...\n");
+                            }
+                            else
+                            {
+                                Doctor house = new Doctor(medRut, medNombre, medApellido, Integer.parseInt(medTriaje));
+                                System.out.println("Se añadirá al doctor " + house.obtenerDatos() + "al Triaje " + medTriaje + ".");
+                                hospital_VIJ.añadirDoctorMapaArray(house);
+                            }   
+                            break;
+   
+                        case "2":
+                            System.out.println("Ingrese el Nombre y Apellido del Médico que desea eliminar:\n");
+                            
+                            for (int i = 0 ; i < hospital_VIJ.getListaDoctoresSize(); i++)
+                            {
+                                Doctor aux_doctor = hospital_VIJ.obtenerDoctor(i);
+                                String printDoc = hospital_VIJ.mostrarDoctor(aux_doctor, i);
+                                System.out.println(printDoc);
+                            }
+                            
+                            System.out.println("1. Nombre \n");
+                            medNombre = reader.readLine();
+                            System.out.println("2. Apellido \n");
+                            medApellido = reader.readLine();
+
+                            int encontrado = 0;
+                            for (int i = 0 ; i < hospital_VIJ.getListaDoctoresSize(); i++)
+                            {
+                                Doctor aux_doctor = hospital_VIJ.obtenerDoctor(i);
+                                if (aux_doctor.getNombre().equals(medNombre) && aux_doctor.getApellido().equals(medApellido))
+                                {
+                                    encontrado = 1;
+                                    System.out.println("Se eliminará al doctor " + aux_doctor.obtenerDatos() + "del Triaje " + aux_doctor.getTriage() + ".");
+                                    hospital_VIJ.eliminarDoctorMapaArray(aux_doctor);
+                                }
+                            }
+                            if (encontrado == 0)
+                            {
+                                System.out.println("No se encontró tal doctor. Volviendo al menú principal...");
+                            }
+                            break;
+                    }
+                    terminal.presioneTecla();
+                    terminal.limpiarPantalla();
+                    break;
+
+                case "10":
+                    // "Explicación de las opciones del menú"
+                    System.out.println("OPCION 10");
                     explicarOpcionesMenu();
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
                     
-                case "10":
+                case "11":
                     //  "Salir del sistema"
-                     System.out.println("OPCION 1o");
+                     System.out.println("OPCION 11");
                     continuar = false;  
                     //terminal.presioneTecla();
                     terminal.limpiarPantalla();

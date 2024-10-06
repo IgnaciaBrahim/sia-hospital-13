@@ -1,3 +1,7 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
-}
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
+  }
+  
