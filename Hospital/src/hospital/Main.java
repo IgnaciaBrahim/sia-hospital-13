@@ -191,8 +191,9 @@ public class Main {
                             System.out.println("\nEl paciente se derivará al CESFAM correspondiente.");
                             System.out.println("\nGracias por venir hospital VIJ. Hasta Luego\n");
                         } else {
-                            System.out.println("\nGracias por venir hospital VIJ. Se agregará al/la paciente " + nombre + " " + apellido + " \n");
-                            hospital_VIJ.agregarPaciente(rut, nombre, apellido, edad, sexo, triaje);
+                            Paciente pac = new Paciente(rut, nombre, apellido, edad, sexo, triaje);
+                            System.out.println(pac.registrarse());
+                            hospital_VIJ.agregarPaciente(pac);
                         }
 
                     } catch (IOException e) {
@@ -442,11 +443,11 @@ public class Main {
                         case "1":
                             System.out.println("Ingrese los datos del Médico que desea añadir:\n");
                             System.out.println("1. RUT \n");
-                            String medRut = reader.readLine();
+                            String medRut = validarRut(reader);
                             System.out.println("2. Nombre \n");
-                            String medNombre = reader.readLine();
+                            String medNombre = validarNombreApellido(reader, "nombre");
                             System.out.println("3. Apellido \n");
-                            String medApellido = reader.readLine();
+                            String medApellido = validarNombreApellido(reader, "apellido");
                             System.out.println("Ingrese el triaje (1 - 5) al que desea añadir a " + medNombre + ": \n");
                             String medTriaje = reader.readLine();
                             
@@ -458,8 +459,9 @@ public class Main {
                             else
                             {
                                 Doctor house = new Doctor(medRut, medNombre, medApellido, Integer.parseInt(medTriaje));
-                                System.out.println("Se añadirá al doctor " + house.obtenerDatos() + "al Triaje " + medTriaje + ".");
+                                System.out.println(house.registrarse());
                                 hospital_VIJ.añadirDoctorMapaArray(house);
+                                System.out.println("Se añadió a " + house.obtenerDatos() + "al Triaje " + medTriaje + ".");
                             }   
                             break;
    
@@ -469,14 +471,14 @@ public class Main {
                             for (int i = 0 ; i < hospital_VIJ.getListaDoctoresSize(); i++)
                             {
                                 Doctor aux_doctor = hospital_VIJ.obtenerDoctor(i);
-                                String printDoc = hospital_VIJ.mostrarDoctor(aux_doctor, i);
+                                String printDoc = hospital_VIJ.mostrarDoctor(aux_doctor, i + 1);
                                 System.out.println(printDoc);
                             }
                             
                             System.out.println("1. Nombre \n");
-                            medNombre = reader.readLine();
+                            medNombre = validarNombreApellido(reader, "nombre");
                             System.out.println("2. Apellido \n");
-                            medApellido = reader.readLine();
+                            medApellido = validarNombreApellido(reader, "apellido");
 
                             int encontrado = 0;
                             for (int i = 0 ; i < hospital_VIJ.getListaDoctoresSize(); i++)

@@ -69,9 +69,9 @@ public class Doctor extends Persona
     
     //Contrato Abstracta   
     @Override
-    public void registrarse()
+    public String registrarse()
     {
-        System.out.println("me registro!");
+        return "Gracias por trabajar con nosotros! Se añadirá el Doctor... ";
     }
     
     @Override
@@ -79,17 +79,5 @@ public class Doctor extends Persona
     {
         Object copy_pac = (Object) new ArrayList<>(lista_pacientes_atencion);
         return copy_pac;
-    }
-    
-    @Override
-    public void salirHospital()
-    {
-        System.out.println("me salgo!");
-    }
-    
-    @Override
-    public void alta()
-    {
-        System.out.println("doy un alta!");
     }
 }

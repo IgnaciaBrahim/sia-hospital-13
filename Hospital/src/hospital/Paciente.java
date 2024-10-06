@@ -114,9 +114,9 @@ public class Paciente extends Persona{
     
     //Contrato
     @Override
-    public void registrarse()
+    public String registrarse()
     {
-        System.out.println("me registro!");
+        return "Gracias por venir al Hospital_VIJ. Se registrará al paciente ";
     }
     
     @Override 
@@ -124,17 +124,5 @@ public class Paciente extends Persona{
     {
         Object medico = (Object) medico_asignado;
         return medico;
-    }
-    
-    @Override
-    public void salirHospital()
-    {
-        System.out.println("me salgo!");
-    }
-    
-    @Override
-    public void alta()
-    {
-        System.out.println("doy un alta!");
     }
 }

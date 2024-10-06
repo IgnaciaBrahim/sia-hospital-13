@@ -56,8 +56,5 @@ public abstract class Persona
     }
     
     public abstract Object verAsignacion();
-    public abstract void registrarse();
-    public abstract void salirHospital();
-    public abstract void alta();
-    
+    public abstract String registrarse();
 }

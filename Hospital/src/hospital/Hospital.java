@@ -278,7 +278,7 @@ public class Hospital {
         String tiempoFormateado = tiempo_actual.format(formatoTiempo);
 
         Paciente pac = new Paciente(rut, nombre, apellido, edad, sexo, triaje, tiempo_actual);
-        System.out.println("Paciente ingresado a las " + tiempoFormateado);
+        //System.out.println("Paciente ingresado a las " + tiempoFormateado);
 
         // Insertar el paciente en la lista de manera ordenada
         int posicionInsertar = 0;
