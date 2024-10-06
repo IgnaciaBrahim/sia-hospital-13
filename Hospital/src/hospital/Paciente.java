@@ -1,5 +1,6 @@
 package hospital;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Paciente extends Persona{
     private int edad;
@@ -125,4 +126,16 @@ public class Paciente extends Persona{
         Object medico = (Object) medico_asignado;
         return medico;
     }
+
+    @Override
+    public String toString() {
+    return "Paciente [RUT: " + getRut() + ", Nombre: " + getNombre() + " " + getApellido() + 
+           ", Edad: " + edad + ", Sexo: " + (sexo == 0 ? "Masculino" : "Femenino") + 
+           ", Triage: " + triage + ", Médico Asignado: " + 
+           (medico_asignado != null ? medico_asignado.getNombre() : "Sin Doctor") + 
+           ", Estado: " + estado_atencion + ", Habitación: " + 
+           (num_habitacion != null ? num_habitacion : "Sin Habitación") + 
+           ", Hora de Atención: " + tiempoActual.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "]";
+    }
+
 }

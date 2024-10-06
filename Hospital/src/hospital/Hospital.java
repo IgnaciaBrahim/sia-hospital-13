@@ -5,9 +5,13 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Hospital {
     
@@ -298,23 +302,25 @@ public class Hospital {
        
     }
 
-    // Método auxiliar para buscar un doctor por su nombre completo
-    private Doctor buscarDoctorPorNombre(String nombreCompleto) {
-    // Asumimos que el nombre completo está en el formato "Nombre Apellido"
-    String[] partesNombre = nombreCompleto.split(" ");
-    String nombre = partesNombre[0];
-    String apellido = partesNombre[1];
-
-    // Buscar en la lista de doctores
-    for (Doctor doctor : lista_doctores) {
-        if (doctor.getNombre().equals(nombre) && doctor.getApellido().equals(apellido)) {
-            return doctor;
+    public Doctor buscarDoctorPorNombre(String nombreCompleto) {
+        // Verificar si el nombre completo es null o está vacío
+        if (nombreCompleto == null || nombreCompleto.isEmpty()) {
+            return null;  // No hay doctor asignado
         }
-    }
-    return null; // Si no se encuentra el doctor
-}
-        
-    //sobreescribi
+    
+        // Recorrer todos los doctores en el mapa para buscar el nombre
+        for (LinkedList<Doctor> listaDoctores : map_doctores.values()) {
+            for (Doctor doctor : listaDoctores) {
+                String nombreDoctor = doctor.getNombre() + " " + doctor.getApellido();
+                if (nombreDoctor.equalsIgnoreCase(nombreCompleto)) {
+                    return doctor;
+                }
+            }
+        }
+    
+        return null; // Si no se en
+    }    
+ 
     public void agregarPaciente(Paciente pac)  {
         LocalDateTime tiempo_actual = LocalDateTime.now();
         DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -392,67 +398,85 @@ public class Hospital {
     }
 
 
-    // Cargar Doctores desde un archivo CSV
     public void cargarDoctoresCSV(String archivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
+    
+            // Saltar la primera línea si es el encabezado
+            linea = br.readLine(); // Lee la primera línea (encabezado) y no la procesa
+    
             while ((linea = br.readLine()) != null) {
-                String[] datos = linea.split(","); // Suponiendo que es un CSV separado por comas
+                String[] datos = linea.split(",");
                 String rut = datos[0];
                 String nombre = datos[1];
                 String apellido = datos[2];
-                int triage = Integer.parseInt(datos[3]);
+                int triage = Integer.parseInt(datos[3]);  // Aquí ya no habrá problema
                 int pacientesMax = Integer.parseInt(datos[4]);
                 int pacientesActual = Integer.parseInt(datos[5]);
                 boolean disponible = Boolean.parseBoolean(datos[6]);
-
+    
                 Doctor doctor = new Doctor(rut, nombre, apellido, triage);
                 doctor.setPacientes_max(pacientesMax);
                 doctor.setPacientes_actual(pacientesActual);
                 doctor.setDisponible(disponible);
-
                 lista_doctores.add(doctor);
-
-                // Agregamos a la estructura de map_doctores por nivel de Triage
+    
+                // Agregar al mapa por nivel de Triage
                 map_doctores.computeIfAbsent(triage, k -> new LinkedList<>()).add(doctor);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
      // Cargar Pacientes desde un archivo CSV
      public void cargarPacientesCSV(String archivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
+
+            // Saltar la primera línea si es el encabezado
+            linea = br.readLine(); // Lee la primera línea (encabezado) y no la procesa
+            
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(",");
+
+                 // Verificar que la línea tenga al menos 10 campos antes de procesarla
+                if (datos.length < 10) {
+                    System.out.println("Línea incompleta encontrada: " + linea);
+                    continue;  // Saltar la línea incompleta
+                }
+                
                 String rut = datos[0];
                 String nombre = datos[1];
                 String apellido = datos[2];
                 int edad = Integer.parseInt(datos[3]);
                 int sexo = Integer.parseInt(datos[4]);
                 int triage = Integer.parseInt(datos[5]);
-                String nombreMedicoAsignado = datos[6];
+                String medicoAsignado = datos[6].isEmpty() ? null : datos[6];
                 String estadoAtencion = datos[7];
-                String numeroHabitacion = datos[8];
+                String numHabitacion = datos[8].isEmpty() ? null : datos[8]; 
                 String horaAtencionStr = datos[9];
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime horaAtencion = LocalDateTime.parse(horaAtencionStr, formatter);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm:ss");
+                LocalTime horaAtencion = LocalTime.parse(horaAtencionStr, formatter);
 
-                Paciente paciente = new Paciente(rut, nombre, apellido, edad, sexo, triage, horaAtencion);
+                // Combinar con una fecha predeterminada, por ejemplo, el día actual
+                LocalDateTime fechaHoraAtencion = LocalDateTime.of(LocalDate.now(), horaAtencion);
+
+
+                Paciente paciente = new Paciente(rut, nombre, apellido, edad, sexo, triage, fechaHoraAtencion);
                 
                 paciente.setEstado_atencion(estadoAtencion);
-                paciente.setNum_habitacion(numeroHabitacion);
+                paciente.setNum_habitacion(numHabitacion);
 
                 // Buscar el doctor por su nombre
-                Doctor doctorAsignado = buscarDoctorPorNombre(nombreMedicoAsignado);
+                Doctor doctorAsignado = buscarDoctorPorNombre(medicoAsignado);
 
                 // Si se encuentra el doctor, asignarlo al paciente
                 if (doctorAsignado != null) {
                     paciente.setMedico_asignado(doctorAsignado);
                 } else {
-                    System.out.println("Doctor no encontrado: " + nombreMedicoAsignado);
+                    System.out.println("Doctor no encontrado: " + medicoAsignado);
                 }
 
                 paciente.setMedico_asignado(doctorAsignado);
@@ -465,9 +489,14 @@ public class Hospital {
         }
     }
 
-     // Guardar Doctores en un archivo CSV
+    // Guardar Doctores en un archivo CSV
     public void guardarDoctoresCSV(String archivo) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+        if (lista_doctores.isEmpty()) {
+            System.out.println("No hay doctores para guardar.");
+            return;  // No guardar si la lista está vacía
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {  // true para modo append
             for (Doctor doctor : lista_doctores) {
                 String linea = String.format("%s,%s,%s,%d,%d,%d,%b\n",
                         doctor.getRut(),
@@ -483,10 +512,17 @@ public class Hospital {
             e.printStackTrace();
         }
     }
+   
 
-     // Guardar Pacientes en un archivo CSV
-     public void guardarPacientesCSV(String archivo) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+
+    // Guardar Pacientes en un archivo CSV
+    public void guardarPacientesCSV(String archivo) {
+        if (lista_pacientes_prioridad.isEmpty()) {
+            System.out.println("No hay pacientes para guardar.");
+            return;  // No guardar si la lista está vacía
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {  // true para modo append
             for (Paciente paciente : lista_pacientes_prioridad) {
                 String linea = String.format("%s,%s,%s,%d,%s,%d,%s,%s,%s,%s\n",
                         paciente.getRut(),
@@ -505,6 +541,7 @@ public class Hospital {
             e.printStackTrace();
         }
     }
+
 
       // Generar reporte en archivo TXT
       public void generarReporteTXT(String archivo) {

@@ -512,7 +512,10 @@ public class Main {
                 case "11":
                     //  "Salir del sistema"
                      System.out.println("OPCION 11");
-                    continuar = false;  
+                    continuar = false; 
+                    hospital_VIJ.generarReporteTXT("reporte.txt"); 
+                    hospital_VIJ.guardarDoctoresCSV("doctores.csv");
+                    hospital_VIJ.guardarPacientesCSV("pacientes.csv");
                     //terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;

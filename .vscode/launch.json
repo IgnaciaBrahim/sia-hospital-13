@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Prueba",
+            "request": "launch",
+            "mainClass": "Ventanas.Prueba",
+            "projectName": "sia-hospital-13_f16bf6f2"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "hospital.Main",

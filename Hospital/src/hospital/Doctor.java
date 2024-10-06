@@ -1,5 +1,5 @@
 package hospital;
-import java.util.*;
+import java.util.ArrayList;
 public class Doctor extends Persona 
 {
     private int triage;
@@ -80,4 +80,12 @@ public class Doctor extends Persona
         Object copy_pac = (Object) new ArrayList<>(lista_pacientes_atencion);
         return copy_pac;
     }
+
+    @Override
+    public String toString() {
+    return "Doctor [RUT: " + getRut() + ", Nombre: " + getNombre() + " " + getApellido() + 
+           ", Triage: " + triage + ", Pacientes Actual: " + pacientes_actual + 
+           ", Pacientes Máx: " + pacientes_max + ", Disponible: " + disponible + "]";
+    }
+
 }
