@@ -8,7 +8,6 @@ abstract class Persona
     +obtenerDatos() : String
     {abstract}+registrarse()
     {abstract}+verAsignacion() : Object
-    {abstract}+salirHospital() : String
 }
 
 class Paciente

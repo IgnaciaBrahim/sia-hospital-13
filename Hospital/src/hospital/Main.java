@@ -158,10 +158,12 @@ public class Main {
      */
     public static void main(String[] args) throws IOException
     {
-        GestionTerminal terminal = new GestionTerminal(); // Se crea una instancia de GestionTerminal para manejar la interfaz de usuario.
-        Hospital hospital_VIJ = new Hospital(); // Se crea una instancia del Hospital.
 
-        // Carga de datos desde archivos CSV
+        GestionTerminal terminal = new GestionTerminal();
+        Hospital hospital_VIJ = new Hospital();
+        String baseDir = System.getProperty("user.dir");  // Obtiene el directorio actual
+        String doctoresPath = baseDir + "/doctores.csv";  // Construye la ruta completa
+        String pacientesPath = baseDir + "/pacientes.csv";  // Construye la ruta completa
         hospital_VIJ.cargarDoctoresCSV("doctores.csv");
         hospital_VIJ.cargarPacientesCSV("pacientes.csv");
         hospital_VIJ.crear_Habitaciones(); // Crea habitaciones para el hospital.
