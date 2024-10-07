@@ -1,63 +1,63 @@
-
 package Ventanas;
 
-/**
- *
- * @author evapo
- */
-public class NuevoPaciente extends javax.swing.JFrame {
+import hospital.Hospital;
+import hospital.Paciente;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    public NuevoPaciente() {
+public class NuevoPaciente extends JFrame {
+    private static Hospital hospital;  // Añadir la instancia de Hospital aquí
+
+    // Componentes de la interfaz gráfica
+    private JTextField jTextField1, jTextField2, jTextField4;
+    private JRadioButton jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4, jRadioButton5, jRadioButton6, jRadioButton7;
+    private ButtonGroup buttonGroup1, buttonGroup2;
+    private JButton jButton1, jButton2;
+
+    // Constructor donde pasas la instancia de Hospital
+    public NuevoPaciente(Hospital hospital) {
+        this.hospital = hospital;  // Recibe la instancia del hospital
         initComponents();
-    }                         
+    }
+
     private void initComponents() {
+        // Inicialización de componentes
+        buttonGroup1 = new ButtonGroup();
+        buttonGroup2 = new ButtonGroup();
+        JPanel jPanel1 = new JPanel();
+        JLabel jLabel6 = new JLabel();
+        JLabel jLabel1 = new JLabel();
+        jTextField1 = new JTextField();
+        JLabel jLabel2 = new JLabel();
+        jTextField2 = new JTextField();
+        JLabel jLabel3 = new JLabel();
+        jTextField4 = new JTextField();
+        JLabel jLabel4 = new JLabel();
+        JLabel jLabel5 = new JLabel();
+        jRadioButton2 = new JRadioButton();
+        jRadioButton3 = new JRadioButton();
+        jRadioButton1 = new JRadioButton();
+        jRadioButton4 = new JRadioButton();
+        jRadioButton5 = new JRadioButton();
+        jRadioButton6 = new JRadioButton();
+        jRadioButton7 = new JRadioButton();
+        jButton1 = new JButton();
+        jButton2 = new JButton();
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        // Configuración de la ventana
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new Color(204, 204, 255));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new Color(204, 204, 255));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-
-        jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        jLabel6.setFont(new Font("Yu Gothic UI Semibold", 1, 24));
         jLabel6.setText("Agregar Paciente:");
 
         jLabel1.setText("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
 
-        jTextField1.setText("XX.XXX.XXX-X");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Ingrese Nombre y Apellido del Paciente:");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Indique la Edad:");
 
@@ -65,241 +65,240 @@ public class NuevoPaciente extends javax.swing.JFrame {
 
         jLabel5.setText("Seleccione la Condición del Paciente:");
 
-        jRadioButton2.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton2.setBackground(new Color(204, 204, 255));
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Femenino");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
 
-        jRadioButton3.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton3.setBackground(new Color(204, 204, 255));
         buttonGroup1.add(jRadioButton3);
         jRadioButton3.setText("Masculino");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
 
-        jRadioButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton1.setBackground(new Color(204, 204, 255));
         buttonGroup2.add(jRadioButton1);
         jRadioButton1.setText("1) Riesgo Vital");
 
-        jRadioButton4.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton4.setBackground(new Color(204, 204, 255));
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setText("2) Alta Urgencia");
-        jRadioButton4.setActionCommand("");
 
-        jRadioButton5.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton5.setBackground(new Color(204, 204, 255));
         buttonGroup2.add(jRadioButton5);
         jRadioButton5.setText("3) Mediana Urgencia");
-        jRadioButton5.setActionCommand("");
 
-        jRadioButton6.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton6.setBackground(new Color(204, 204, 255));
         buttonGroup2.add(jRadioButton6);
         jRadioButton6.setText("4) Baja Urgencia");
-        jRadioButton6.setActionCommand("");
 
-        jRadioButton7.setBackground(new java.awt.Color(204, 204, 255));
+        jRadioButton7.setBackground(new Color(204, 204, 255));
         buttonGroup2.add(jRadioButton7);
         jRadioButton7.setText("5) No Urgente");
-        jRadioButton7.setActionCommand("");
 
         jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        // Aquí es donde enlazamos el evento del botón con su método
+        jButton1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                jButton1ActionPerformed(evt);  // Llamada al método que será creado más abajo
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(229, 229, 229));
         jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                jButton2ActionPerformed(evt);  // Llamada al método para cancelar
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        // Configuración del layout omitida por simplicidad
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton5)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(90, 90, 90)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton7)
-                            .addComponent(jRadioButton6)))
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, Short.MAX_VALUE)
-                                .addComponent(jTextField1))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel1)
+                        .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(jRadioButton2)
+                        .addComponent(jRadioButton3)
+                        .addComponent(jLabel5)
+                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButton4)
+                        .addComponent(jRadioButton5)
+                        .addComponent(jRadioButton6)
+                        .addComponent(jRadioButton7)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jButton2)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton1)))
+                    .addContainerGap(150, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel6)
+                    .addGap(18, 18, 18)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel2)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel3)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel4)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton2)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jRadioButton3)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel5)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jRadioButton1)
-                    .addComponent(jLabel3))
-                .addGap(1, 1, 1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jRadioButton4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton5)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton6)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton7)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)
+                        .addComponent(jButton1))
+                    .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        
-    }                                             
+    // Método que se ejecuta cuando el botón "Aceptar" es presionado
+    private void jButton1ActionPerformed(ActionEvent evt) {
+        // Capturar los datos desde los campos de texto
+        String rut = jTextField1.getText();
+        String nombreApellido = jTextField2.getText();
+        String edadStr = jTextField4.getText();
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Se ha añadido al paciente con éxito!");
-        this.dispose();  // Cierra la ventana actual
-
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        this.dispose();  
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-    }                                             
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            NuevoPaciente ventana = new NuevoPaciente();  // Crear la ventana
-            ventana.setLocationRelativeTo(null);  // Centramos la ventana
-            ventana.setVisible(true);  // Mostrar la ventana
+        // Validar que los campos obligatorios no estén vacíos
+        if (rut.isEmpty() || nombreApellido.isEmpty() || edadStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    });
+
+        // Dividir el nombre y apellido
+        String[] nombreApellidoArray = nombreApellido.split(" ");
+        if (nombreApellidoArray.length < 2) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese tanto el nombre como el apellido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombre = nombreApellidoArray[0];
+        String apellido = nombreApellidoArray[1];
+
+        // Validar la edad
+        int edad;
+        try {
+            edad = Integer.parseInt(edadStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La edad debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar el sexo (0 = Hombre, 1 = Mujer)
+        int sexo;
+        if (jRadioButton2.isSelected()) {
+            sexo = 1;  // Femenino
+        } else if (jRadioButton3.isSelected()) {
+            sexo = 0;  // Masculino
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione el sexo del paciente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar el triaje (1 = Riesgo Vital, 2 = Alta Urgencia, etc.)
+        int triaje;
+        if (jRadioButton1.isSelected()) {
+            triaje = 1;
+        } else if (jRadioButton4.isSelected()) {
+            triaje = 2;
+        } else if (jRadioButton5.isSelected()) {
+            triaje = 3;
+        } else if (jRadioButton6.isSelected()) {
+            triaje = 4;
+        } else if (jRadioButton7.isSelected()) {
+            triaje = 5;
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione la condición del paciente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Lógica adicional para pacientes con triaje 5
+        if (triaje == 5) {
+            JOptionPane.showMessageDialog(this, "El paciente será derivado al CESFAM correspondiente.");
+            this.dispose();
+            NewJFrame menuVentana = new NewJFrame(hospital);
+            menuVentana.setLocationRelativeTo(null);
+            menuVentana.setVisible(true);
+            return;
+        }
+
+        // Crear el paciente y agregarlo al hospital
+        Paciente paciente = new Paciente(rut, nombre, apellido, edad, sexo, triaje);
+        hospital.agregarPaciente(paciente);
+
+        // Mostrar un mensaje de confirmación
+        JOptionPane.showMessageDialog(this, "¡Se ha añadido al paciente con éxito!");
+
+        // Cerrar esta ventana y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    // Método para el botón "Cancelar"
+    private void jButton2ActionPerformed(ActionEvent evt) {
+        this.dispose();  // Cerrar la ventana actual
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                NuevoPaciente ventana = new NuevoPaciente(hospital);
+                ventana.setLocationRelativeTo(null);
+                ventana.setVisible(true);
+            }
+        });
+    }
 }
 
-
-    // Variables declaration - do not modify                     
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    // End of variables declaration                   
-}

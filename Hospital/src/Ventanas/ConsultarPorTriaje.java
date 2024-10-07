@@ -1,5 +1,11 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Paciente; // Asegúrate de importar la clase Paciente
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -7,10 +13,14 @@ package Ventanas;
  */
 public class ConsultarPorTriaje extends javax.swing.JFrame {
 
-    public ConsultarPorTriaje() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public ConsultarPorTriaje(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
-                         
+
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -73,49 +83,43 @@ public class ConsultarPorTriaje extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel6)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jRadioButton4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel6)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton3))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addContainerGap())))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,26 +140,75 @@ public class ConsultarPorTriaje extends javax.swing.JFrame {
         );
 
         pack();
-    }                      
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
+    // Acción del botón "Aceptar"
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "Lista aquí.....");
-        this.dispose();  // Cierra la ventana actual
+        int triajeSeleccionado = 0;
 
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        // Obtener el valor seleccionado en los radio buttons
+        if (jRadioButton1.isSelected()) {
+            triajeSeleccionado = 1;
+        } else if (jRadioButton2.isSelected()) {
+            triajeSeleccionado = 2;
+        } else if (jRadioButton3.isSelected()) {
+            triajeSeleccionado = 3;
+        } else if (jRadioButton4.isSelected()) {
+            triajeSeleccionado = 4;
+        }
+
+        // Mostrar la lista de pacientes por triaje en un JTextArea scrolleable
+        String pacientesPorTriaje = obtenerPacientesPorTriaje(triajeSeleccionado);
+        if (pacientesPorTriaje.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay pacientes en este triaje.", "Pacientes por Triaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JTextArea textArea = new JTextArea(pacientesPorTriaje);
+            textArea.setEditable(false);  // Para que no se pueda editar el texto
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new java.awt.Dimension(400, 300));  // Tamaño preferido del área de scroll
+            JOptionPane.showMessageDialog(this, scrollPane, "Pacientes por Triaje", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
+
+    // Acción del botón "Cancelar"
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    // Método que obtiene los pacientes según el triaje seleccionado y los retorna como un String
+    private String obtenerPacientesPorTriaje(int triaje) {
+        StringBuilder resultado = new StringBuilder();
+        List<Paciente> listaPacientes = hospital.obtenerListaPacientes();
+
+        resultado.append("Pacientes en Triaje: ").append(triaje).append("\n");
+        resultado.append("- - - - - - - - - - - - - - - - - -\n");
+
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getTriage() == triaje) {
+                resultado.append("- Nombre: ").append(paciente.getNombre()).append("\n");
+                resultado.append("- Apellido: ").append(paciente.getApellido()).append("\n");
+                resultado.append("- RUT: ").append(paciente.getRut()).append("\n");
+                if (paciente.getNum_habitacion() != null) {
+                    resultado.append("- Habitación: ").append(paciente.getNum_habitacion()).append("\n");
+                } else {
+                    resultado.append("- Sin habitación asignada.\n");
+                }
+                resultado.append("- - - - - - - - - - - - - - - - - -\n");
+            }
+        }
+
+        return resultado.toString();
+    }
 
     /**
      * @param args the command line arguments
@@ -177,12 +230,10 @@ public class ConsultarPorTriaje extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ConsultarPorTriaje.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConsultarPorTriaje().setVisible(true);
+                new ConsultarPorTriaje(hospital).setVisible(true);
             }
         });
     }
@@ -200,3 +251,4 @@ public class ConsultarPorTriaje extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton4;
     // End of variables declaration                   
 }
+

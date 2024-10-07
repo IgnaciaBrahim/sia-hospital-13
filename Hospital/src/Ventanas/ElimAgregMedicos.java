@@ -1,16 +1,21 @@
 
 package Ventanas;
 
+import hospital.Hospital; 
 /**
  *
  * @author evapo
  */
 public class ElimAgregMedicos extends javax.swing.JFrame {
 
-    public ElimAgregMedicos() {
+    private static Hospital hospital; // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public ElimAgregMedicos(Hospital hospital) {
+        this.hospital = hospital; // Asignar la instancia de hospital
         initComponents();
     }
-                         
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -106,31 +111,31 @@ public class ElimAgregMedicos extends javax.swing.JFrame {
         );
 
         pack();
-    }               
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        // Abrir ventana del menú principal
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        AñadirMedicoOpcion anadir = new AñadirMedicoOpcion();
+        // Abrir la ventana para añadir un médico
+        AñadirMedicoOpcion anadir = new AñadirMedicoOpcion(hospital); // Pasar la instancia de hospital
         anadir.setLocationRelativeTo(null);
         anadir.setVisible(true);
-    }                                        
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        EliminarDoc elimDc = new EliminarDoc();
+        // Abrir la ventana para eliminar un médico
+        EliminarDoc elimDc = new EliminarDoc(hospital); // Pasar la instancia de hospital
         elimDc.setLocationRelativeTo(null);
         elimDc.setVisible(true);
-    }                                        
+    }
 
     /**
      * @param args the command line arguments
@@ -153,12 +158,10 @@ public class ElimAgregMedicos extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ElimAgregMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ElimAgregMedicos().setVisible(true);
+                new ElimAgregMedicos(hospital).setVisible(true);  // Pasa la instancia del hospital aquí
             }
         });
     }

@@ -1,5 +1,9 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Doctor;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -7,9 +11,15 @@ package Ventanas;
  */
 public class TodosDoctores extends javax.swing.JFrame {
 
-    public TodosDoctores() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public TodosDoctores(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
-    }                        
+        mostrarDoctoresDisponibles();  // Mostrar los doctores disponibles
+    }
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -24,14 +34,8 @@ public class TodosDoctores extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
         jLabel6.setText("Disponibilidad de Doctores");
-        jLabel6.setToolTipText("");
 
         jList1.setBackground(new java.awt.Color(204, 204, 255));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Lucas Pinto Aliste - 21.669.284-5 - DISPONIBLE", "Kiara Villarroel Perez - 21.602.832-5 - DISPONIBLE", "Barbara Oyarzo Oyarzo - 21.800.535-7 - OCUPADA", "Ignacia Brahim Lara - 21.275.186-3  DISPONIBLE" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jButton2.setBackground(new java.awt.Color(229, 229, 229));
@@ -87,40 +91,45 @@ public class TodosDoctores extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
+
+    // Método para mostrar los doctores disponibles
+    private void mostrarDoctoresDisponibles() {
+        DefaultListModel<String> model = new DefaultListModel<>(); // Modelo para la lista
+
+        // Obtener el tamaño de la lista de doctores
+        int size = hospital.getListaDoctoresSize();
+        int cont = 0;
+
+        // Recorrer la lista de doctores
+        for (int i = 0; i < size; i++) {
+            Doctor doctor_aux = hospital.obtenerDoctor(i);
+            if (doctor_aux != null && doctor_aux.isDisponible()) {
+                cont++;
+                model.addElement(doctor_aux.obtenerDatos());  // Agregar el doctor disponible al modelo
+            }
+        }
+
+        if (cont == 0) {
+            model.addElement("No hay doctores disponibles...");
+        }
+
+        jList1.setModel(model);  // Asignar el modelo a la lista
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        // Cerrar la ventana y volver al menú principal
         this.dispose();  // Cierra la ventana actual
-        // Abrir la ventana del menú (prueba.java)
-        NewJFrame menuVentana = new NewJFrame();
+        NewJFrame menuVentana = new NewJFrame(hospital);  // Pasar la instancia de hospital
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TodosDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TodosDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TodosDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TodosDoctores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TodosDoctores().setVisible(true);
+                // Pasar una instancia de Hospital cuando se crea la ventana
+                new TodosDoctores(hospital).setVisible(true);
             }
         });
     }

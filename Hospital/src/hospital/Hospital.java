@@ -559,6 +559,16 @@ public class Hospital {
             e.printStackTrace();
         }
     }
+      
+    public ArrayList<Paciente> obtenerListaPacientes()
+    {
+        ArrayList<Paciente> copy = new ArrayList<>();
+        for (Paciente pac : lista_pacientes_prioridad)
+        {
+            copy.add(pac);
+        }
+        return copy;
+    }
 }
 
   

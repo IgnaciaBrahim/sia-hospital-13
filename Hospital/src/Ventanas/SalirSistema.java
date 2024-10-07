@@ -1,5 +1,7 @@
-
 package Ventanas;
+
+import hospital.Hospital;  // Importar la clase Hospital
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -7,10 +9,14 @@ package Ventanas;
  */
 public class SalirSistema extends javax.swing.JFrame {
 
-    public SalirSistema() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public SalirSistema(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
-                         
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -75,14 +81,25 @@ public class SalirSistema extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        this.dispose();  // Cierra la ventana actual
-        // Abrir la ventana del menú (prueba.java)
-        
-    }                                        
+        // Lógica para finalizar el sistema
+
+        // Generar reporte y guardar datos antes de salir
+        try {
+            hospital.generarReporteTXT("reporte.txt");  // Guardar reporte de hospital
+            hospital.guardarDoctoresCSV("doctores.csv");  // Guardar lista de doctores en CSV
+            hospital.guardarPacientesCSV("pacientes.csv");  // Guardar lista de pacientes en CSV
+
+            JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Salir del sistema
+        System.exit(0);
+    }
 
     /**
      * @param args the command line arguments
@@ -106,7 +123,7 @@ public class SalirSistema extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SalirSistema().setVisible(true);
+                new SalirSistema(new Hospital()).setVisible(true);
             }
         });
     }
@@ -115,5 +132,6 @@ public class SalirSistema extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    // End of variables declaration                   
+    // End of variables declaration
 }
+

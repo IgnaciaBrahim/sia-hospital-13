@@ -1,15 +1,23 @@
 package Ventanas;
 
+import hospital.Hospital;
+import hospital.Paciente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author evapo
  */
 public class RegistrarVisita extends javax.swing.JFrame {
 
-    public RegistrarVisita() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public RegistrarVisita(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
-                      
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -98,26 +106,48 @@ public class RegistrarVisita extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
+    // Acción del botón "Aceptar"
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "Visita Registrada.");
-        this.dispose();  // Cierra la ventana actual
+        String rut = jTextField1.getText();  // Obtener el RUT ingresado
+        Paciente pacienteEncontrado = null;
 
-        // Abrir la ventana del menú (prueba.java)
-        NewJFrame menuVentana = new NewJFrame();
+        // Buscar el paciente por RUT
+        for (int i = 0; i < hospital.getListaPacientePriorSize(); i++) {
+            Paciente pacienteCama = hospital.obtenerPacienteLista(i);
+            if (pacienteCama.getRut().equals(rut)) {
+                pacienteEncontrado = pacienteCama;
+                break;
+            }
+        }
+
+        if (pacienteEncontrado != null) {
+            // Verificar si el paciente tiene una habitación asignada
+            if (pacienteEncontrado.getNum_habitacion() != null) {
+                JOptionPane.showMessageDialog(this, "El paciente " + pacienteEncontrado.obtenerDatos() + " está asignado a la habitación " + pacienteEncontrado.getNum_habitacion());
+            } else {
+                JOptionPane.showMessageDialog(this, "El paciente con RUT " + rut + " no tiene una cama asignada.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró ningún paciente con el RUT ingresado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
 
+    // Acción del botón "Cancelar"
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        this.dispose();  // Cierra la ventana actual
-        // Abrir la ventana del menú (prueba.java)
-        NewJFrame menuVentana = new NewJFrame();
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
 
     /**
      * @param args the command line arguments
@@ -139,12 +169,11 @@ public class RegistrarVisita extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RegistrarVisita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarVisita().setVisible(true);
+                // Aquí debes pasar una instancia de Hospital al constructor
+                new RegistrarVisita(hospital).setVisible(true);
             }
         });
     }

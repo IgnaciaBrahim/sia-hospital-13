@@ -1,15 +1,23 @@
-
 package Ventanas;
+
+import hospital.Doctor;
+import hospital.Hospital;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author evapo
  */
 public class EliminarDoc extends javax.swing.JFrame {
-    public EliminarDoc() {
+
+    private static Hospital hospital;  // Instancia del Hospital
+
+    // Constructor que recibe la instancia del hospital
+    public EliminarDoc(Hospital hospital) {
+        this.hospital = hospital;
         initComponents();
     }
-                         
+
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
@@ -38,11 +46,16 @@ public class EliminarDoc extends javax.swing.JFrame {
 
         jLabel3.setText("1. Nombre y Apellido:");
 
-        jList1.setBackground(new java.awt.Color(204, 204, 255));
+        // Aquí mostramos la lista de doctores
+        String[] doctorList = new String[hospital.getListaDoctoresSize()];
+        for (int i = 0; i < hospital.getListaDoctoresSize(); i++) {
+            Doctor aux_doctor = hospital.obtenerDoctor(i);
+            doctorList[i] = aux_doctor.obtenerDatos();
+        }
+
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Lucas Pinto Aliste - 21.669.284-5 - DISPONIBLE", "Kiara Villarroel Perez - 21.602.832-5 - DISPONIBLE", "Barbara Oyarzo Oyarzo - 21.800.535-7 - OCUPADA", "Ignacia Brahim Lara - 21.275.186-3  DISPONIBLE" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public int getSize() { return doctorList.length; }
+            public String getElementAt(int i) { return doctorList[i]; }
         });
         jScrollPane1.setViewportView(jList1);
 
@@ -61,12 +74,13 @@ public class EliminarDoc extends javax.swing.JFrame {
             }
         });
 
+        // Layout del panel
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -79,7 +93,7 @@ public class EliminarDoc extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jToggleButton2)))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,6 +115,7 @@ public class EliminarDoc extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        // Layout del frame
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,60 +134,55 @@ public class EliminarDoc extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        javax.swing.JOptionPane.showMessageDialog(this, "El/La doctor JUANA PEREZ ha sido añadida con éxito.");
-        this.dispose();  // Cierra la ventana actual
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Acción del botón "Aceptar"
+        String nombreApellido = jTextField3.getText();
+        String[] partes = nombreApellido.split(" ");
+        if (partes.length < 2) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el nombre y apellido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombre = partes[0];
+        String apellido = partes[1];
 
-        // Abrir la ventana del menú (prueba.java)
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                              
-
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        javax.swing.JOptionPane.showMessageDialog(this, "El/La doctor BARBARA OYARZO ha sido eliminado/a con éxito.");
-        this.dispose();  // Cierra la ventana actual
-
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                              
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        // Búsqueda y eliminación del doctor
+        int encontrado = 0;
+        for (int i = 0; i < hospital.getListaDoctoresSize(); i++) {
+            Doctor aux_doctor = hospital.obtenerDoctor(i);
+            if (aux_doctor.getNombre().equals(nombre) && aux_doctor.getApellido().equals(apellido)) {
+                encontrado = 1;
+                hospital.eliminarDoctorMapaArray(aux_doctor);
+                JOptionPane.showMessageDialog(this, "Se ha eliminado al doctor " + aux_doctor.obtenerDatos() + ".");
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarDoc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarDoc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarDoc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarDoc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        if (encontrado == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontró tal doctor.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        jToggleButton1ActionPerformed(evt);
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose();  // Cerrar la ventana
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EliminarDoc().setVisible(true);
+                new EliminarDoc(hospital).setVisible(true);  // Instancia de ejemplo para pruebas
             }
         });
     }
@@ -189,3 +199,4 @@ public class EliminarDoc extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration                   
 }
+

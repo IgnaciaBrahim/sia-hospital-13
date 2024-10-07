@@ -3,6 +3,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import Ventanas.AñadirMedicoOpcion;
+import Ventanas.AsignarDoctor;
+import Ventanas.AsignarHabitacion;
+import Ventanas.ConsultarPorTriaje;
+import Ventanas.DisponibilidadDoctores;
+import Ventanas.ElimAgregMedicos;
+import Ventanas.EliminarDoc;
+import Ventanas.EstdaoHabitacionCama;
+import Ventanas.HabitacionParticular;
+import Ventanas.NewJFrame;
+import Ventanas.NuevoPaciente;
+import Ventanas.OpcionesMenu;
+import Ventanas.RegistrarAlta;
+import Ventanas.RegistrarVisita;
+import Ventanas.SalirSistema;
+import Ventanas.TodosDoctores;
+import Ventanas.doctorParticular;
+import Ventanas.mostrarTodasHabitaciones;
+import Ventanas.Prueba;
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
     public static void explicarOpcionesMenu() {
@@ -128,7 +150,19 @@ public class Main {
         hospital_VIJ.cargarPacientesCSV("pacientes.csv");
         hospital_VIJ.crear_Habitaciones();
         
-
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                // Create and open the Prueba window (Main window)
+                Prueba ventana = new Prueba(hospital_VIJ);
+                
+                // Center the window
+                ventana.setLocationRelativeTo(null);
+                
+                // Make it visible
+                ventana.setVisible(true);
+            }
+        });
+        
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
@@ -531,3 +565,4 @@ public class Main {
         System.out.println("Gracias por usar el sistema de Atención Hospitalaria. ¡Hasta luego!");
     }
 }
+

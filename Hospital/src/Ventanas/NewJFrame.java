@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Ventanas;
+
+import hospital.Hospital;
 
 /**
  *
@@ -10,10 +8,13 @@ package Ventanas;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
+    private static Hospital hospital;  // Variable para almacenar la instancia de Hospital
+
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public NewJFrame(Hospital hospital) {
+        this.hospital = hospital;  // Recibe la instancia del hospital y la guarda
         initComponents();
     }
 
@@ -93,146 +94,143 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {                                    
         // Verificar que la opción seleccionada es "Añadir Paciente"
-    String seleccion = jList1.getSelectedValue().toString();
+        String seleccion = jList1.getSelectedValue().toString();
 
-    if (seleccion.equals("Añadir Paciente")) {
-  
-        NuevoPaciente nuevoPacienteVentana = new NuevoPaciente();
-        nuevoPacienteVentana.setLocationRelativeTo(null);
-        nuevoPacienteVentana.setVisible(true);
+        if (seleccion.equals("Añadir Paciente")) {
+            // Crear la ventana de NuevoPaciente pasando la instancia de Hospital
+            NuevoPaciente nuevoPacienteVentana = new NuevoPaciente(hospital);
+            nuevoPacienteVentana.setLocationRelativeTo(null);
+            nuevoPacienteVentana.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose();  
-    }
-    if (seleccion.equals("Registrar Alta Voluntaria")) {
-    
-        RegistrarAlta altaVol = new RegistrarAlta();
-        altaVol.setLocationRelativeTo(null);
-        altaVol.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose();  
+        }
+        if (seleccion.equals("Registrar Alta Voluntaria")) {
+            // Crear la ventana de RegistrarAlta pasando la instancia de Hospital
+            RegistrarAlta altaVol = new RegistrarAlta(hospital);
+            altaVol.setLocationRelativeTo(null);
+            altaVol.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Asignar Doctor a Paciente")) {
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Asignar Doctor a Paciente")) {
+            // Crear la ventana de AsignarDoctor pasando la instancia de Hospital
+            AsignarDoctor asignarDoct = new AsignarDoctor(hospital);
+            asignarDoct.setLocationRelativeTo(null);
+            asignarDoct.setVisible(true);
 
-        AsignarDoctor asignarDoct = new AsignarDoctor();
-        asignarDoct.setLocationRelativeTo(null);
-        asignarDoct.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Asignar Habitación a Paciente")) {
+            // Crear la ventana de AsignarHabitacion pasando la instancia de Hospital
+            AsignarHabitacion asignarHab = new AsignarHabitacion(hospital);
+            asignarHab.setLocationRelativeTo(null);
+            asignarHab.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Asignar Habitación a Paciente")) {
-    
-        AsignarHabitacion asignarHab = new AsignarHabitacion();
-        asignarHab.setLocationRelativeTo(null);
-        asignarHab.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Registrar Visita a Paciente")) {
+            // Crear la ventana de RegistrarVisita pasando la instancia de Hospital
+            RegistrarVisita visita = new RegistrarVisita(hospital);
+            visita.setLocationRelativeTo(null);
+            visita.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Registrar Visita a Paciente")) {
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Consultar Pacientes por Triaje")) {
+            // Crear la ventana de ConsultarPorTriaje pasando la instancia de Hospital
+            ConsultarPorTriaje triajeBusc = new ConsultarPorTriaje(hospital);
+            triajeBusc.setLocationRelativeTo(null);
+            triajeBusc.setVisible(true);
 
-        RegistrarVisita visita = new RegistrarVisita();
-        visita.setLocationRelativeTo(null);
-        visita.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose();  
+        }
+        if (seleccion.equals("Ver Estado de Habitaciones y Camas")) {
+            // Crear la ventana de EstdaoHabitacionCama pasando la instancia de Hospital
+            EstdaoHabitacionCama habCam = new EstdaoHabitacionCama(hospital);
+            habCam.setLocationRelativeTo(null);
+            habCam.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Consultar Pacientes por Triaje")) {
-        
-        ConsultarPorTriaje triajeBusc = new ConsultarPorTriaje();
-        triajeBusc.setLocationRelativeTo(null);
-        triajeBusc.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Ver Disponibilidad de Doctores")) {
+            // Crear la ventana de DisponibilidadDoctores pasando la instancia de Hospital
+            DisponibilidadDoctores doctoresVt = new DisponibilidadDoctores(hospital);
+            doctoresVt.setLocationRelativeTo(null);
+            doctoresVt.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose();  
-    }
-    if (seleccion.equals("Ver Estado de Habitaciones y Camas")) {
-       
-        EstdaoHabitacionCama habCam = new EstdaoHabitacionCama();
-        habCam.setLocationRelativeTo(null);
-        habCam.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Explicación de las Opciones del Menú")) {
+            // Crear la ventana de OpcionesMEnu pasando la instancia de Hospital
+            OpcionesMenu menuu = new OpcionesMenu(hospital);
+            menuu.setLocationRelativeTo(null);
+            menuu.setVisible(true);
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Ver Disponibilidad de Doctores")) {
-   
-        DisponibilidadDoctores doctoresVt = new DisponibilidadDoctores();
-        doctoresVt.setLocationRelativeTo(null);
-        doctoresVt.setVisible(true);
+            // Cerrar la ventana actual
+            this.dispose(); 
+        }
+        if (seleccion.equals("Salir del Sistema.")) {
+            // Cerrar la aplicación
+            System.exit(0);
+        }
 
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Explicación de las Opciones del Menú")) {
-        // Crear y mostrar la ventana NuevoPaciente
-        OpcionesMEnu menuu = new OpcionesMEnu();
-        menuu.setLocationRelativeTo(null);
-        menuu.setVisible(true);
-        // Cerrar la ventana actual
-        this.dispose(); 
-    }
-    if (seleccion.equals("Salir del Sistema.")) {
-        // Crear y mostrar la ventana NuevoPaciente
-        SalirSistema salida = new SalirSistema();
-        salida.setLocationRelativeTo(null);
-        salida.setVisible(true);
-        // Cerrar la ventana actual
-        this.dispose();
-    }
+        if (seleccion.equals("Gestionar Medicos por Triaje")) {
+            // Crear la ventana de ElimAgregMedicos pasando la instancia de Hospital
+            ElimAgregMedicos elimAgreg = new ElimAgregMedicos(hospital);
+            elimAgreg.setLocationRelativeTo(null);
+            elimAgreg.setVisible(true);
 
-    if (seleccion.equals("Gestionar Medicos por Triaje")) { 
-        // Crear y mostrar la ventana ElimAgregMedicos
-        ElimAgregMedicos elimAgreg = new ElimAgregMedicos();
-        elimAgreg.setLocationRelativeTo(null);
-        elimAgreg.setVisible(true);
-    
-        // Cerrar la ventana actual
-        this.dispose();  // Esto cierra NewJFrame
-    }
+            // Cerrar la ventana actual
+            this.dispose();  // Esto cierra NewJFrame
+        }
     }                             
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-     * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                // Crear la instancia de Hospital y pasarla al NewJFrame
+                NewJFrame ventana = new NewJFrame(hospital);  // Crear la ventana con hospital
+                
+                ventana.setLocationRelativeTo(null);  // Centramos la ventana en la pantalla
+                ventana.setVisible(true);  // Hacer visible la ventana
+            }
+        });
     }
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            NewJFrame ventana = new NewJFrame();  // Crear la ventana
-            
-            ventana.setLocationRelativeTo(null);  // Centramos la ventana en la pantalla
-            ventana.setVisible(true);  // Hacer visible la ventana
-        }
-    });
-}
-
 
     // Variables declaration - do not modify                     
     private javax.swing.JLabel jLabel1;

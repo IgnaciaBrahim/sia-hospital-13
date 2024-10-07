@@ -1,5 +1,6 @@
-
 package Ventanas;
+
+import hospital.Hospital;
 
 /**
  *
@@ -7,30 +8,24 @@ package Ventanas;
  */
 public class EstdaoHabitacionCama extends javax.swing.JFrame {
 
-    public EstdaoHabitacionCama() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public EstdaoHabitacionCama(Hospital hospital) {
+        this.hospital = hospital;
         initComponents();
     }
-                         
+
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        //buttonGroup1 = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();  // Botón Aceptar
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton3 = new javax.swing.JButton();
-
-        jLabel1.setText("Ingrese una opción:");
-
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jRadioButton1 = new javax.swing.JRadioButton();  // Opción: Todas las habitaciones
+        jRadioButton2 = new javax.swing.JRadioButton();  // Opción: Habitación en particular
+        jButton3 = new javax.swing.JButton();  // Botón Cancelar
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -45,21 +40,20 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
 
         jRadioButton1.setBackground(new java.awt.Color(204, 204, 255));
         jRadioButton1.setText("1) Todas las habitaciones");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
 
         jRadioButton2.setBackground(new java.awt.Color(204, 204, 255));
         jRadioButton2.setText("2) Habitación en particular");
         jRadioButton2.setToolTipText("");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+
+        // Botón "Aceptar" para abrir la ventana correspondiente
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
+        // Botón "Cancelar" para cerrar la ventana
         jButton3.setBackground(new java.awt.Color(229, 229, 229));
         jButton3.setText("Cancelar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +62,7 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
             }
         });
 
+        // Layout de los elementos en el panel
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -75,12 +70,14 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
+                    .addComponent(jButton3)  // Botón Cancelar
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel2)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2)))
+                        .addComponent(jLabel6)  // Título
+                        .addComponent(jLabel2)  // Etiqueta de opciones
+                        .addComponent(jRadioButton1)  // Opción: Todas las habitaciones
+                        .addComponent(jRadioButton2)))  // Opción: Habitación en particular
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)  // Botón Aceptar
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -95,10 +92,13 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))  // Botón Aceptar
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        // Layout general de la ventana
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,46 +117,39 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "Lista aquí.....");
-        this.dispose();  // Cierra la ventana actual
+    // Acción del botón "Aceptar"
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (jRadioButton1.isSelected()) {
+            // Si se seleccionó "Todas las habitaciones", abrir la ventana correspondiente
+            mostrarTodasHabitaciones todasV = new mostrarTodasHabitaciones(hospital);
+            todasV.setLocationRelativeTo(null);
+            todasV.setVisible(true);
+        } else if (jRadioButton2.isSelected()) {
+            // Si se seleccionó "Habitación en particular", abrir la ventana correspondiente
+            HabitacionParticular unaHab = new HabitacionParticular(hospital);
+            unaHab.setLocationRelativeTo(null);
+            unaHab.setVisible(true);
+        } else {
+            // Si no se seleccionó ninguna opción
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor seleccione una opción.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
 
-        // Abrir la ventana del menú (prueba.java)
-        NewJFrame menuVentana = new NewJFrame();
+        // Cerrar la ventana actual
+        this.dispose();
+    }
+
+    // Acción del botón "Cancelar"
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        mostrarTodasHabitaciones todasV = new mostrarTodasHabitaciones();
-        todasV.setLocationRelativeTo(null);
-        todasV.setVisible(true);
-    }                                             
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        HabitacionParticular unaHab = new HabitacionParticular();
-        unaHab.setLocationRelativeTo(null);
-        unaHab.setVisible(true);
-    }                                             
-
-    /**
-     * @param args the command line arguments
-     */
+    // Método principal para lanzar la aplicación
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -174,16 +167,16 @@ public class EstdaoHabitacionCama extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EstdaoHabitacionCama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EstdaoHabitacionCama().setVisible(true);
-                
+                // Aquí debes pasar una instancia de Hospital
+                new EstdaoHabitacionCama(hospital).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify                     
-
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

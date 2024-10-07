@@ -1,6 +1,6 @@
-
 package Ventanas;
 
+import hospital.Hospital;
 
 /**
  *
@@ -8,10 +8,13 @@ package Ventanas;
  */
 public class Prueba extends javax.swing.JFrame {
 
+    private static Hospital hospital;  // Variable para almacenar la instancia de Hospital
+
     /**
-     * Creates new form prueba
+     * Creates new form Prueba
      */
-    public Prueba() {
+    public Prueba(Hospital hospital) {
+        this.hospital = hospital;  // Crear la instancia de Hospital
         initComponents();
     }
                        
@@ -120,15 +123,16 @@ public class Prueba extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        NewJFrame newFrameVentana = new NewJFrame();
+        // Pasar la instancia del hospital al abrir NewJFrame
+        NewJFrame newFrameVentana = new NewJFrame(hospital);
         newFrameVentana.setLocationRelativeTo(null);
         newFrameVentana.setVisible(true);
-        this.dispose();
+        this.dispose();  // Cerrar la ventana actual
 
     }                                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-         this.dispose(); 
+         this.dispose();  // Cerrar la ventana actual
     }                                        
 
     /**
@@ -137,7 +141,7 @@ public class Prueba extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Prueba ventana = new Prueba();  // Crear la ventana de ingreso
+                Prueba ventana = new Prueba(hospital);  // Crear la ventana de ingreso
             
                 // Centramos la ventana en el centro de la pantalla
                 ventana.setLocationRelativeTo(null);
@@ -145,7 +149,6 @@ public class Prueba extends javax.swing.JFrame {
                 // Hacer visible la ventana
                 ventana.setVisible(true);
             }
-            
         });
     }
 
@@ -158,3 +161,4 @@ public class Prueba extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration                   
 }
+

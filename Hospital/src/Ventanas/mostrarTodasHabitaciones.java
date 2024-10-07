@@ -1,5 +1,7 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Habitacion;
 
 /**
  *
@@ -7,10 +9,16 @@ package Ventanas;
  */
 public class mostrarTodasHabitaciones extends javax.swing.JFrame {
 
-    public mostrarTodasHabitaciones() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public mostrarTodasHabitaciones(Hospital hospital) {
+        this.hospital = hospital;  // Guardar la instancia del hospital
         initComponents();
+        mostrarEstadoHabitaciones();  // Llamar a la función para mostrar las habitaciones
     }
-                      
+
+    // Inicialización de componentes
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
@@ -24,10 +32,12 @@ public class mostrarTodasHabitaciones extends javax.swing.JFrame {
         jLabel6.setText("Lista de Habitaciones");
         jLabel6.setToolTipText("");
 
+        // Configuración del JTextArea para mostrar el estado de las habitaciones
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        // Botón "Continuar"
         jButton1.setText("Continuar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -35,6 +45,7 @@ public class mostrarTodasHabitaciones extends javax.swing.JFrame {
             }
         });
 
+        // Layout del contenido
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -61,44 +72,40 @@ public class mostrarTodasHabitaciones extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
+    // Método que muestra el estado de todas las habitaciones en el JTextArea
+    private void mostrarEstadoHabitaciones() {
+        StringBuilder sb = new StringBuilder();
+
+        // Iterar sobre las habitaciones del hospital y obtener su estado
+        for (int i = 1; i <= 150; i++) {
+            sb.append("==================================================================================================\n");
+            Habitacion aux = hospital.obtenerHabitacion(i);
+            String cadena_mostrar = hospital.obtenerMostrarHabitacion(aux);
+            sb.append(cadena_mostrar).append("\n");
+        }
+
+        // Mostrar el estado de todas las habitaciones en el JTextArea
+        jTextArea1.setText(sb.toString());
+    }
+
+    // Acción del botón "Continuar"
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         this.dispose();  // Cierra la ventana actual
 
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        // Volver al menú principal
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
 
-    /**
-     * @param args the command line arguments
-     */
+    // Método principal para lanzar la ventana
     public static void main(String args[]) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mostrarTodasHabitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mostrarTodasHabitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mostrarTodasHabitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mostrarTodasHabitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mostrarTodasHabitaciones().setVisible(true);
+                // Aquí debes pasar una instancia de Hospital
+                new mostrarTodasHabitaciones(hospital).setVisible(true);
             }
         });
     }

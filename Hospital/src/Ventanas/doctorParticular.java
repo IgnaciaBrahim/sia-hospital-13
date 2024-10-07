@@ -1,5 +1,9 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Doctor;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 /**
  *
@@ -7,10 +11,14 @@ package Ventanas;
  */
 public class doctorParticular extends javax.swing.JFrame {
 
-    public doctorParticular() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public doctorParticular(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
-                      
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -62,7 +70,7 @@ public class doctorParticular extends javax.swing.JFrame {
         jLabel6.setText("Búsqueda por Triaje");
         jLabel6.setToolTipText("");
 
-        jLabel1.setText("Ingrese el nivel de Triaje:");
+        jLabel1.setText("Seleccione el nivel de Triaje:");
 
         jButton2.setBackground(new java.awt.Color(229, 229, 229));
         jButton2.setText("Cancelar");
@@ -78,12 +86,9 @@ public class doctorParticular extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jRadioButton1)
@@ -92,6 +97,10 @@ public class doctorParticular extends javax.swing.JFrame {
                             .addComponent(jRadioButton4))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,79 +136,58 @@ public class doctorParticular extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    // Acción al seleccionar Riesgo Vital
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        mostrarDoctoresPorTriaje("1");
+    }
+
+    // Acción al seleccionar Alta Urgencia
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        mostrarDoctoresPorTriaje("2");
+    }
+
+    // Acción al seleccionar Mediana Urgencia
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        mostrarDoctoresPorTriaje("3");
+    }
+
+    // Acción al seleccionar Baja Urgencia
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+        mostrarDoctoresPorTriaje("4");
+    }
+
+    // Acción del botón Cancelar
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        NewJFrame menuVentana = new NewJFrame(hospital);  // Volver al menú principal
         menuVentana.setVisible(true);
-    }                                        
+    }
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        javax.swing.JOptionPane.showMessageDialog(this, "Opción 1:\nLUCAS PINTO - DISPONIBLE");
-        this.dispose();  // Cierra la ventana actual
+    // Método para mostrar los doctores por triaje
+    private void mostrarDoctoresPorTriaje(String triaje) {
+        ArrayList<Doctor> doctoresDisponibles = hospital.obtenerDoctor(triaje);  // Usar el método de la lógica de consola
 
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setVisible(true);
-    }                                             
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        javax.swing.JOptionPane.showMessageDialog(this, "Opción 2:\nIGNACIA BRAHIM - DISPONIBLE");
-        this.dispose();  // Cierra la ventana actual
-
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                             
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        javax.swing.JOptionPane.showMessageDialog(this, "Opción 3:\nKIARA VILLARROEL - DISPONIBLE");
-        this.dispose();  // Cierra la ventana actual
-
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                             
-
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        javax.swing.JOptionPane.showMessageDialog(this, "Opción 4:\nBARBARA OYARZO - OCUPADA");
-        this.dispose();  // Cierra la ventana actual
-
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                             
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        if (doctoresDisponibles == null || doctoresDisponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay doctores disponibles en este triaje.");
+        } else {
+            StringBuilder mensaje = new StringBuilder("Doctores disponibles:\n");
+            for (Doctor doctor : doctoresDisponibles) {
+                mensaje.append(hospital.mostrarDoctor(doctor)).append("\n");
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(doctorParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(doctorParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(doctorParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(doctorParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, mensaje.toString());
         }
 
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);  // Volver al menú principal
+        menuVentana.setVisible(true);
+    }
+
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new doctorParticular().setVisible(true);
+                new doctorParticular(hospital).setVisible(true);  // Pasar instancia de hospital
             }
         });
     }

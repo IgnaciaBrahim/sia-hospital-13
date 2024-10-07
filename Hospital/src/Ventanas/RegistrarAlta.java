@@ -1,5 +1,8 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Paciente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -7,7 +10,11 @@ package Ventanas;
  */
 public class RegistrarAlta extends javax.swing.JFrame {
 
-    public RegistrarAlta() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public RegistrarAlta(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
                       
@@ -25,7 +32,7 @@ public class RegistrarAlta extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
-        jLabel6.setText("Regsitrar Alta Voluntaria:");
+        jLabel6.setText("Registrar Alta Voluntaria:");
         jLabel6.setToolTipText("");
 
         jLabel1.setText("Ingrese RUT del Paciente:");
@@ -108,17 +115,41 @@ public class RegistrarAlta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    // Botón "Aceptar" que registra el alta del paciente
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "El/La Paciente JUAN ALCACHOFA no estaba hospitalizado/a. Se ha dado de alta.");
-        this.dispose();  
-        NewJFrame menuVentana = new NewJFrame();
+        String rut = jTextField1.getText();  // Obtener el RUT del campo de texto
+        Paciente aux_paciente = hospital.buscarPacienteRut(rut);  // Buscar el paciente por RUT
+
+        if (aux_paciente == null) {
+            // Paciente no existe
+            JOptionPane.showMessageDialog(this, "No existe tal paciente. Saliendo al menú principal.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (aux_paciente.getEdad() < 18) {
+            // Paciente menor de edad, no se puede dar de alta
+            JOptionPane.showMessageDialog(this, "El/La Paciente es menor de edad. No se pudo registrar el alta.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (aux_paciente.getTriage() < 3) {
+            // Paciente en estado grave, no se puede dar de alta
+            JOptionPane.showMessageDialog(this, "El/La Paciente está en estado grave. No se puede registrar el alta.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Paciente válido para dar de alta
+            hospital.borrarPaciente(rut, aux_paciente);
+            if (aux_paciente.getNum_habitacion() != null) {
+                JOptionPane.showMessageDialog(this, "El/La Paciente estaba hospitalizado/a. Se ha dado de alta a " + aux_paciente.obtenerDatos());
+            } else {
+                JOptionPane.showMessageDialog(this, "El/La Paciente no estaba hospitalizado/a. Se ha dado de alta a " + aux_paciente.obtenerDatos());
+            }
+        }
+
+        // Cerrar la ventana y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
 
+    // Botón "Cancelar" que vuelve al menú principal
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         this.dispose();  
-        NewJFrame menuVentana = new NewJFrame();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
@@ -153,7 +184,8 @@ public class RegistrarAlta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarAlta().setVisible(true);
+                // Aquí debes pasar una instancia de Hospital al constructor
+                new RegistrarAlta(hospital).setVisible(true);
             }
         });
     }
@@ -167,3 +199,4 @@ public class RegistrarAlta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration                   
 }
+

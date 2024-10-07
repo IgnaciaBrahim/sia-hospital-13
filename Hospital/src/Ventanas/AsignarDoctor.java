@@ -1,5 +1,8 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Paciente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -7,10 +10,14 @@ package Ventanas;
  */
 public class AsignarDoctor extends javax.swing.JFrame {
 
-    public AsignarDoctor() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia de Hospital
+    public AsignarDoctor(Hospital hospital) {
+        this.hospital = hospital;  // Asignar la instancia del hospital
         initComponents();
     }
-                       
+
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -109,27 +116,41 @@ public class AsignarDoctor extends javax.swing.JFrame {
         );
 
         pack();
-    }                       
+    }
 
+    // Acción del botón "Aceptar"
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "Doctor asignado.");
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        String rut = jTextField1.getText();  // Obtener el RUT ingresado
+        Paciente paciente = hospital.buscarPacienteRut(rut);  // Buscar el paciente por RUT
+
+        if (paciente != null) {
+            // Asignar un doctor al paciente
+            hospital.asignarDoctorAPaciente(paciente);
+            JOptionPane.showMessageDialog(this, "Doctor asignado con éxito a " + paciente.obtenerDatos());
+        } else {
+            // Paciente no encontrado
+            JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
 
+    // Acción del botón "Cancelar"
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
     }                                        
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    }                                           
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Acción para manejar el campo de texto, si es necesario
+    }
 
     /**
      * @param args the command line arguments
@@ -153,7 +174,8 @@ public class AsignarDoctor extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AsignarDoctor().setVisible(true);
+                // Aquí debes pasar una instancia de Hospital al constructor
+                new AsignarDoctor(hospital).setVisible(true);
             }
         });
     }
@@ -168,3 +190,4 @@ public class AsignarDoctor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration                   
 }
+

@@ -1,5 +1,8 @@
-
 package Ventanas;
+
+import hospital.Hospital;
+import hospital.Habitacion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -7,10 +10,15 @@ package Ventanas;
  */
 public class HabitacionParticular extends javax.swing.JFrame {
 
-    public HabitacionParticular() {
+    private static Hospital hospital;  // Instancia de Hospital
+
+    // Constructor que recibe la instancia del hospital
+    public HabitacionParticular(Hospital hospital) {
+        this.hospital = hospital;  // Guardar la instancia de hospital
         initComponents();
     }
-                         
+
+    // Inicialización de los componentes
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -45,6 +53,7 @@ public class HabitacionParticular extends javax.swing.JFrame {
             }
         });
 
+        // Configuración de layout
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -52,9 +61,7 @@ public class HabitacionParticular extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -102,52 +109,54 @@ public class HabitacionParticular extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        this.dispose();  // Cierra la ventana actual
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
-        menuVentana.setLocationRelativeTo(null);
-        menuVentana.setVisible(true);
-    }                                        
-
+    // Acción del botón "Continuar"
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        javax.swing.JOptionPane.showMessageDialog(this, "Estado Habitación X: DISPONIBLE");
-        this.dispose();  // Cierra la ventana actual
+        try {
+            // Obtener el número de habitación ingresado por el usuario
+            int numHabitacion = Integer.parseInt(jTextField2.getText());
 
-        // Abrir ventana
-        NewJFrame menuVentana = new NewJFrame();
+            // Validar el número de habitación
+            if (numHabitacion < 1 || numHabitacion > 150) {
+                JOptionPane.showMessageDialog(this, "Número de habitación inválido. Ingrese un valor entre 1 y 150.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener la habitación del hospital
+            Habitacion habitacion = hospital.obtenerHabitacion(numHabitacion);
+
+            // Mostrar el estado de la habitación
+            String estadoHabitacion = hospital.obtenerMostrarHabitacion(habitacion);
+            JOptionPane.showMessageDialog(this, estadoHabitacion);
+
+        } catch (NumberFormatException e) {
+            // Manejar el error si el usuario ingresa un valor no numérico
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
         menuVentana.setLocationRelativeTo(null);
         menuVentana.setVisible(true);
-    }                                        
+    }
 
-    /**
-     * @param args the command line arguments
-     */
+    // Acción del botón "Cancelar"
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Cerrar la ventana actual y volver al menú principal
+        this.dispose();
+        NewJFrame menuVentana = new NewJFrame(hospital);
+        menuVentana.setLocationRelativeTo(null);
+        menuVentana.setVisible(true);
+    }
+
+    // Método principal para ejecutar la ventana
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HabitacionParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HabitacionParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HabitacionParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HabitacionParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HabitacionParticular().setVisible(true);
+                // Pasar la instancia de hospital al constructor
+                new HabitacionParticular(hospital).setVisible(true);
             }
         });
     }
