@@ -2,6 +2,16 @@ package hospital;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * Clase que representa a un paciente en el sistema de gestión hospitalaria.
+ * Hereda de la clase `Persona` y contiene atributos adicionales específicos
+ * para los pacientes, como su edad, sexo, nivel de triaje, médico asignado,
+ * estado de atención, número de habitación, y tiempo de registro.
+ * 
+ * La clase también proporciona métodos para obtener y modificar estos atributos,
+ * así como sobreescribir métodos de la clase padre `Persona`.
+ */
 public class Paciente extends Persona{
     private int edad;
     private int sexo; //(0M - 1F)
@@ -11,6 +21,18 @@ public class Paciente extends Persona{
     private String num_habitacion = null; 
     private LocalDateTime tiempoActual;
 
+    /**
+     * Constructor que inicializa un paciente con datos completos, incluyendo su RUT,
+     * nombre, apellido, edad, sexo, nivel de triaje, y la fecha y hora actuales.
+     * 
+     * @param rut El RUT del paciente.
+     * @param nombre El nombre del paciente.
+     * @param apellido El apellido del paciente.
+     * @param edad La edad del paciente.
+     * @param sexo El sexo del paciente (0 para masculino, 1 para femenino).
+     * @param triaje El nivel de triaje asignado al paciente.
+     * @param tiempoActual El tiempo actual de registro del paciente.
+     */
     public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triaje, LocalDateTime tiempoActual){
         super(rut, nombre, apellido);
         this.edad = edad;
@@ -22,6 +44,14 @@ public class Paciente extends Persona{
         this.tiempoActual = tiempoActual;
     }
 
+     /**
+     * Constructor que inicializa un paciente con solo su RUT, nombre y apellido.
+     * Otros atributos como edad, sexo y triaje se inicializan con valores por defecto.
+     * 
+     * @param rut El RUT del paciente.
+     * @param nombre El nombre del paciente.
+     * @param apellido El apellido del paciente.
+     */
     public Paciente(String rut, String nombre, String apellido) {
         super(rut, nombre, apellido);
         this.edad = 0;
@@ -33,6 +63,16 @@ public class Paciente extends Persona{
         this.tiempoActual = LocalDateTime.now();
     }
 
+     /**
+     * Constructor que inicializa un paciente con datos completos excepto la asignación de un médico.
+     * 
+     * @param rut El RUT del paciente.
+     * @param nombre El nombre del paciente.
+     * @param apellido El apellido del paciente.
+     * @param edad La edad del paciente.
+     * @param sexo El sexo del paciente.
+     * @param triaje El nivel de triaje asignado al paciente.
+     */
     public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triage){
         super(rut, nombre, apellido);
         this.edad = edad;
@@ -44,6 +84,19 @@ public class Paciente extends Persona{
         this.tiempoActual = LocalDateTime.now();
     }
 
+     /**
+     * Constructor que inicializa un paciente con datos completos, incluyendo la asignación de un médico y habitación.
+     * 
+     * @param rut El RUT del paciente.
+     * @param nombre El nombre del paciente.
+     * @param apellido El apellido del paciente.
+     * @param edad La edad del paciente.
+     * @param sexo El sexo del paciente.
+     * @param triage El nivel de triaje asignado al paciente.
+     * @param medico_asignado El médico asignado al paciente.
+     * @param estado_atencion El estado de atención del paciente.
+     * @param num_habitacion El número de habitación asignado al paciente.
+     */
     public Paciente(String rut, String nombre, String apellido, int edad, int sexo, int triage, Doctor medico_asignado, String estado_atencion, String num_habitacion) {
         super(rut, nombre, apellido);
         this.edad = edad;
@@ -55,7 +108,7 @@ public class Paciente extends Persona{
         this.tiempoActual = LocalDateTime.now();
     }
     
-    //Setter + Getter Clase 
+    // Métodos getter y setter para los atributos 
     public int getEdad() {
         return edad;
     }
@@ -113,13 +166,24 @@ public class Paciente extends Persona{
         this.tiempoActual = tiempoActual;
     }
     
-    //Contrato
+    // Métodos sobrescritos de la clase `Persona`
+
+    /**
+     * Método sobrescrito de la clase `Persona` que registra al paciente.
+     * 
+     * @return Un mensaje de agradecimiento por registrarse.
+     */
     @Override
     public String registrarse()
     {
         return "Gracias por venir al Hospital_VIJ. Se registrará al paciente ";
     }
     
+    /**
+     * Método sobrescrito que muestra la asignación actual del paciente.
+     * 
+     * @return El médico asignado al paciente, o `null` si no hay médico.
+     */
     @Override 
     public Object verAsignacion()
     {
@@ -127,6 +191,13 @@ public class Paciente extends Persona{
         return medico;
     }
 
+    /**
+     * Método sobrescrito `toString()` para generar una cadena representativa
+     * del estado del paciente, incluyendo su nombre, RUT, edad, sexo, nivel de triaje,
+     * médico asignado, estado de atención y habitación.
+     * 
+     * @return Una representación en formato de texto del paciente.
+     */
     @Override
     public String toString() {
     return "Paciente [RUT: " + getRut() + ", Nombre: " + getNombre() + " " + getApellido() + 

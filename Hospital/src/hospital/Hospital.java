@@ -13,25 +13,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * Clase que representa un hospital, gestionando doctores, pacientes y habitaciones.
+ * Proporciona funcionalidades para asignar doctores a pacientes, habitaciones a pacientes,
+ * eliminar pacientes y cargar datos de doctores y pacientes desde archivos CSV.
+ */
 public class Hospital {
     
-    //DOCTOR
+    // Mapa de doctores, organizado por nivel de triage
     private final HashMap<Integer, LinkedList<Doctor>> map_doctores = new HashMap<>();
+    // Lista de todos los doctores
     private final ArrayList<Doctor> lista_doctores = new ArrayList<>();
     
-    //PACIENTE
+    // Mapa de pacientes, con el RUT como clave
     private final HashMap<String, Paciente> map_paciente = new HashMap<>();
+    // Lista de pacientes priorizados por triage
     private final LinkedList<Paciente> lista_pacientes_prioridad = new LinkedList<>();
     
-    //HABITACION
+    // Lista de habitaciones en el hospital
     ArrayList<Habitacion> habitaciones = new ArrayList<>();
     
+    /**
+     * Busca un paciente por su RUT.
+     * @param rut RUT del paciente.
+     * @return Paciente si existe, null si no se encuentra.
+     */
     public Paciente buscarPacienteRut(String rut)
     {
         Paciente aux_paciente = map_paciente.get(rut);
         return aux_paciente;
     }
     
+     /**
+     * Borra la referencia del paciente en la cama de la habitación que ocupaba.
+     * @param aux_paciente El paciente a eliminar.
+     */
     public void borrarPacienteCama(Paciente aux_paciente)
     {
         for (int i = 0; i < habitaciones.size(); i++) 
@@ -52,6 +68,11 @@ public class Hospital {
         }
     }
 
+     /**
+     * Elimina un paciente del sistema y libera su habitación si corresponde.
+     * @param rut RUT del paciente.
+     * @param aux_paciente El paciente a eliminar.
+     */
     public void borrarPaciente(String rut, Paciente aux_paciente)
     {
         map_paciente.remove(rut);
@@ -62,7 +83,10 @@ public class Hospital {
         }
     }
 
-
+    /**
+     * Asigna un doctor disponible a un paciente en función de su triage.
+     * @param paciente Paciente al que se le va a asignar un doctor.
+     */
     public void asignarDoctorAPaciente(Paciente paciente) {
         int triage = paciente.getTriage();
         LinkedList<Doctor> doctoresDisponibles = map_doctores.get(triage);
@@ -83,7 +107,10 @@ public class Hospital {
         }
     }
 
-
+    /**
+     * Asigna una habitación disponible a un paciente.
+     * @param paciente Paciente al que se le va a asignar una habitación.
+     */
     public void asignarHabitacionAPaciente(Paciente paciente) {
         for (Habitacion habitacion : habitaciones) {
             if (!habitacion.isOcupado()) {
@@ -104,6 +131,10 @@ public class Hospital {
         System.out.println("No hay habitaciones disponibles.");
     }
 
+    /**
+     * Muestra los pacientes por nivel de triage.
+     * @param triaje El nivel de triage a filtrar.
+     */
     public void mostrarPacientesPorTriaje(int triaje){
         if (triaje >=5){
             System.out.println("Ingreso de triaje incorrecto.");
@@ -127,6 +158,15 @@ public class Hospital {
         }
     }
     
+    /**
+    * Devuelve una habitación específica basada en su número.
+    * 
+    * Este método busca una habitación en la lista de habitaciones según el número dado.
+    * Si el número está fuera del rango válido, se muestra un mensaje de error y retorna `null`.
+    * 
+    * @param num El número de la habitación que se desea obtener.
+    * @return La habitación correspondiente al número, o `null` si el número es inválido.
+    */
     public Habitacion obtenerHabitacion(int num)
     {
         if (num >= 1 && num <= habitaciones.size()) {
@@ -137,6 +177,16 @@ public class Hospital {
         }
     }
     
+    /**
+    * Devuelve una cadena que muestra el estado de ocupación de la habitación.
+    * 
+    * Este método retorna una descripción detallada del estado de la habitación, 
+    * incluyendo el número de habitación, si está ocupada y los datos de los pacientes 
+    * en las camas disponibles. Si alguna cama está vacía, indica "Nadie".
+    * 
+    * @param aux La habitación que se desea mostrar.
+    * @return Una cadena con los detalles de la habitación y sus camas.
+     */
     public String obtenerMostrarHabitacion(Habitacion aux)
     {
         if (aux.getCama_1() != null && aux.getCama_2() == null)
@@ -154,6 +204,15 @@ public class Hospital {
         return "Número Habitación : " + aux.getNum_habitacion() + " Ocupado: " + aux.isOcupado() + " Cama 1: Nadie"  + " Cama 2: Nadie";
     }
     
+    /**
+    * Añade un doctor a la lista y al mapa de doctores por triage.
+    * 
+    * Este método agrega un doctor a la lista global de doctores y lo asigna 
+    * al mapa de doctores basado en su triage. Si el triage del doctor no existe en el mapa, 
+    * crea una nueva entrada.
+    * 
+    * @param doctor_aux El doctor que se desea añadir al sistema.
+    */
     public void añadirDoctorMapaArray(Doctor doctor_aux) 
     {
         int triage = doctor_aux.getTriage();
@@ -170,6 +229,14 @@ public class Hospital {
         lista_doctores.add(doctor_aux);
     }
     
+    /**
+    * Elimina un doctor de la lista y del mapa de doctores por triage.
+    * 
+    * Este método elimina al doctor de la lista global de doctores y del mapa de doctores 
+    * basado en su triage.
+    * 
+    * @param doctor_aux El doctor que se desea eliminar del sistema.
+    */
     public void eliminarDoctorMapaArray(Doctor doctor_aux) 
     {
         int triage = doctor_aux.getTriage();
@@ -178,12 +245,29 @@ public class Hospital {
         lista_doctores.remove(doctor_aux);
     }
     
+    /**
+    * Devuelve un doctor de la lista basado en su índice.
+    * 
+    * Este método obtiene un doctor de la lista global de doctores utilizando el índice proporcionado.
+    * 
+    * @param i El índice del doctor que se desea obtener.
+    * @return El doctor correspondiente al índice.
+    */
     public Doctor obtenerDoctor(int i)
     {
         Doctor aux_doctor = lista_doctores.get(i);
         return aux_doctor;
     }
     
+    /**
+    * Devuelve una lista de doctores disponibles para un triaje específico.
+    * 
+    * Este método busca en el mapa de doctores el triaje dado y retorna una lista 
+    * de doctores disponibles para ese triaje.
+    * 
+    * @param triaje_aux El triaje en formato de cadena.
+    * @return Una lista de doctores disponibles para el triaje especificado.
+    */
     public ArrayList<Doctor> obtenerDoctor(String triaje_aux)
     {
         int triaje = Integer.parseInt(triaje_aux);
@@ -202,6 +286,15 @@ public class Hospital {
         return doctor_disponible_triaje; 
     }
     
+    /**
+    * Muestra los detalles de un doctor.
+    * 
+    * Este método devuelve una cadena que muestra los datos de un doctor 
+    * junto con su disponibilidad.
+    * 
+    * @param aux_doctor El doctor cuyos datos se desean mostrar.
+    * @return Una cadena con los datos del doctor y su disponibilidad.
+    */
     public String mostrarDoctor(Doctor aux_doctor)
     {
         String disp;
@@ -222,6 +315,16 @@ public class Hospital {
         return i + ". " + aux_doctor.obtenerDatos() + " Triaje: " + aux_doctor.getTriage();
     }
 
+
+    /**
+    * Sobrecarga del método mostrarDoctor.
+    * 
+    * Este método sobrecargado muestra los datos del doctor junto con su índice y su triaje.
+    * 
+    * @param aux_doctor El doctor cuyos datos se desean mostrar.
+    * @param i El índice del doctor en la lista.
+    * @return Una cadena con el índice, los datos del doctor y su triaje.
+    */
     public void crearDoctores(){
         // aca
         //ArrayList<Doctor> listaDoctores = new ArrayList<>();
@@ -265,7 +368,19 @@ public class Hospital {
         map_doctores.put(datDoct4.getTriage(), triaje_4);
         map_doctores.put(datDoct5.getTriage(), triaje_5);
     }
-    
+
+    /**
+    * Crea las habitaciones del hospital y las agrega a la lista de habitaciones.
+    * 
+    * Este método genera un conjunto de 150 habitaciones numeradas del 1 al 150. 
+    * Por cada habitación creada, se añade a la lista de habitaciones del hospital 
+    * y se muestra la información de la habitación en pantalla a través del método 
+    * obtenerMostrarHabitacion().
+    * 
+    * No recibe parámetros.
+    * 
+    * No retorna valores.
+    */
     public void crear_Habitaciones()
     {   
         for (int i = 1; i < 151; i++)
@@ -276,6 +391,22 @@ public class Hospital {
         } 
     }
     
+    /**
+     * Agrega un nuevo paciente a la lista de pacientes con prioridad, ordenándolos 
+    * según su triaje y tiempo de ingreso.
+    * 
+    * Este método recibe los datos del paciente, crea una nueva instancia de la clase Paciente, 
+    * y lo inserta en la lista de pacientes de acuerdo a su prioridad (triaje). 
+    * Si dos pacientes tienen el mismo nivel de triaje, se ordenan según el tiempo de llegada. 
+    * Además, el paciente se almacena en un mapa para acceso rápido por su RUT.
+    * 
+    * @param rut       RUT del paciente.
+    * @param nombre    Nombre del paciente.
+    * @param apellido  Apellido del paciente.
+    * @param edad      Edad del paciente.
+    * @param sexo      Sexo del paciente (0: masculino, 1: femenino).
+    * @param triaje    Nivel de triaje del paciente (entre 1 y 5, siendo 1 la mayor prioridad).
+    */
         public void agregarPaciente(String rut, String nombre, String apellido, int edad, int sexo, int triaje)  {
         LocalDateTime tiempo_actual = LocalDateTime.now();
         DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -302,6 +433,18 @@ public class Hospital {
        
     }
 
+    /**
+    * Busca un doctor en el mapa de doctores utilizando su nombre completo.
+    * 
+    * Este método recorre la lista de doctores almacenados en el mapa (map_doctores) 
+    * y compara el nombre completo (nombre + apellido) del doctor con el nombre 
+    * proporcionado. Si encuentra un doctor con el nombre completo exacto, 
+    * lo retorna. Si no se encuentra o si el nombre ingresado es nulo o vacío, 
+    * retorna null.
+    * 
+    * @param nombreCompleto El nombre completo del doctor a buscar.
+    * @return El doctor encontrado, o null si no se encuentra ningún doctor con ese nombre.
+    */
     public Doctor buscarDoctorPorNombre(String nombreCompleto) {
         // Verificar si el nombre completo es null o está vacío
         if (nombreCompleto == null || nombreCompleto.isEmpty()) {
@@ -321,6 +464,17 @@ public class Hospital {
         return null; // Si no se en
     }    
  
+    /**
+    * Agrega un paciente ya creado a la lista de pacientes con prioridad, ordenándolos 
+    * según su triaje y tiempo de ingreso.
+    * 
+     * Este método recibe una instancia de la clase Paciente, la cual ya ha sido creada, 
+     * y lo inserta en la lista de pacientes de acuerdo a su prioridad (triaje). 
+    * Si dos pacientes tienen el mismo nivel de triaje, se ordenan según el tiempo de llegada. 
+    * Además, el paciente se almacena en un mapa para acceso rápido por su RUT.
+    * 
+    * @param pac El paciente a agregar a la lista de pacientes con prioridad.
+    */
     public void agregarPaciente(Paciente pac)  {
         LocalDateTime tiempo_actual = LocalDateTime.now();
         DateTimeFormatter formatoTiempo = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -345,7 +499,17 @@ public class Hospital {
         map_paciente.put(pac.getRut(), pac);
        
     }
-
+    /**
+    * Busca un paciente asignado a una habitación específica.
+    * 
+    * Este método recorre la lista de pacientes con prioridad y verifica si alguno 
+     * de ellos está asignado a la habitación con el número proporcionado. Si encuentra 
+     * un paciente que esté en la habitación indicada, lo retorna. Si no se encuentra 
+     * ningún paciente en esa habitación, retorna null.
+     * 
+     * @param numHabitacion El número de la habitación a buscar.
+     * @return El paciente asignado a la habitación, o null si no se encuentra ninguno.
+     */
     public Paciente buscarPacientePorCama(String numHabitacion) {
         for (Paciente paciente : lista_pacientes_prioridad) {
             if (paciente.getNum_habitacion() != null && paciente.getNum_habitacion().equals(numHabitacion)) {
@@ -381,7 +545,7 @@ public class Hospital {
     
 
 
-    //funciones que necesito para que funcione el main D:
+    
     public int getListaDoctoresSize()
     {
         return lista_doctores.size();
@@ -397,7 +561,10 @@ public class Hospital {
         return lista_pacientes_prioridad.get(i);
     }
 
-
+    /**
+     * Carga los datos de doctores desde un archivo CSV.
+     * @param archivo Ruta del archivo CSV.
+     */
     public void cargarDoctoresCSV(String archivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
@@ -430,7 +597,10 @@ public class Hospital {
     }
     
 
-     // Cargar Pacientes desde un archivo CSV
+      /**
+     * Carga los datos de pacientes desde un archivo CSV.
+     * @param archivo Ruta del archivo CSV.
+     */
      public void cargarPacientesCSV(String archivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
@@ -489,7 +659,19 @@ public class Hospital {
         }
     }
 
-    // Guardar Doctores en un archivo CSV
+    /**
+    * Guarda los datos de los doctores en un archivo CSV.
+    * 
+    * Este método recorre la lista de doctores y escribe sus datos en un archivo CSV. 
+    * Si la lista de doctores está vacía, no se realiza ninguna acción. 
+    * El archivo se abre en modo "append" para agregar los datos al final del archivo 
+     * sin sobrescribir su contenido.
+     * 
+     * El formato de cada línea en el archivo es: 
+     * "RUT, Nombre, Apellido, Triage, Pacientes Max, Pacientes Actual, Disponible".
+     * 
+     * @param archivo El nombre del archivo CSV donde se guardarán los datos de los doctores.
+    */
     public void guardarDoctoresCSV(String archivo) {
         if (lista_doctores.isEmpty()) {
             System.out.println("No hay doctores para guardar.");
@@ -515,7 +697,20 @@ public class Hospital {
    
 
 
-    // Guardar Pacientes en un archivo CSV
+    /**
+    * Guarda los datos de los pacientes en un archivo CSV.
+    * 
+    * Este método recorre la lista de pacientes priorizados y escribe sus datos en un archivo CSV. 
+    * Si la lista de pacientes está vacía, no se realiza ninguna acción. 
+    * El archivo se abre en modo "append" para agregar los datos al final del archivo 
+    * sin sobrescribir su contenido.
+     * 
+    * El formato de cada línea en el archivo es: 
+    * "RUT, Nombre, Apellido, Edad, Sexo, Triage, Doctor Asignado, Estado de Atención, 
+    * Número de Habitación, Tiempo de Ingreso".
+    * 
+    * @param archivo El nombre del archivo CSV donde se guardarán los datos de los pacientes.
+    */
     public void guardarPacientesCSV(String archivo) {
         if (lista_pacientes_prioridad.isEmpty()) {
             System.out.println("No hay pacientes para guardar.");
@@ -543,7 +738,16 @@ public class Hospital {
     }
 
 
-      // Generar reporte en archivo TXT
+      /**
+    * Genera un reporte en formato TXT con los datos de los doctores y pacientes.
+    * 
+    * Este método crea un archivo de texto que contiene un reporte con la información 
+    * de todos los doctores y pacientes registrados. El reporte incluye un bloque para 
+    * los doctores y otro para los pacientes, con cada uno de ellos representado en una línea 
+    * utilizando su método toString().
+    * 
+    * @param archivo El nombre del archivo TXT donde se guardará el reporte.
+    */
       public void generarReporteTXT(String archivo) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
             bw.write("Reporte de Doctores:\n");
