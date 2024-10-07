@@ -26,7 +26,16 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Clase principal que maneja la interacción del usuario con el sistema
+ * hospitalario. Proporciona métodos para mostrar opciones del menú,
+ * validar entradas y gestionar pacientes y doctores.
+ */
 public class Main {
+    /**
+     * Muestra las opciones disponibles en el menú del sistema hospitalario,
+     * proporcionando una breve descripción de cada opción.
+     */
     public static void explicarOpcionesMenu() {
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
         System.out.println("| Explicación de las Opciones del Menú              |");
@@ -65,6 +74,15 @@ public class Main {
         System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
     }
 
+    /**
+    * Valida la entrada del usuario para diferentes tipos de datos: edad, sexo y triage.
+    *
+    * @param reader BufferedReader utilizado para leer la entrada del usuario.
+    * @param mensaje Mensaje que se muestra al usuario al solicitar la entrada.
+    * @param tipo Tipo de dato a validar (edad, sexo, triage).
+     * @return Un número entero válido según el tipo especificado.
+     * @throws IOException Si ocurre un error al leer la entrada.
+    */
     public static int esValido(BufferedReader reader, String mensaje, String tipo) throws IOException {
         int numero = 0;
         boolean valido = false;
@@ -110,6 +128,13 @@ public class Main {
         return numero;
     }   
 
+    /**
+    * Valida el formato del RUT ingresado por el usuario.
+    *
+    * @param reader BufferedReader utilizado para leer la entrada del usuario.
+    * @return El RUT válido ingresado por el usuario.
+    * @throws IOException Si ocurre un error al leer la entrada.
+    */
     public static String validarRut(BufferedReader reader) throws IOException {
         String rut = "";
         boolean valido = false;
@@ -126,6 +151,14 @@ public class Main {
         return rut;
     }
     
+    /**
+    * Valida que la entrada del usuario para nombre o apellido contenga solo letras.
+     *
+     * @param reader BufferedReader utilizado para leer la entrada del usuario.
+     * @param tipo Tipo de entrada a validar (nombre o apellido).
+    * @return La entrada válida ingresada por el usuario.
+    * @throws IOException Si ocurre un error al leer la entrada.
+    */
     public static String validarNombreApellido(BufferedReader reader, String tipo) throws IOException {
         String entrada;
         while (true) {
@@ -139,8 +172,15 @@ public class Main {
         return entrada;
     }
 
+    /**
+     * Método principal que inicia la ejecución de la aplicación.
+     * 
+     * @param args Argumentos de línea de comandos (no utilizados).
+     * @throws IOException Si ocurre un error al leer o escribir archivos.
+     */
     public static void main(String[] args) throws IOException
     {
+
         GestionTerminal terminal = new GestionTerminal();
         Hospital hospital_VIJ = new Hospital();
         String baseDir = System.getProperty("user.dir");  // Obtiene el directorio actual
@@ -148,8 +188,9 @@ public class Main {
         String pacientesPath = baseDir + "/pacientes.csv";  // Construye la ruta completa
         hospital_VIJ.cargarDoctoresCSV("doctores.csv");
         hospital_VIJ.cargarPacientesCSV("pacientes.csv");
-        hospital_VIJ.crear_Habitaciones();
+        hospital_VIJ.crear_Habitaciones(); // Crea habitaciones para el hospital.
         
+<<<<<<< HEAD
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // Create and open the Prueba window (Main window)
@@ -166,9 +207,18 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
+=======
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // Para leer entradas del usuario.
+        String opcion = ""; 
+        boolean continuar = true; // Bandera para controlar el bucle del menú.
+>>>>>>> ce21c379b9822cd2ae0477e9fdbd77b73a413481
     
         while (continuar) 
         {
+            // Menú principal
+
+            // Se muestra las opciones del menú al usuario.
             System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
             System.out.println("| Bienvenido/a al sistema de Atención Hospitalaria. |");
             System.out.println("|                                                   |");
@@ -189,13 +239,15 @@ public class Main {
             System.out.println("+ - - - - - - - - - - - - - - - - - - - - - - - - - +");
                
             System.out.print("\n\nIngrese su opción: \n");
-            opcion = reader.readLine();
+            opcion = reader.readLine();// Lee la opción seleccionada por el usuario.
             String rut;
             Persona datos_paciente = null;
+
             switch (opcion) 
             {
                 
                 case "1":
+                // Opción para añadir un paciente.
                     try {
                         // Validar el RUT hasta que sea válido
                         System.out.println("Ingrese RUT del Paciente (ej. XX.XXX.XXX-X)");
@@ -461,7 +513,6 @@ public class Main {
                             System.out.println("\nOpción inválida. Volviendo al menú principal...");
                             break;
                             
-                    //La magia de la sobrecarga ojala funcione D:   
                     }
                     terminal.presioneTecla();
                     terminal.limpiarPantalla();
@@ -549,10 +600,10 @@ public class Main {
                 case "11":
                     //  "Salir del sistema"
                      System.out.println("OPCION 11");
-                    continuar = false; 
-                    hospital_VIJ.generarReporteTXT("reporte.txt"); 
-                    hospital_VIJ.guardarDoctoresCSV("doctores.csv");
-                    hospital_VIJ.guardarPacientesCSV("pacientes.csv");
+                    continuar = false; // Sale del sistema
+                    hospital_VIJ.generarReporteTXT("reporte.txt"); // Genera un reporte en TXT.
+                    hospital_VIJ.guardarDoctoresCSV("doctores.csv");// Guarda doctores en un archivo CSV.   
+                    hospital_VIJ.guardarPacientesCSV("pacientes.csv"); // Guarda pacientes en un archivo CSV.
                     //terminal.presioneTecla();
                     terminal.limpiarPantalla();
                     break;
