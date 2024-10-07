@@ -189,8 +189,7 @@ public class Main {
         hospital_VIJ.cargarDoctoresCSV("doctores.csv");
         hospital_VIJ.cargarPacientesCSV("pacientes.csv");
         hospital_VIJ.crear_Habitaciones(); // Crea habitaciones para el hospital.
-        
-<<<<<<< HEAD
+ 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // Create and open the Prueba window (Main window)
@@ -207,12 +206,6 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcion = "";
         boolean continuar = true;
-=======
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // Para leer entradas del usuario.
-        String opcion = ""; 
-        boolean continuar = true; // Bandera para controlar el bucle del menú.
->>>>>>> ce21c379b9822cd2ae0477e9fdbd77b73a413481
     
         while (continuar) 
         {
