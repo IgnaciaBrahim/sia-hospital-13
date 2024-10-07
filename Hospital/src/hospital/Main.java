@@ -124,8 +124,8 @@ public class Main {
         String baseDir = System.getProperty("user.dir");  // Obtiene el directorio actual
         String doctoresPath = baseDir + "/doctores.csv";  // Construye la ruta completa
         String pacientesPath = baseDir + "/pacientes.csv";  // Construye la ruta completa
-        hospital_VIJ.cargarDoctoresCSV(doctoresPath);
-        hospital_VIJ.cargarPacientesCSV(pacientesPath);
+        hospital_VIJ.cargarDoctoresCSV("doctores.csv");
+        hospital_VIJ.cargarPacientesCSV("pacientes.csv");
         hospital_VIJ.crear_Habitaciones();
         
 
